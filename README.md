@@ -1,4 +1,12 @@
 Public Link: https://github.com/izzyphan/RecWellDevelopment
+Trello Board Link:
+
+Project Description:
+
+User Stories:
+
+Breaking Down User Stories and Burndown Chart:
+_We need to make a table_
 
 Daily Scrum Meetings:
 You are assumed that you have done at least 15 minutes of daily meetings throughout the
