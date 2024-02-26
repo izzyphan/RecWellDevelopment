@@ -4,6 +4,31 @@ Trello Board Link: https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069
 Project Description:
 
 User Stories:
+**User Story 1:** As RecWell student staff employee, I want access to a user-friendly website where I can easily manage and update my employee information, so that our professional team can better understand who I am and I can foster a cohesive work environment between other student staff members.
+
+Acceptance Criteria:
+
+-As a RecWell staff member, I can log in securely with my own email and password.
+-Upon logging in, I am presented with employee updates, an employee directory, and access to my own information.
+-I can easily navigate to sections for adding my own information, updating existing details, and viewing the entire staff directory.
+-I have an ability to create a centralized location for all training materials by scanning and uploading them to a portfolio. 
+-I can easily view RecWell’s blog posts for targeted advice and tips for professional development aspects. 
+-Under my account information, I am able to view how many penalty points I have and any endorsements I have received from other staff members. 
+-The website is mobile-responsive, allowing easy access and functionality across different devices.
+
+**User Story 2:** As a RecWell professional staff member (full-time employee overseeing student staff), I want to access a more professional website featuring and focusing on our student staff members. 
+
+Acceptance Criteria:
+
+-As the admin, I can log in securely with my unique credentials.
+-When adding a new employee, I can input necessary information such as name, contact details, position, and any relevant certifications or training completed. I also have the ability to update and delete this information. 
+-I have the ability to search and filter the employee database based on different criteria such as name or position.
+-I can add blog posts and tips for students to add to their professional skills.
+-I can add important information to the home page to ensure staff have access to updates.
+-Using this website, I can track our penalty point system by assigning points to various staff members. These points also need to be cleared each semester. 
+-The website is mobile-responsive, allowing easy access and functionality across different devices.
+-For the point and rewards system, I can define various actions or achievements that earn points, such as completing training modules, receiving positive feedback from peers or supervisors, or achieving performance milestones.
+
 
 Breaking Down User Stories and Burndown Chart:
 _We need to make a table_
