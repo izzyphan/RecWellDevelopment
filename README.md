@@ -1,5 +1,5 @@
 Public Link: https://github.com/izzyphan/RecWellDevelopment
-Trello Board Link:
+Trello Board Link: https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development
 
 Project Description:
 
