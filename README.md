@@ -1,5 +1,5 @@
-Public Link: https://github.com/izzyphan/RecWellDevelopment
-Trello Board Link: https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development
+Public Link: https://github.com/izzyphan/RecWellDevelopment <br>
+Trello Board Link: https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development <br>
 
 Project Description:
 
@@ -8,26 +8,26 @@ User Stories:
 
 Acceptance Criteria:
 
--As a RecWell staff member, I can log in securely with my own email and password.
--Upon logging in, I am presented with employee updates, an employee directory, and access to my own information.
--I can easily navigate to sections for adding my own information, updating existing details, and viewing the entire staff directory.
--I have an ability to create a centralized location for all training materials by scanning and uploading them to a portfolio. 
--I can easily view RecWell’s blog posts for targeted advice and tips for professional development aspects. 
--Under my account information, I am able to view how many penalty points I have and any endorsements I have received from other staff members. 
--The website is mobile-responsive, allowing easy access and functionality across different devices.
+-As a RecWell staff member, I can log in securely with my own email and password. <br>
+-Upon logging in, I am presented with employee updates, an employee directory, and access to my own information. <br>
+-I can easily navigate to sections for adding my own information, updating existing details, and viewing the entire staff directory. <br>
+-I have an ability to create a centralized location for all training materials by scanning and uploading them to a portfolio. <br>
+-I can easily view RecWell’s blog posts for targeted advice and tips for professional development aspects. <br>
+-Under my account information, I am able to view how many penalty points I have and any endorsements I have received from other staff members. <br>
+-The website is mobile-responsive, allowing easy access and functionality across different devices. <br>
 
 **User Story 2:** As a RecWell professional staff member (full-time employee overseeing student staff), I want to access a more professional website featuring and focusing on our student staff members. 
 
 Acceptance Criteria:
 
--As the admin, I can log in securely with my unique credentials.
--When adding a new employee, I can input necessary information such as name, contact details, position, and any relevant certifications or training completed. I also have the ability to update and delete this information. 
--I have the ability to search and filter the employee database based on different criteria such as name or position.
--I can add blog posts and tips for students to add to their professional skills.
--I can add important information to the home page to ensure staff have access to updates.
--Using this website, I can track our penalty point system by assigning points to various staff members. These points also need to be cleared each semester. 
--The website is mobile-responsive, allowing easy access and functionality across different devices.
--For the point and rewards system, I can define various actions or achievements that earn points, such as completing training modules, receiving positive feedback from peers or supervisors, or achieving performance milestones.
+-As the admin, I can log in securely with my unique credentials. <br>
+-When adding a new employee, I can input necessary information such as name, contact details, position, and any relevant certifications or training completed. I also have the ability to update and delete this information. <br>
+-I have the ability to search and filter the employee database based on different criteria such as name or position. <br>
+-I can add blog posts and tips for students to add to their professional skills. <br>
+-I can add important information to the home page to ensure staff have access to updates. <br>
+-Using this website, I can track our penalty point system by assigning points to various staff members. These points also need to be cleared each semester. <br>
+-The website is mobile-responsive, allowing easy access and functionality across different devices. <br>
+-For the point and rewards system, I can define various actions or achievements that earn points, such as completing training modules, receiving positive feedback from peers or supervisors, or achieving performance milestones. <br>
 
 
 Breaking Down User Stories and Burndown Chart:
