@@ -30,7 +30,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: black;
+  background-color: rgb(22, 22, 22);
   color: rgb(218, 19, 19);
   margin: 0;
   padding: 0;
@@ -43,7 +43,7 @@ footer {
 }
 
 .navbar {
-  background-color: rgb(216, 20, 20);
+  background-color: rgb(22, 22, 22);
   overflow: hidden;
 }
 
@@ -79,7 +79,7 @@ footer {
 }
 
 .navbar .navbar-links li a:hover {
-  background-color: #555;
+  background-color: red;
   color: white;
 }
 
@@ -116,4 +116,8 @@ footer {
   width: 25px;
   height: 3px;
   background-color: #fff;
+}
+
+h1 {
+  text-align: center;
 }
