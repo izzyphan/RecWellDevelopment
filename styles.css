@@ -159,20 +159,22 @@ h1 {
 }
 
 .form-group input {
-  width: 100%;
+  width: 80%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 .form-group input[type="submit"] {
-  background-color: #007bff;
+  background-color: red;
   color: white;
   cursor: pointer;
+  margin-left: 100px;
+  width: 50%;
 }
 
 .form-group input[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: rgb(123, 6, 6);
 }
 
 .modal-logo {
