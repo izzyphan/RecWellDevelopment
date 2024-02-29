@@ -31,7 +31,19 @@ Acceptance Criteria:
 
 
 Breaking Down User Stories and Burndown Chart:
-_We need to make a table_
+| Task                                                                  | Corresponding Story Number | Duration    | Priority | Complexity | Lead Person |
+|------------------------------------------------------------|----------------------------|-------------|----------|------------|-------------|
+| Create Navigation Bar                                                 | 1                          | 30 minutes  | 10       | low        | Emily       |
+| Connect Firebase to website to allow for sign in, sign up, log in     | 5                          | 1.5 hours   | 8        | high       | Henry       |
+| Add JS to navigation bar to hide all wepages until a user logs in     | 3                          | 45 minutes  | 6        | medium     | Henry       |
+| Add sign in, sign up, and log in modal to navigation bar              | 7                          | 2 hours     | 6        | high       | Emily       |
+| Add message bar to home page to let a user know they are logged in    | 3                          | 45 minutes  | 3        | medium     | Matt        |
+| Create a home page for users who are not logged in                    | 2                          | 30 minutes  | 8        | low        | Henry       |
+| Create a home page that is a 1 column layout                          | 1                          | 15 minutes  | 2        | low        | Emily       |
+| Create prototype in JustInMind for home page                          | 2                          | 1 hour      | 6        | low        | Izzy        |
+| Add content to main section of home page                              | 3                          | 45 minutes  | 6        | low        | Matt/Cristian |
+| Add images to home page                                               | 2                          | 30 minutes  | 5        | low        | Cristian    |
+
 
 Daily Scrum Meetings:
 You are assumed that you have done at least 15 minutes of daily meetings throughout the
