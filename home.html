@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RecWell Professional Development</title>
+    <title>Rec Well Staff Website</title>
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" href="styles.css" />
 
@@ -17,23 +17,32 @@
     <nav class="navbar">
       <div class="navbar-toggle" onclick="toggleNavbar()"></div>
       <ul class="navbar-links" id="navbar-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">Directory</a></li>
-        <li><a href="talent.html">Talent Tunstile</a></li>
-        <li><a href="myaccount.html">My Account</a></li>
-        <li><a href="points.html">Points</a></li>
+        <!-- logo -->
+        <div class="navbar-logo">
+          <li>
+            <a href="index.html" id="logo"
+              ><img
+                src="https://recwell.wisc.edu/wp-content/uploads/sites/1075/2019/07/cropped-site_symbol-01.png"
+                alt=""
+                height="50px"
+                background-color="grey"
+            /></a>
+          </li>
+        </div>
 
+        <!-- center links -->
+        <div class="navbar-center">
+          <li><a href="about.html">Directory</a></li>
+          <li><a href="talent.html">Talent Tunstile</a></li>
+          <li><a href="myaccount.html">My Account</a></li>
+          <li><a href="points.html">Points</a></li>
+        </div>
+
+        <!-- right links -->
         <div class="navbar-right">
           <li><a>Sign Up</a></li>
           <li><a>Sign In</a></li>
           <li><a>Log In</a></li>
-        </div>
-
-        <!-- burger -->
-        <div class="burger-menu" onclick="toggleMenu()">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
         </div>
       </ul>
     </nav>
@@ -42,7 +51,7 @@
     <div id="message_bar">Message Bar To Configure when user signs in</div>
 
     <header>
-      <h1>Welcome to RecWell Professional Development</h1>
+      <h1>Welcome Rec Well Staff.</h1>
     </header>
 
     <div class="container">
