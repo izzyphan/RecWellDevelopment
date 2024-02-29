@@ -47,10 +47,6 @@ footer {
   overflow: hidden;
 }
 
-.navbar-right {
-  float: right;
-}
-
 .navbar .navbar-toggle {
   display: none;
 }
@@ -62,8 +58,19 @@ footer {
   overflow: hidden;
 }
 
+.navbar .navbar-links {
+  list-style-type: none;
+  margin: 0 auto; /* Center the links horizontally */
+  padding: 0;
+  overflow: hidden;
+}
+
 .navbar .navbar-links li {
   float: left;
+}
+
+.navbar-right {
+  float: right;
 }
 
 .navbar-links.active {
