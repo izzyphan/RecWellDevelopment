@@ -54,38 +54,32 @@ footer {
 .navbar .navbar-links {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding-left: 30%;
   overflow: hidden;
-}
-
-.navbar .navbar-links {
-  list-style-type: none;
-  margin: 0 auto; /* Center the links horizontally */
-  padding: 0;
-  overflow: hidden;
+  align-items: center;
 }
 
 .navbar .navbar-links li {
   float: left;
 }
 
-.navbar-right {
-  float: right;
-}
-
 .navbar-links.active {
   display: flex; /* Show the menu when burger menu is clicked */
 }
 
-.navbar .navbar-links li a {
+.navbar .navbar-links li a:not(#logo) {
   display: block;
   color: white;
-  text-align: center;
-  padding: 14px 20px;
+  align-items: center;
+  padding: 20px;
   text-decoration: none;
 }
 
-.navbar .navbar-links li a:hover {
+#logo {
+  padding: 15px;
+}
+
+.navbar .navbar-links li a:hover:not(#logo) {
   background-color: red;
   color: white;
 }
