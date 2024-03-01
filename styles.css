@@ -1,31 +1,18 @@
 .container {
   display: flex;
-  min-height: 300px;
-  background-color: white;
+  flex-direction: column; /* Set the flex direction to column */
+  height: 500px; /* Set a fixed height for the container */
+  overflow-y: auto; /* Add scrollbars when content overflows vertically */
 }
 
-.column1 {
-  flex: 3;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
-  background-color: white;
-}
-
-.column2 {
-  flex: 4;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
-  background-color: white;
-}
-
+.column1,
+.column2,
 .column3 {
-  flex: 3;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
-  background-color: white;
+  flex: 1;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #333;
 }
 
 body {
