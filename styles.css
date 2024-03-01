@@ -1,8 +1,37 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .container {
   display: flex;
   flex-direction: column; /* Set the flex direction to column */
   height: 500px; /* Set a fixed height for the container */
   overflow-y: auto; /* Add scrollbars when content overflows vertically */
+}
+
+.top-links {
+  background-color: #333;
+  padding: 10px;
+}
+
+.top-links ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top-links ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.top-links ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.top-links ul li a:hover {
+  color: red;
 }
 
 .column1,
