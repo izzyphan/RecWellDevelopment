@@ -1,36 +1,56 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .container {
   display: flex;
-  min-height: 300px;
-  background-color: white;
+  flex-direction: column; /* Set the flex direction to column */
+  height: 500px; /* Set a fixed height for the container */
+  overflow-y: auto; /* Add scrollbars when content overflows vertically */
 }
 
-.column1 {
-  flex: 3;
+.top-links {
+  background-color: #333;
   padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
-  background-color: white;
+  text-align: center;
+  width: 40%;
+  margin: auto;
 }
 
-.column2 {
-  flex: 4;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
-  background-color: white;
+.top-links ul {
+  list-style-type: none;
+  margin: 0;
 }
 
+.top-links ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.top-links ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 0px 20px;
+}
+
+.top-links ul li a:hover {
+  color: red;
+}
+
+.column1,
+.column2,
 .column3 {
-  flex: 3;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
-  background-color: white;
+  flex: 1;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  box-shadow: 3px 3px 3px black;
 }
 
 body {
   font-family: Arial, sans-serif;
-  background-color: black;
+  background-color: rgb(22, 22, 22);
   color: rgb(218, 19, 19);
   margin: 0;
   padding: 0;
@@ -43,12 +63,8 @@ footer {
 }
 
 .navbar {
-  background-color: rgb(216, 20, 20);
+  background-color: rgb(22, 22, 22);
   overflow: hidden;
-}
-
-.navbar-right {
-  float: right;
 }
 
 .navbar .navbar-toggle {
@@ -58,8 +74,9 @@ footer {
 .navbar .navbar-links {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding-left: 30%;
   overflow: hidden;
+  align-items: center;
 }
 
 .navbar .navbar-links li {
@@ -70,16 +87,20 @@ footer {
   display: flex; /* Show the menu when burger menu is clicked */
 }
 
-.navbar .navbar-links li a {
+.navbar .navbar-links li a:not(#logo) {
   display: block;
   color: white;
-  text-align: center;
-  padding: 14px 20px;
+  align-items: center;
+  padding: 20px;
   text-decoration: none;
 }
 
-.navbar .navbar-links li a:hover {
-  background-color: #555;
+#logo {
+  padding: 15px;
+}
+
+.navbar .navbar-links li a:hover:not(#logo) {
+  background-color: red;
   color: white;
 }
 
@@ -116,4 +137,75 @@ footer {
   width: 25px;
   height: 3px;
   background-color: #fff;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* log in page css */
+.modal-body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.modal {
+  background-color: #1c1c1c;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal h2 {
+  text-align: center;
+  color: red;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-group input[type="submit"] {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  margin-left: 100px;
+  width: 50%;
+}
+
+.form-group input[type="submit"]:hover {
+  background-color: rgb(123, 6, 6);
+}
+
+.modal-logo {
+  text-align: center;
+}
+
+h2 {
+  color: red;
+}
+
+p {
+  color: white;
 }

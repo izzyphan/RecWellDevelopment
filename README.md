@@ -32,7 +32,7 @@ Acceptance Criteria:
 
 Breaking Down User Stories and Burndown Chart:
 | Task                                                                  | Corresponding Story Number | Duration    | Priority | Complexity | Lead Person |
-|------------------------------------------------------------|----------------------------|-------------|----------|------------|-------------|
+|-----------------------------------------------------------------------|----------------------------|-------------|----------|------------|-------------|
 | Create Navigation Bar                                                 | 1                          | 30 minutes  | 10       | low        | Emily       |
 | Connect Firebase to website to allow for sign in, sign up, log in     | 5                          | 1.5 hours   | 8        | high       | Henry       |
 | Add JS to navigation bar to hide all wepages until a user logs in     | 3                          | 45 minutes  | 6        | medium     | Henry       |
