@@ -212,7 +212,8 @@ p {
 
 /* Hide the main content and navigation bar by default */
 #main-content,
-.navbar {
+.navbar,
+#message_bar.modal-hidden {
   display: none;
 }
 
