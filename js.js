@@ -31,18 +31,84 @@ function toggleMenu() {
   menu.classList.toggle("active");
 }
 
-// change html of main content when you click directory
-// Get the link element with the class directory
-var directoryLink = r_e("directory");
+// When you click directory, the html in div main-content will change to html from directory.html
+document
+  .getElementById("directory")
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
 
-// Get the div element with the ID main-content
-var mainContentDiv = r_e("main-content");
+    // Fetch the HTML content from a separate file
+    fetch("directory.html")
+      .then((response) => response.text()) // Get the response text
+      .then((html) => {
+        // Set the innerHTML of the element with id "main-content" to the fetched HTML content
+        document.getElementById("main-content").innerHTML = html;
+      })
+      .catch((error) => console.error("Error fetching HTML:", error));
+  });
 
-// Add click event listener to the link
-directoryLink.addEventListener("click", function (event) {
-  // Prevent default link behavior
-  event.preventDefault();
+// When you click talent turnstile, the html in div main-content will change to html from talent.html
+document.getElementById("talent").addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default link behavior
 
-  // Change the HTML content of the div
-  mainContentDiv.innerHTML = "<p>This is the new content.</p>";
+  // Fetch the HTML content from a separate file
+  fetch("talent.html")
+    .then((response) => response.text()) // Get the response text
+    .then((html) => {
+      // Set the innerHTML of the element with id "main-content" to the fetched HTML content
+      document.getElementById("main-content").innerHTML = html;
+    })
+    .catch((error) => console.error("Error fetching HTML:", error));
+});
+
+// When you click my account, the html in div main-content will change to html from myaccount.html
+document
+  .getElementById("myaccount")
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    // Fetch the HTML content from a separate file
+    fetch("myaccount.html")
+      .then((response) => response.text()) // Get the response text
+      .then((html) => {
+        // Set the innerHTML of the element with id "main-content" to the fetched HTML content
+        document.getElementById("main-content").innerHTML = html;
+      })
+      .catch((error) => console.error("Error fetching HTML:", error));
+  });
+
+// When you click points, the html in div main-content will change to html from points.html
+document.getElementById("points").addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default link behavior
+
+  // Fetch the HTML content from a separate file
+  fetch("points.html")
+    .then((response) => response.text()) // Get the response text
+    .then((html) => {
+      // Set the innerHTML of the element with id "main-content" to the fetched HTML content
+      document.getElementById("main-content").innerHTML = html;
+    })
+    .catch((error) => console.error("Error fetching HTML:", error));
+});
+
+// When you click the rec well logo, the html in div main-content will change to html from home.html
+document.getElementById("logo").addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default link behavior
+
+  // Fetch the HTML content from a separate file
+  fetch("home.html")
+    .then((response) => response.text()) // Get the response text
+    .then((html) => {
+      // Create a temporary element to hold the fetched HTML
+      var tempElement = document.createElement("div");
+      tempElement.innerHTML = html;
+
+      // Extract the content of the main-content div
+      var mainContentHtml =
+        tempElement.querySelector("#main-content").innerHTML;
+
+      // Set the innerHTML of the current page's main-content div to the fetched HTML content
+      document.getElementById("main-content").innerHTML = mainContentHtml;
+    })
+    .catch((error) => console.error("Error fetching HTML:", error));
 });
