@@ -30,3 +30,19 @@ function toggleMenu() {
   var menu = document.getElementById("menu");
   menu.classList.toggle("active");
 }
+
+// change html of main content when you click directory
+// Get the link element with the class directory
+var directoryLink = r_e("directory");
+
+// Get the div element with the ID main-content
+var mainContentDiv = r_e("main-content");
+
+// Add click event listener to the link
+directoryLink.addEventListener("click", function (event) {
+  // Prevent default link behavior
+  event.preventDefault();
+
+  // Change the HTML content of the div
+  mainContentDiv.innerHTML = "<p>This is the new content.</p>";
+});
