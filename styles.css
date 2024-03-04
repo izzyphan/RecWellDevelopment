@@ -5,7 +5,7 @@ html {
 .container {
   display: flex;
   flex-direction: column; /* Set the flex direction to column */
-  height: 500px; /* Set a fixed height for the container */
+  /* height: 500px; Set a fixed height for the container */
   overflow-y: auto; /* Add scrollbars when content overflows vertically */
 }
 

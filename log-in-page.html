@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RecWell Development Project</title>
-
+    <script src="login.js" defer></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="modal-body">
@@ -18,7 +18,7 @@
         /></a>
       </div>
       <h2>Please Log In.</h2>
-      <form action="#">
+      <form action="#" id="loginform">
         <div class="form-group">
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" required />
@@ -32,5 +32,42 @@
         </div>
       </form>
     </div>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+    <script>
+      // TODO
+      // Copy **only** your firebaseConfig from Google Firebae and add it below
+      const firebaseConfig = {
+        apiKey: "AIzaSyDUF0yblD2mxOTH2_lMfAq3n2N3w0TfE7c",
+        authDomain: "rec-well-staff-w.firebaseapp.com",
+        projectId: "rec-well-staff-w",
+        storageBucket: "rec-well-staff-w.appspot.com",
+        messagingSenderId: "102788649386",
+        appId: "1:102788649386:web:68078be005801434e3dbd3",
+      };
+
+      // Your web app's Firebase configuration
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // define authentication variable
+      let auth = firebase.auth();
+      let db = firebase.firestore();
+
+      // define a storage reference
+      let ref = firebase.storage().ref();
+    </script>
   </body>
 </html>
