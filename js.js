@@ -130,4 +130,26 @@ r_e("loginform").addEventListener("submit", function (event) {
   });
 });
 
-console.log("hi");
+// Function to toggle modal visibility
+function toggleModal() {
+  var modal = document.getElementById("loginModal");
+  modal.classList.toggle("show");
+  // Toggle modal-hidden class on body to hide/show main content and navigation bar
+  document.body.classList.toggle("modal-hidden");
+}
+
+// Show modal when the page loads
+window.addEventListener("load", function () {
+  toggleModal(); // Show modal
+});
+
+// Add event listener to login form submission
+document
+  .getElementById("loginform")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+    // Perform login logic here
+    // For demonstration purposes, simulate successful login and hide modal
+    localStorage.setItem("isLoggedIn", "true"); // Set flag to indicate user is logged in
+    toggleModal(); // Hide modal
+  });

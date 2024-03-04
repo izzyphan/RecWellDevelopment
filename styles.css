@@ -209,3 +209,15 @@ h2 {
 p {
   color: white;
 }
+
+/* Hide the main content and navigation bar by default */
+#main-content,
+.navbar {
+  display: none;
+}
+
+/* Show the main content and navigation bar when the modal is hidden */
+.modal-hidden #main-content,
+.modal-hidden .navbar {
+  display: block;
+}
