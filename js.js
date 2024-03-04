@@ -127,7 +127,7 @@ r_e("loginform").addEventListener("submit", function (event) {
 
   auth.createUserWithEmailAndPassword(username, password).then((cred) => {
     const modal = r_e("loginModal");
-    MIDIAccess.modal.getInstance(modal).close();
+    M.modal.getInstance(modal).close();
   });
 });
 
