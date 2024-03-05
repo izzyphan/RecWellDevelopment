@@ -113,14 +113,6 @@ document.getElementById("logo").addEventListener("click", function (event) {
     .catch((error) => console.error("Error fetching HTML:", error));
 });
 
-// Function to toggle modal visibility
-function toggleModal() {
-  var modal = document.getElementById("loginModal");
-  modal.classList.toggle("show");
-  // Toggle modal-hidden class on body to hide/show main content and navigation bar
-  document.body.classList.toggle("modal-hidden");
-}
-
 // Show modal when the page loads
 window.addEventListener("load", function () {
   toggleModal(); // Show modal
@@ -143,18 +135,19 @@ document
       auth.signInWithEmailAndPassword(username, password).then((cred) => {
         const modal = document.getElementById("loginModal");
         document.getElementById("loginform").reset();
-        modal.classList.remove("is-active");
-        document.body.classList.remove("modal-hidden");
-        toggleModal();
+
+        r_e("loginModal").style.display = "none";
+        r_e("main-content").style.display = "block";
+        document.getElementsByClassName("navbar").style.display = "block";
       });
     } else if (submitButtonValue === "Sign Up") {
       // Perform sign-up logic here
       auth.createUserWithEmailAndPassword(username, password).then((cred) => {
         const modal = document.getElementById("loginModal");
         document.getElementById("loginform").reset();
-        modal.classList.remove("is-active");
-        document.body.classList.remove("modal-hidden");
-        toggleModal();
+
+        r_e("loginModal").style.display = "none";
+        r_e("main-content").style.display = "block";
       });
     }
   });

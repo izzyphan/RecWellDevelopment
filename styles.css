@@ -211,14 +211,6 @@ p {
 }
 
 /* Hide the main content and navigation bar by default */
-#main-content,
-.navbar,
-#message_bar.modal-hidden {
+#main-content {
   display: none;
-}
-
-/* Show the main content and navigation bar when the modal is hidden */
-.modal-hidden #main-content,
-.modal-hidden .navbar {
-  display: block;
 }

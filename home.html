@@ -10,11 +10,12 @@
     <!-- Link to the external JavaScript file for the navigation bar -->
     <script src="js.js" defer></script>
   </head>
-  <body class="modal-hidden">
+
+  <body>
     <!-- modals -->
 
     <!-- log in modal -->
-    <div class="modal" id="loginModal">
+    <div class="modal is-active" id="loginModal">
       <div class="modal-logo">
         <a href="index.html" id="logo"
           ><img
@@ -39,88 +40,90 @@
         </div>
       </form>
     </div>
-
-    <!-- Navigation bar -->
-    <nav class="navbar">
-      <div class="navbar-toggle" onclick="toggleNavbar()"></div>
-      <ul class="navbar-links" id="navbar-links">
-        <!-- logo -->
-        <div class="navbar-logo">
-          <li>
-            <a href="" id="logo"
-              ><img
-                src="https://recwell.wisc.edu/wp-content/uploads/sites/1075/2019/07/cropped-site_symbol-01.png"
-                alt=""
-                height="50px"
-            /></a>
-          </li>
-        </div>
-
-        <!-- center links -->
-
-        <li><a href="#" id="directory">Directory</a></li>
-        <li><a href="#" id="talent">Talent Tunstile</a></li>
-        <li><a href="#" id="myaccount">My Account</a></li>
-        <li><a href="#" id="points">Points</a></li>
-      </ul>
-    </nav>
-
-    <!-- message bar -->
-    <div id="message_bar" class="modal-hidden">
-      Message Bar To Configure when user signs in
-    </div>
     <div id="main-content">
-      <header>
-        <h1>Welcome Rec Well Staff.</h1>
-      </header>
+      <div class="modal-hidden" id="modal-hidden">
+        <!-- Navigation bar -->
+        <nav class="navbar">
+          <div class="navbar-toggle" onclick="toggleNavbar()"></div>
+          <ul class="navbar-links" id="navbar-links">
+            <!-- logo -->
+            <div class="navbar-logo">
+              <li>
+                <a href="" id="logo"
+                  ><img
+                    src="https://recwell.wisc.edu/wp-content/uploads/sites/1075/2019/07/cropped-site_symbol-01.png"
+                    alt=""
+                    height="50px"
+                /></a>
+              </li>
+            </div>
 
-      <!-- links to home page content -->
-      <div class="container">
-        <div class="top-links">
-          <ul>
-            <li><a href="#shoutouts">Shoutouts</a></li>
-            <li><a href="#forms">Forms</a></li>
-            <li><a href="#appreciation">Appreciation</a></li>
+            <!-- center links -->
+
+            <li><a href="#" id="directory">Directory</a></li>
+            <li><a href="#" id="talent">Talent Tunstile</a></li>
+            <li><a href="#" id="myaccount">My Account</a></li>
+            <li><a href="#" id="points">Points</a></li>
           </ul>
-        </div>
-        <br />
+        </nav>
 
-        <img
-          width="100%"
-          src="https://recwell.wisc.edu/wp-content/uploads/sites/1075/2023/10/09345_08292023_recwellmanagers_03KW-2048x640.jpg"
-          alt=""
-          height="10%"
-        />
-
-        <div class="column1" id="shoutouts">
-          <h2>Employee Shoutouts</h2>
-          <p>Content for employee shoutouts goes here...</p>
+        <!-- message bar -->
+        <div id="message_bar" class="modal-hidden">
+          Message Bar To Configure when user signs in
         </div>
-        <div class="column2" id="forms">
-          <h2>Employee Forms</h2>
+
+        <header>
+          <h1>Welcome Rec Well Staff.</h1>
+        </header>
+
+        <!-- links to home page content -->
+        <div class="container">
+          <div class="top-links">
+            <ul>
+              <li><a href="#shoutouts">Shoutouts</a></li>
+              <li><a href="#forms">Forms</a></li>
+              <li><a href="#appreciation">Appreciation</a></li>
+            </ul>
+          </div>
+          <br />
+
+          <img
+            width="100%"
+            src="https://recwell.wisc.edu/wp-content/uploads/sites/1075/2023/10/09345_08292023_recwellmanagers_03KW-2048x640.jpg"
+            alt=""
+            height="10%"
+          />
+
+          <div class="column1" id="shoutouts">
+            <h2>Employee Shoutouts</h2>
+            <p>Content for employee shoutouts goes here...</p>
+          </div>
+          <div class="column2" id="forms">
+            <h2>Employee Forms</h2>
+            <p>
+              <a
+                href="https://forms.office.com/pages/responsepage.aspx?id=IYOmLNoOCEmIskJKjLSw-bqqepPDIi1OoOdCzD27aPFUNFJZTlBQRTZaNzZYQVIyM0ZBRks5QlFCNyQlQCN0PWcu"
+                >Professional Development Bookings</a
+              >
+              <br />
+              <a
+                href="https://forms.office.com/pages/responsepage.aspx?id=IYOmLNoOCEmIskJKjLSw-bqqepPDIi1OoOdCzD27aPFUNEdLRzZOVUdZWUVJRkY4V1IzSklYWlRDUSQlQCN0PWcu"
+                >Absence Request Form</a
+              >
+            </p>
+          </div>
+          <div class="column3" id="appreciation">
+            <h2>Employee Appreciation</h2>
+            <p>Content for employee appreciation goes here...</p>
+          </div>
+        </div>
+
+        <footer>
           <p>
-            <a
-              href="https://forms.office.com/pages/responsepage.aspx?id=IYOmLNoOCEmIskJKjLSw-bqqepPDIi1OoOdCzD27aPFUNFJZTlBQRTZaNzZYQVIyM0ZBRks5QlFCNyQlQCN0PWcu"
-              >Professional Development Bookings</a
-            >
-            <br />
-            <a
-              href="https://forms.office.com/pages/responsepage.aspx?id=IYOmLNoOCEmIskJKjLSw-bqqepPDIi1OoOdCzD27aPFUNEdLRzZOVUdZWUVJRkY4V1IzSklYWlRDUSQlQCN0PWcu"
-              >Absence Request Form</a
-            >
+            &copy; 2024 RecWell Professional Development. All rights reserved.
           </p>
-        </div>
-        <div class="column3" id="appreciation">
-          <h2>Employee Appreciation</h2>
-          <p>Content for employee appreciation goes here...</p>
-        </div>
+        </footer>
       </div>
-
-      <footer>
-        <p>
-          &copy; 2024 RecWell Professional Development. All rights reserved.
-        </p>
-      </footer>
     </div>
 
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
