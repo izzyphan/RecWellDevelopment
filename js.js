@@ -113,24 +113,6 @@ document.getElementById("logo").addEventListener("click", function (event) {
     .catch((error) => console.error("Error fetching HTML:", error));
 });
 
-// Add event listener to login form submission
-r_e("loginform").addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  // Get form input values
-  var username = document.getElementById("username").value;
-  var password = document.getElementById("password").value;
-
-  // Log form input values to the console
-  console.log("Username:", username);
-  console.log("Password:", password);
-
-  auth.createUserWithEmailAndPassword(username, password).then((cred) => {
-    const modal = r_e("loginModal");
-    M.modal.getInstance(modal).close();
-  });
-});
-
 // Function to toggle modal visibility
 function toggleModal() {
   var modal = document.getElementById("loginModal");
@@ -144,13 +126,35 @@ window.addEventListener("load", function () {
   toggleModal(); // Show modal
 });
 
-// Add event listener to login form submission
+// Firebase Sign Up and Log In
 document
   .getElementById("loginform")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    // Perform login logic here
-    // For demonstration purposes, simulate successful login and hide modal
-    localStorage.setItem("isLoggedIn", "true"); // Set flag to indicate user is logged in
-    toggleModal(); // Hide modal
+    // Get form input values
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+
+    // Determine which button was clicked
+    var submitButtonValue = event.submitter.value;
+
+    if (submitButtonValue === "Log In") {
+      // Perform login logic here
+      auth.signInWithEmailAndPassword(username, password).then((cred) => {
+        const modal = document.getElementById("loginModal");
+        document.getElementById("loginform").reset();
+        modal.classList.remove("is-active");
+        document.body.classList.remove("modal-hidden");
+        toggleModal();
+      });
+    } else if (submitButtonValue === "Sign Up") {
+      // Perform sign-up logic here
+      auth.createUserWithEmailAndPassword(username, password).then((cred) => {
+        const modal = document.getElementById("loginModal");
+        document.getElementById("loginform").reset();
+        modal.classList.remove("is-active");
+        document.body.classList.remove("modal-hidden");
+        toggleModal();
+      });
+    }
   });

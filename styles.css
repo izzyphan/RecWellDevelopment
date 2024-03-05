@@ -190,8 +190,8 @@ h1 {
   background-color: red;
   color: white;
   cursor: pointer;
-  margin-left: 100px;
-  width: 50%;
+  margin-left: 55px;
+  width: 30%;
 }
 
 .form-group input[type="submit"]:hover {
