@@ -146,3 +146,11 @@ document
       });
     }
   });
+
+// sign out
+r_e("signout").addEventListener("click", () => {
+  auth.signOut().then(() => {
+    r_e("loginModal").style.display = "block";
+    r_e("main-content").style.display = "none";
+  });
+});
