@@ -177,6 +177,7 @@ h1 {
 
 .form-group {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .form-group label {
@@ -195,7 +196,7 @@ h1 {
   background-color: red;
   color: white;
   cursor: pointer;
-  margin-left: 55px;
+  margin: 10px;
   width: 30%;
 }
 
