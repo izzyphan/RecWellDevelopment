@@ -220,3 +220,22 @@ p {
 #main-content {
   display: none;
 }
+
+.column2 a {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px; /* Add padding to create space inside the box */
+  border: 2px solid #ffffff; /* Add a border around the box */
+  background-color: black;
+  border-radius: 5px; /* Add rounded corners */
+  color: #ffffff; /* Blue color for the links */
+  width: 30%;
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and color changes */
+}
+
+.column2 a:hover {
+  background-color: red; /* Darker background color on hover */
+  color: #ffffff; /* White text color on hover */
+}
