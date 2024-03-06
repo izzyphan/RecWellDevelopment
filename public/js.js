@@ -27,6 +27,7 @@ function configure_message_bar(message) {
 
 function hideModal() {
   document.getElementById("loginModal").style.display = "none";
+  sessionStorage.setItem("modalHidden", "true");
 }
 
 // Function to fetch and load HTML content dynamically
@@ -58,6 +59,18 @@ function loadContent(url) {
     })
     .catch((error) => console.error("Error fetching HTML:", error));
 }
+
+// Function to check the modal state on page load
+function checkModalState() {
+  const modalHidden = sessionStorage.getItem("modalHidden");
+  if (modalHidden === "true") {
+    hideModal(); // Hide the modal if the flag indicates it should be hidden
+    r_e("main-content").style.display = "block";
+  }
+}
+
+// Call the function to check the modal state on page load
+checkModalState();
 
 // Event listener for clicks on the document
 document.addEventListener("click", function (event) {

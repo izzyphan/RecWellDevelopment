@@ -239,3 +239,26 @@ p {
   background-color: red; /* Darker background color on hover */
   color: #ffffff; /* White text color on hover */
 }
+
+.update-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.update-card h3 {
+  margin-top: 0;
+}
+
+.update-card p {
+  color: black;
+}
+
+.update-card a {
+  text-decoration: none;
+}
+.update-card a:hover {
+  text-decoration: underline;
+}
