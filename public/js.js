@@ -147,10 +147,44 @@ document
     }
   });
 
-// sign out
-r_e("signout").addEventListener("click", () => {
+function handleLogout() {
   auth.signOut().then(() => {
+    // Open the login modal
     r_e("loginModal").style.display = "block";
+    // Hide the main content
     r_e("main-content").style.display = "none";
   });
+}
+
+// Function to check the authentication state on page load
+function checkAuthState() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in, hide the modal and show the main content
+      r_e("loginModal").style.display = "none";
+      r_e("main-content").style.display = "block";
+    } else {
+      // User is signed out, show the modal and hide the main content
+      r_e("loginModal").style.display = "block";
+      r_e("main-content").style.display = "none";
+    }
+  });
+}
+
+// Function to handle logout
+function handleLogout() {
+  auth.signOut().then(() => {
+    // Reload the page to trigger the onAuthStateChanged listener
+    window.location.reload();
+  });
+}
+
+// Attach the event listener using event delegation
+document.addEventListener("click", function (event) {
+  if (event.target.id === "signout") {
+    handleLogout();
+  }
 });
+
+// Call the function to check authentication state on page load
+checkAuthState();
