@@ -13,13 +13,14 @@ html {
   background-color: #333;
   padding: 10px;
   text-align: center;
-  width: 40%;
-  margin: auto;
+  max-width: 600px; /* Set a maximum width for responsiveness */
+  margin: auto; /* Center the element */
 }
 
 .top-links ul {
   list-style-type: none;
   margin: 0;
+  padding: 0; /* Remove default padding */
 }
 
 .top-links ul li {
@@ -27,14 +28,26 @@ html {
   margin-right: 20px;
 }
 
+.top-links ul li:last-child {
+  margin-right: 0; /* Remove margin from the last item */
+}
+
 .top-links ul li a {
   color: white;
   text-decoration: none;
   padding: 0px 20px;
+  display: inline-block; /* Add display property */
 }
 
 .top-links ul li a:hover {
   color: red;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .top-links {
+    width: 80%; /* Adjust width for smaller screens */
+  }
 }
 
 .column1,
