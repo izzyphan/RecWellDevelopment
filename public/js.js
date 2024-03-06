@@ -131,42 +131,53 @@ document
       auth.signInWithEmailAndPassword(username, password).then((cred) => {
         const modal = document.getElementById("loginModal");
         document.getElementById("loginform").reset();
-
-        r_e("loginModal").style.display = "none";
-        r_e("main-content").style.display = "block";
+        showMainContent;
+        hideModal;
       });
     } else if (submitButtonValue === "Sign Up") {
       // Perform sign-up logic here
       auth.createUserWithEmailAndPassword(username, password).then((cred) => {
         const modal = document.getElementById("loginModal");
         document.getElementById("loginform").reset();
-
-        r_e("loginModal").style.display = "none";
-        r_e("main-content").style.display = "block";
+        showMainContent;
+        hideModal;
       });
     }
   });
 
-function handleLogout() {
-  auth.signOut().then(() => {
-    // Open the login modal
-    r_e("loginModal").style.display = "block";
-    // Hide the main content
-    r_e("main-content").style.display = "none";
-  });
+// Function to show the main content
+function showMainContent() {
+  r_e("main-content").style.display = "block";
+}
+
+// Function to hide the main content
+function hideMainContent() {
+  r_e("main-content").style.display = "none";
+}
+
+// Function to show the modal
+function showModal() {
+  r_e("loginModal").style.display = "block";
+}
+
+// Function to hide the modal
+function hideModal() {
+  r_e("loginModal").style.display = "none";
 }
 
 // Function to check the authentication state on page load
 function checkAuthState() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      // User is signed in, hide the modal and show the main content
-      r_e("loginModal").style.display = "none";
-      r_e("main-content").style.display = "block";
+      // User is signed in, show the main content
+      showMainContent();
+      // Hide the modal
+      hideModal();
     } else {
-      // User is signed out, show the modal and hide the main content
-      r_e("loginModal").style.display = "block";
-      r_e("main-content").style.display = "none";
+      // User is signed out, show the modal
+      showModal();
+      // Hide the main content
+      hideMainContent();
     }
   });
 }
