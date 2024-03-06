@@ -64,45 +64,31 @@ footer {
 
 .navbar {
   background-color: rgb(22, 22, 22);
-  overflow: hidden;
   border: 8px solid rgb(74, 3, 3); /* Add red border to the navbar */
-}
-
-.navbar .navbar-toggle {
-  display: none;
+  display: flex;
+  justify-content: center; /* Center the items horizontally */
+  align-items: center; /* Center the items vertically */
 }
 
 .navbar .navbar-links {
   list-style-type: none;
-  margin: 0;
-  padding-left: 30%;
-  overflow: hidden;
-  align-items: center;
+  margin: auto;
+  padding: 10px;
+  display: flex;
 }
 
-.navbar .navbar-links li {
-  float: left;
+.navbar .navbar-links:not(.navbar-logo) {
+  margin: 10px 5px; /* Add spacing between menu items */
 }
 
-.navbar-links.active {
-  display: flex; /* Show the menu when burger menu is clicked */
-}
-
-.navbar .navbar-links li a:not(#logo) {
-  display: block;
+.navbar .navbar-links li a:not(.navbar-logo) {
   color: white;
-  align-items: center;
-  padding: 20px;
   text-decoration: none;
+  padding: 20px 15px;
 }
 
-#logo {
-  padding: 15px;
-}
-
-.navbar .navbar-links li a:hover:not(#logo) {
+.navbar .navbar-links li a:hover {
   background-color: red;
-  color: white;
 }
 
 @media screen and (max-width: 600px) {
@@ -115,12 +101,22 @@ footer {
 
   .navbar .navbar-links {
     display: none;
-    float: right;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+    position: absolute;
+    top: 100%; /* Position the dropdown menu below the navbar */
+    left: 0;
+    background-color: rgb(22, 22, 22);
+  }
+
+  .navbar .navbar-links.active {
+    display: flex; /* Show the menu when burger menu is clicked */
   }
 
   .navbar .navbar-links li {
-    float: none;
-    display: block;
+    margin: 0;
+    text-align: center;
   }
 }
 
