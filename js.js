@@ -121,8 +121,15 @@ function configure_message_bar(message) {
 //     .catch((error) => console.error("Error fetching HTML:", error));
 // });
 
+function hideModal() {
+  document.getElementById("loginModal").style.display = "none";
+}
+
 // Function to fetch and load HTML content dynamically
 function loadContent(url) {
+  // Hide the modal
+  hideModal();
+
   // Fetch the HTML content from the specified URL
   fetch(url)
     .then((response) => {
@@ -132,8 +139,18 @@ function loadContent(url) {
       return response.text(); // Get the response text
     })
     .then((html) => {
-      // Set the innerHTML of the main-content div to the fetched HTML content
-      document.getElementById("main-content").innerHTML = html;
+      // Exclude modal content if loading home.html
+      if (url !== "home.html") {
+        // Set the innerHTML of the main-content div to the fetched HTML content
+        document.getElementById("main-content").innerHTML = html;
+      } else {
+        // Extract the main content from the loaded HTML
+        var tempElement = document.createElement("div");
+        tempElement.innerHTML = html;
+        var mainContentHtml =
+          tempElement.querySelector("#main-content").innerHTML;
+        document.getElementById("main-content").innerHTML = mainContentHtml;
+      }
     })
     .catch((error) => console.error("Error fetching HTML:", error));
 }
@@ -143,7 +160,9 @@ document.addEventListener("click", function (event) {
   console.log("Clicked element:", event.target);
 
   // Check if the clicked element is a link with one of the specified IDs
-  if (event.target.matches("#directory, #talent, #myaccount, #points")) {
+  if (
+    event.target.matches("#directory, #talent, #myaccount, #points, #home-logo")
+  ) {
     event.preventDefault(); // Prevent default link behavior
 
     // Get the ID of the clicked element
@@ -166,7 +185,7 @@ document.addEventListener("click", function (event) {
       case "points":
         url = "points.html";
         break;
-      case "logo":
+      case "home-logo":
         url = "home.html";
         break;
     }
@@ -175,25 +194,8 @@ document.addEventListener("click", function (event) {
 
     // Load the content corresponding to the clicked link
     loadContent(url);
-  } else if (event.target.matches("#logo")) {
-    event.preventDefault(); // Prevent default link behavior
-
-    console.log("Clicked logo");
-
-    // Load the home content
-    loadContent("home.html");
-  } else if (!event.target.closest(".modal")) {
-    // If the click is not within the modal or a link, hide the modal
-    console.log("Clicked outside modal or link");
-    // r_e("modal-hidden").style.display = "none";
-    // document.getElementById("modal-hidden").classList.add("modal-hidden");
   }
 });
-
-// Show modal when the page loads
-// window.addEventListener("load", function () {
-//   toggleModal(); // Show modal
-// });
 
 // Firebase Sign Up and Log In
 document

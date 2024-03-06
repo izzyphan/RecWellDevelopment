@@ -65,6 +65,7 @@ footer {
 .navbar {
   background-color: rgb(22, 22, 22);
   overflow: hidden;
+  border: 8px solid rgb(74, 3, 3); /* Add red border to the navbar */
 }
 
 .navbar .navbar-toggle {
@@ -121,6 +122,10 @@ footer {
     float: none;
     display: block;
   }
+}
+
+.new-content {
+  border: 8px solid rgb(74, 3, 3); /* Add red border to the navbar */
 }
 
 #message_bar {
