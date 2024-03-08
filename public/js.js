@@ -105,23 +105,40 @@ document
 
     if (submitButtonValue === "Log In") {
       // Perform login logic here
-      auth.signInWithEmailAndPassword(username, password).then((cred) => {
-        const modal = document.getElementById("loginModal");
-        document.getElementById("loginform").reset();
-        hideModal;
-        showMainContent;
-      });
+      auth
+        .signInWithEmailAndPassword(username, password)
+        .then((cred) => {
+          const modal = document.getElementById("loginModal");
+          document.getElementById("loginform").reset();
+          hideModal;
+          showMainContent;
+        })
+        .catch((error) => {
+          let errorMessage = error.message;
+          document.querySelector(".error_message").innerHTML = errorMessage;
+        });
     } else if (submitButtonValue === "Sign Up") {
       // Perform sign-up logic here
-      auth.createUserWithEmailAndPassword(username, password).then((cred) => {
-        const modal = document.getElementById("loginModal");
-        document.getElementById("loginform").reset();
-        hideModal;
-        showMainContent;
-      });
+      auth
+        .createUserWithEmailAndPassword(username, password)
+        .then((cred) => {
+          const modal = document.getElementById("loginModal");
+          document.getElementById("loginform").reset();
+          hideModal;
+          showMainContent;
+        })
+        .catch((error) => {
+          let errorMessage = error.message;
+          document.querySelector(".error_message").innerHTML = errorMessage;
+        });
     }
   });
 
+// .catch((error) => {
+//   let errorMessage = error.message;
+
+//   r_e("signupmodal").querySelector(".error").innerHTML = errorMessage;
+// });
 // Function to show the main content
 function showMainContent() {
   r_e("main-content").style.display = "block";
