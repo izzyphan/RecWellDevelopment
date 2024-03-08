@@ -112,7 +112,7 @@ function handleLoginFormSubmission(event) {
       })
       .catch((error) => {
         let errorMessage = error.message;
-        document.querySelector(".error_message").innerHTML = errorMessage;
+        document.querySelector(".error_message1").innerHTML = errorMessage;
       });
   }
 }
@@ -134,7 +134,7 @@ function handleSignupFormSubmission(event) {
     })
     .catch((error) => {
       let errorMessage = error.message;
-      document.querySelector(".error_message").innerHTML = errorMessage;
+      document.querySelector(".error_message2").innerHTML = errorMessage;
     });
 }
 
