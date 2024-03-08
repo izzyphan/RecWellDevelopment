@@ -14,7 +14,7 @@
   <body>
     <!-- modals -->
 
-    <!-- log in modal -->
+    <!-- log in/sign up modal -->
     <div class="modal" id="loginModal">
       <div class="modal-logo">
         <a href="#" id="logo"
@@ -24,23 +24,58 @@
             height="100px"
         /></a>
       </div>
-      <h2>Please Sign Up or Log In.</h2>
+      <h2>Please Log In.</h2>
       <form action="#" id="loginform">
         <div class="form-group">
-          <label for="username">Email:</label>
-          <input type="email" id="username" name="username" required />
+          <label for="l_username">Email:</label>
+          <input type="email" id="l_username" name="l_username" required />
         </div>
         <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
+          <label for="l_password">Password:</label>
+          <input type="password" id="l_password" name="l_password" required />
         </div>
         <div class="form-group">
-          <input type="submit" value="Sign Up" id="sign_up_button" />
           <input type="submit" value="Log In" id="log_in_button" />
+
+          <button id="new_user">New User?</button>
         </div>
 
         <!-- error message -->
         <div class="error_message"></div>
+      </form>
+    </div>
+    <!-- sign up -->
+    <div class="modal" id="signupModal">
+      <div class="modal-logo">
+        <a href="#" id="logo"
+          ><img
+            src="https://recwell.wisc.edu/wp-content/uploads/sites/1075/2019/07/cropped-site_symbol-01.png"
+            alt=""
+            height="100px"
+        /></a>
+        <h2>Please Sign Up.</h2>
+      </div>
+      <form action="#" id="signupform">
+        <div class="form-group">
+          <label for="f_name">First Name:</label>
+          <input type="name" id="f_name" name="f_name" required />
+        </div>
+        <div class="form-group">
+          <label for="l_name">Last Name:</label>
+          <input type="name" id="l_name" name="l_name" required />
+        </div>
+        <div class="form-group">
+          <label for="s_username">Email:</label>
+          <input type="email" id="s_username" name="s_username" required />
+        </div>
+        <div class="form-group">
+          <label for="s_password">Password:</label>
+          <input type="password" id="s_password" name="s_password" required />
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Sign Up" id="sign_up_button" />
+          <button id="old_user">Already a User</button>
+        </div>
       </form>
     </div>
     <div id="main-content">

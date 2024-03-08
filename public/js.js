@@ -91,55 +91,61 @@ document.addEventListener("click", function (event) {
   }
 });
 
-// Firebase Sign Up and Log In
+// Function to handle login form submission
+function handleLoginFormSubmission(event) {
+  event.preventDefault();
+  // Get form input values
+  var username = document.getElementById("l_username").value;
+  var password = document.getElementById("l_password").value;
+
+  // Determine which button was clicked
+  var submitButtonValue = event.submitter.value;
+
+  if (submitButtonValue === "Log In") {
+    // Perform login logic here
+    auth
+      .signInWithEmailAndPassword(username, password)
+      .then((cred) => {
+        document.getElementById("loginform").reset();
+        hideModal();
+        showMainContent();
+      })
+      .catch((error) => {
+        let errorMessage = error.message;
+        document.querySelector(".error_message").innerHTML = errorMessage;
+      });
+  }
+}
+
+// Function to handle signup form submission
+function handleSignupFormSubmission(event) {
+  event.preventDefault();
+  // Get form input values
+  var s_username = document.getElementById("s_username").value; // Get sign-up form username
+  var s_password = document.getElementById("s_password").value; // Get sign-up form password
+
+  // Perform sign-up logic here
+  auth
+    .createUserWithEmailAndPassword(s_username, s_password)
+    .then((cred) => {
+      document.getElementById("signupform").reset();
+      hideModal();
+      showMainContent();
+    })
+    .catch((error) => {
+      let errorMessage = error.message;
+      document.querySelector(".error_message").innerHTML = errorMessage;
+    });
+}
+
+// Attach event listeners to login and signup forms
 document
   .getElementById("loginform")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    // Get form input values
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+  .addEventListener("submit", handleLoginFormSubmission);
+document
+  .getElementById("signupform")
+  .addEventListener("submit", handleSignupFormSubmission);
 
-    // Determine which button was clicked
-    var submitButtonValue = event.submitter.value;
-
-    if (submitButtonValue === "Log In") {
-      // Perform login logic here
-      auth
-        .signInWithEmailAndPassword(username, password)
-        .then((cred) => {
-          const modal = document.getElementById("loginModal");
-          document.getElementById("loginform").reset();
-          hideModal;
-          showMainContent;
-        })
-        .catch((error) => {
-          let errorMessage = error.message;
-          document.querySelector(".error_message").innerHTML = errorMessage;
-        });
-    } else if (submitButtonValue === "Sign Up") {
-      // Perform sign-up logic here
-      auth
-        .createUserWithEmailAndPassword(username, password)
-        .then((cred) => {
-          const modal = document.getElementById("loginModal");
-          document.getElementById("loginform").reset();
-          hideModal;
-          showMainContent;
-        })
-        .catch((error) => {
-          let errorMessage = error.message;
-          document.querySelector(".error_message").innerHTML = errorMessage;
-        });
-    }
-  });
-
-// .catch((error) => {
-//   let errorMessage = error.message;
-
-//   r_e("signupmodal").querySelector(".error").innerHTML = errorMessage;
-// });
-// Function to show the main content
 function showMainContent() {
   r_e("main-content").style.display = "block";
 }
@@ -152,11 +158,13 @@ function hideMainContent() {
 // Function to show the modal
 function showModal() {
   r_e("loginModal").style.display = "block";
+  r_e("signupModal").style.display = "none";
 }
 
 // Function to hide the modal
 function hideModal() {
   r_e("loginModal").style.display = "none";
+  r_e("signupModal").style.display = "none";
 }
 
 // Function to check the authentication state on page load
@@ -191,3 +199,22 @@ document.addEventListener("click", function (event) {
 
 // Call the function to check authentication state on page load
 checkAuthState();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const loginModal = document.getElementById("loginModal");
+  const signupModal = document.getElementById("signupModal");
+  const newUserButton = document.getElementById("new_user");
+  const oldUserButton = document.getElementById("old_user");
+
+  // Show signup modal and hide login modal
+  newUserButton.addEventListener("click", function () {
+    loginModal.style.display = "none";
+    signupModal.style.display = "block";
+  });
+
+  // Show login modal and hide signup modal
+  oldUserButton.addEventListener("click", function () {
+    loginModal.style.display = "block";
+    signupModal.style.display = "none";
+  });
+});
