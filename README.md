@@ -45,6 +45,11 @@ Breaking Down User Stories and Burndown Chart:
 | Add images to home page                                               | 2                          | 30 minutes  | 5        | low        | Cristian    |
 
 
+Burn Down Chart Day 4, Day 9, Day 12
+Day 4: ![GitGraph](BurnDownChartDay4.png)
+Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
+
+
 Daily Scrum Meetings:
 You are assumed that you have done at least 15 minutes of daily meetings throughout the
 sprint. Show evidence of 3 “stand-up” Scrum meetings in your README. In your evidence, show
@@ -52,6 +57,7 @@ each team member’s responses to the following questions:
 a. What did you do yesterday?
 b. What are you planning to do today?
 c. Any problems are you facing?
+![GitGraph](StandUpNotes.png)
 
 Sprint Review:
 At the end of the sprint, the team will conduct a sprint review. Show evidence that the team
