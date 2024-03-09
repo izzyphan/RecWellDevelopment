@@ -71,3 +71,4 @@ We think we can make things better, especially our time estimations, by break do
 e. Are you satisfied with what you already completed?
 We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far
 f. Which group was invited? What are your observations/notes? Everybody was present?
+Group 2 was invited. Observations/notes:... Yes, everybody was present for the sprint review. 
