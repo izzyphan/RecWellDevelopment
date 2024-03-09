@@ -1,7 +1,7 @@
 Public Link: https://github.com/izzyphan/RecWellDevelopment <br>
 Trello Board Link: https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development <br>
 
-Project Description:
+Project Description: This project currently holds the main page of our Rec Well Staff Website which is based on professional development and adding a database to hold their employee's information. This README file holds work conducted for the first sprint of the project as we focused on adding GUI of the home page. Below we have user stories, burndown charts, daily scrum meeting notes, and a review of the sprint. 
 
 User Stories:
 **User Story 1:** As RecWell student staff employee, I want access to a user-friendly website where I can easily manage and update my employee information, so that our professional team can better understand who I am and I can foster a cohesive work environment between other student staff members.
