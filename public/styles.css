@@ -97,7 +97,7 @@ footer {
 }
 
 .navbar .navbar-links:not(.navbar-logo) {
-  margin: 10px 5px; /* Add spacing between menu items */
+  margin: 10px; /* Add spacing between menu items */
 }
 
 .navbar .navbar-links li a:not(.navbar-logo) {
