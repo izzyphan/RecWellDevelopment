@@ -154,6 +154,8 @@ footer {
 #message_bar {
   background-color: white;
   color: #555;
+  display: none;
+  text-align: center;
 }
 
 .burger-menu {

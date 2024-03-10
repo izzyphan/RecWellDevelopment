@@ -13,13 +13,13 @@ function toggleNavbar() {
 
 // message bar popup
 function configure_message_bar(message) {
-  r_e("message_bar").classList.remove("is-hidden");
+  r_e("message_bar").style.display = "block";
 
   r_e("message_bar").innerHTML = message;
 
   // hide the message bar
   setTimeout(() => {
-    r_e("message_bar").classList.add("is-hidden");
+    r_e("message_bar").style.display = "none";
     // clear values in bar
     r_e("message_bar").innerHTML = "";
   }, 5000);
@@ -109,6 +109,7 @@ function handleLoginFormSubmission(event) {
         document.getElementById("loginform").reset();
         hideModal();
         showMainContent();
+        configure_message_bar(username + " " + "is now logged in.");
       })
       .catch((error) => {
         let errorMessage = error.message;
@@ -131,6 +132,7 @@ function handleSignupFormSubmission(event) {
       document.getElementById("signupform").reset();
       hideModal();
       showMainContent();
+      configure_message_bar(s_username + " " + "is now logged in.");
     })
     .catch((error) => {
       let errorMessage = error.message;
