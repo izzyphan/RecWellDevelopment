@@ -1,12 +1,14 @@
-Public Link: https://github.com/izzyphan/RecWellDevelopment <br>
-Trello Board Link: https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development <br>
+**Public Link:** https://github.com/izzyphan/RecWellDevelopment <br>
+**Deployed Website URL:** https://rec-well-staff-w.web.app/home.html <br>
+**Trello Board Link:** https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development <br>
 
-Project Description: This project currently holds the main page of our Rec Well Staff Website which is based on professional development and adding a database to hold their employee's information. This README file holds work conducted for the first sprint of the project as we focused on adding GUI of the home page. Below we have user stories, burndown charts, daily scrum meeting notes, and a review of the sprint.
+**Project Description:** This project currently holds the main page of our Rec Well Staff Website which is based on professional development and adding a database to hold their employee's information. This README file holds work conducted for the first sprint of the project as we focused on adding GUI of the home page. Below we have user stories, burndown charts, daily scrum meeting notes, and a review of the sprint.
 
-User Stories:
-**User Story 1:** As RecWell student staff employee, I want access to a user-friendly website where I can easily manage and update my employee information, so that our professional team can better understand who I am and I can foster a cohesive work environment between other student staff members.
+**User Stories:** <br>
+**User Story 1:** <br> 
+As RecWell student staff employee, I want access to a user-friendly website where I can easily manage and update my employee information, so that our professional team can better understand who I am and I can foster a cohesive work environment between other student staff members.
 
-Acceptance Criteria:
+**Acceptance Criteria:**
 
 -As a RecWell staff member, I can log in securely with my own email and password. <br>
 -Upon logging in, I am presented with employee updates, an employee directory, and access to my own information. <br>
@@ -16,9 +18,10 @@ Acceptance Criteria:
 -Under my account information, I am able to view how many penalty points I have and any endorsements I have received from other staff members. <br>
 -The website is mobile-responsive, allowing easy access and functionality across different devices. <br>
 
-**User Story 2:** As a RecWell professional staff member (full-time employee overseeing student staff), I want to access a more professional website featuring and focusing on our student staff members.
+**User Story 2:** <br>
+As a RecWell professional staff member (full-time employee overseeing student staff), I want to access a more professional website featuring and focusing on our student staff members.
 
-Acceptance Criteria:
+**Acceptance Criteria:**
 
 -As the admin, I can log in securely with my unique credentials. <br>
 -When adding a new employee, I can input necessary information such as name, contact details, position, and any relevant certifications or training completed. I also have the ability to update and delete this information. <br>
@@ -29,7 +32,7 @@ Acceptance Criteria:
 -The website is mobile-responsive, allowing easy access and functionality across different devices. <br>
 -For the point and rewards system, I can define various actions or achievements that earn points, such as completing training modules, receiving positive feedback from peers or supervisors, or achieving performance milestones. <br>
 
-Breaking Down User Stories and Burndown Chart:
+**Breaking Down User Stories and Burndown Chart:** <br>
 | Task | Corresponding Story Number | Duration | Priority | Complexity | Lead Person |
 |-----------------------------------------------------------------------|----------------------------|-------------|----------|------------|-------------|
 | Create Navigation Bar | 1 | 30 minutes | 10 | low | Emily |
@@ -43,32 +46,32 @@ Breaking Down User Stories and Burndown Chart:
 | Add content to main section of home page | 3 | 45 minutes | 6 | low | Matt/Cristian |
 | Add images to home page | 2 | 30 minutes | 5 | low | Cristian |
 
-Burn Down Chart Day 4, Day 9, Day 12
-Day 4: ![GitGraph](BurnDownChartDay4.png)
+**Burn Down Chart Day 4, Day 9, Day 12** <br>
+Day 4: ![GitGraph](BurnDownChartDay4.png) 
+<br>
 Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
+<br>
+Day 12: ![GitGraph](BurnDownChartDay12.png)
 
-Daily Scrum Meetings:
-You are assumed that you have done at least 15 minutes of daily meetings throughout the
-sprint. Show evidence of 3 “stand-up” Scrum meetings in your README. In your evidence, show
-each team member’s responses to the following questions:
-a. What did you do yesterday?
-b. What are you planning to do today?
-c. Any problems are you facing?
+**Evidence of 3 Daily Scrum Meetings:**
 ![GitGraph](StandUpNotes.png)
 
-Sprint Review:
-At the end of the sprint, the team will conduct a sprint review. Show evidence that the team
-completed a thorough sprint review. As part of that evidence, each team needs to invite
-another team for the review. In your README, answer the following questions:
-a. What did you learn from doing our first sprint?
-We found that it was important to communicate what tasks were being currently worked on, completed, and still needed to be finished. This was important becuase it reduced the number of potential merge errors that we anticipated getting later in the project. We also found it was important for people to work on the parts of the website and development that matched their skills the best.
-b. What did go well? Why?
+**Sprint Review:**
+
+**a. What did you learn from doing our first sprint?** <br>
+We found that it was important to communicate what tasks were being currently worked on, completed, and still needed to be finished. This was important becuase it reduced the number of potential merge errors that we anticipated getting later in the project. We also found it was important for people to work on the parts of the website and development that matched their skills the best. 
+<br>
+**b. What did go well? Why?** <br>
 One thing we believed we well was our communication. We were contantly conmmunicating to ensure that we were meeting deadlines, staying on track for budgeted time, and keeping the project in scope. We did this best through a groupchat that we had created where we can send questions and pictures and get quick responses instead of having to wait for in person conversations.
-c. What didn’t go well? Why not?
+<br>
+**c. What didn’t go well? Why not?** <br>
 One area we think we could improve on is time estimation. We had created time estimations for each of our major sprint goals and most of the time they were inaccurate. One of the reasons we think this happened was becasue we had over estimated our skills and knowledge retention from previous courses.
-d. How can you make things better next time?
+<br>
+**d. How can you make things better next time?** <br>
 We think we can make things better, especially our time estimations, by break down each part and goal of our project into smaller pieces. This will be valuable as it will allow us to have a better understanding of how much time we still need to spend to hit our sprint goals. It will also allow more people to simultaneously work on one part of the project if it is broken up into smaller chunks.
-e. Are you satisfied with what you already completed?
-We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far
-f. Which group was invited? What are your observations/notes? Everybody was present?
+<br>
+**e. Are you satisfied with what you already completed?** <br>
+We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far.
+<br>
+**f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
 Group 2 was invited to our sprint review. Some feedback we received following the sprint review was that during our sprint review, we effectively communicated evidence of the daily scrum and we were confident in our effort and unified in deciding what went well and what needs improving. We believe we are now well prepared for the next stage of the projet and will see further improvement in our future sprints. Yes, everybody was present for the sprint review.
