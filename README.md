@@ -77,3 +77,21 @@ We are happy with the visual design of our website. There are still a few small 
 <br>
 **f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
 Group 2 was invited to our sprint review. Some feedback we received following the sprint review was that during our sprint review, we effectively communicated evidence of the daily scrum and we were confident in our effort and unified in deciding what went well and what needs improving. We believe we are now well prepared for the next stage of the projet and will see further improvement in our future sprints. Yes, everybody was present for the sprint review.
+
+Prototype:
+After our meeting with the staff member's of Rec Well here was out initial Protype for both the Login/Sign-Up Screen and the Main Page. We were able to include the items that they needed:
+
+![InitialPrototype:Login](InitialPrototypeLogin.png)
+
+![InitialPrototype:Main](InitialPrototypeMain.png)
+
+We met with them and discussed what they were looking for:
+- Wanted darker color scheme
+- More simple
+- Scrolling and all links showing on one page
+
+Afterwards we met as a team and sketched out a new design for the main page and the login one. We took the news ideas out and it was close to what they envisioned. They also encouraged us to do what we think best and would best fit the site and their needs. Here is the new Prototype designs:
+
+![Final Prototype:Login](DecidedLoginPage.png)
+
+![Final Prototype:Main](DecidedMainPage.png)
