@@ -49,9 +49,11 @@ As a RecWell professional staff member (full-time employee overseeing student st
 **Burn Down Chart Day 4, Day 9, Day 12** <br>
 Day 4: ![GitGraph](BurnDownChartDay4.png) 
 <br>
+This burn down chart does not accurately show the amount of work completed because our group did not know the graph depended on manual data entrance. We realized how to use this chart correctly after this screenshot was taken. The graph still showed us an accurate ideal burndown. We talked to the professor about this.
 Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
 <br>
-Day 12: ![GitGraph](BurnDownChartDay12.png)
+Day 12: ![GitGraph](BurnDownChartDay12.png) <br>
+Our group could not figure out how to change the current day's total work completed because the burndown website only allowed us to edit past day's total work completed. I believe this error in our graph arised from closing tasks on day 12 even though work had been completed for these tasks on other days. We estimated we worked for 2.5 hours on day 12 and that is shown with the drawn in red dot and line to thr graph.
 
 **Evidence of 3 Daily Scrum Meetings:**
 ![GitGraph](StandUpNotes.png)
