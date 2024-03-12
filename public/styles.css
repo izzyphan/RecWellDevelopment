@@ -111,6 +111,10 @@ footer {
   background-color: red;
 }
 
+.navbar-logo img:hover {
+  transform: scale(1.2); /* You can adjust the scale factor as needed */
+}
+
 @media screen and (max-width: 600px) {
   .navbar .navbar-toggle {
     display: block;
