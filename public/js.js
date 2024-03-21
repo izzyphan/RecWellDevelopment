@@ -124,7 +124,8 @@ function handleSignupFormSubmission(event) {
   // Get form input values
   var s_username = document.getElementById("s_username").value; // Get sign-up form username
   var s_password = document.getElementById("s_password").value; // Get sign-up form password
-
+  var firstName = document.getElementById("f_name").value; // Get sign-up form password
+  var lastName = document.getElementById("l_name").value; // Get sign-up form password
   // Perform sign-up logic here
   auth
     .createUserWithEmailAndPassword(s_username, s_password)
@@ -133,6 +134,18 @@ function handleSignupFormSubmission(event) {
       hideModal();
       showMainContent();
       configure_message_bar(s_username + " " + "is now logged in.");
+
+      // Get the authenticated user
+      var user = cred.user;
+
+      // Store user information in Firestore
+      db.collection("employees").doc(user.uid).set({
+        firstName: firstName,
+        email: s_username,
+        lastName: lastName,
+
+        // Add more employee details as needed
+      });
     })
     .catch((error) => {
       let errorMessage = error.message;
