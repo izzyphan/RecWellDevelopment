@@ -252,16 +252,17 @@ function loadUserData(userId) {
       if (doc.exists) {
         var userData = doc.data();
         var firstName = userData.firstName;
-        console.log(firstName);
+        var lastName = userData.lastName;
 
-        // Check if the element with ID "name_header" exists
-        var nameHeader = document.getElementById("test");
-        if (nameHeader) {
-          // Update the inner HTML of the element
-          nameHeader.innerHTML = firstName;
-        } else {
-          console.log("Element with ID 'test' not found.");
-        }
+        // Make variables for each form input
+        var nameHeader = document.getElementById("NameHeader");
+        var account_fname = document.getElementById("account_fname");
+        var account_lname = document.getElementById("account_lname");
+
+        // change value of form
+        nameHeader.innerHTML = firstName;
+        account_fname.value = firstName;
+        account_lname.value = lastName;
 
         // Update the content in the <span> element with ID "test"
         document.getElementById("test").textContent = firstName;
@@ -274,5 +275,16 @@ function loadUserData(userId) {
     });
 }
 
-// Call the function to load user data when the page loads
-// window.addEventListener("load", loadUserData);
+// Make sure My Account is loaded before loading information
+document.addEventListener("DOMContentLoaded", function () {
+  var myAccountLink = document.getElementById("myaccount");
+
+  if (myAccountLink) {
+    myAccountLink.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default link behavior
+
+      // Call the checkAuthState function to ensure the user is authenticated
+      checkAuthState();
+    });
+  }
+});

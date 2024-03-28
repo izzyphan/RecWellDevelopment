@@ -325,6 +325,10 @@ p {
   text-align: left;
 }
 
+#account_container td {
+  color: black;
+}
+
 #account_container input[type="text"],
 #account_container input[type="tel"],
 #account_container input[type="email"],
