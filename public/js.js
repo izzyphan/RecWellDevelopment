@@ -183,6 +183,15 @@ function hideModal() {
   r_e("signupModal").style.display = "none";
 }
 
+// Make sure My Account is loaded before loading information
+let myAccountLink = document.getElementById("myaccount");
+myAccountLink.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent the default link behavior
+
+  // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
+  checkAuthStateAndLoadUserData();
+});
+
 // Function to check the authentication state on page load
 function checkAuthState() {
   firebase.auth().onAuthStateChanged(function (user) {
@@ -195,9 +204,6 @@ function checkAuthState() {
       var userId = user.uid;
 
       console.log("User ID:", userId);
-
-      // Load user data based on the user ID
-      loadUserData(userId);
     } else {
       // User is signed out, show the modal
       showModal();
@@ -254,20 +260,19 @@ function loadUserData(userId) {
         var firstName = userData.firstName;
         var lastName = userData.lastName;
 
-        // Make variables for each form input
+        // Check if the elements exist before accessing them
         var nameHeader = document.getElementById("NameHeader");
         var account_fname = document.getElementById("account_fname");
         var account_lname = document.getElementById("account_lname");
 
-        // change value of form
-        nameHeader.innerHTML = firstName;
-        account_fname.value = firstName;
-        account_lname.value = lastName;
-
-        // Update the content in the <span> element with ID "test"
-        document.getElementById("test").textContent = firstName;
-      } else {
-        console.log("No such document!");
+        if (nameHeader && account_fname && account_lname) {
+          // Change value of elements
+          nameHeader.innerHTML = firstName;
+          account_fname.value = firstName;
+          account_lname.value = lastName;
+        } else {
+          console.log("One or more elements not found.");
+        }
       }
     })
     .catch(function (error) {
@@ -275,16 +280,20 @@ function loadUserData(userId) {
     });
 }
 
-// Make sure My Account is loaded before loading information
-document.addEventListener("DOMContentLoaded", function () {
-  var myAccountLink = document.getElementById("myaccount");
+// Function to check the authentication state and load user data
+function checkAuthStateAndLoadUserData() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in
+      var userId = user.uid;
 
-  if (myAccountLink) {
-    myAccountLink.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default link behavior
+      console.log("User ID:", userId);
 
-      // Call the checkAuthState function to ensure the user is authenticated
-      checkAuthState();
-    });
-  }
-});
+      // Load user data based on the user ID
+      loadUserData(userId);
+    } else {
+      // User is signed out, handle accordingly (e.g., show login modal)
+      console.log("User is not authenticated.");
+    }
+  });
+}
