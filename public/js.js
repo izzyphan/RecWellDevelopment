@@ -245,21 +245,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to load user data into the table
 function loadUserData(userId) {
-  var userRef = db.collection("employees").doc(userId); // Replace 'currentUserUid' with the actual user's UID
+  var userRef = db.collection("employees").doc(userId);
   userRef
     .get()
     .then(function (doc) {
       if (doc.exists) {
         var userData = doc.data();
-        console.log(userData.firstName);
-        // document.getElementById("account_name").value =
-        //   userData.firstName || "";
-        // document.getElementById("position").value = userData.position || "";
-        // document.getElementById("department").value = userData.department || "";
-        // document.getElementById("phoneNumber").value =
-        //   userData.phoneNumber || "";
-        // document.getElementById("email").value = userData.email || "";
-        // document.getElementById("biography").value = userData.biography || "";
+        var firstName = userData.firstName;
+        console.log(firstName);
+
+        // Check if the element with ID "name_header" exists
+        var nameHeader = document.getElementById("test");
+        if (nameHeader) {
+          // Update the inner HTML of the element
+          nameHeader.innerHTML = firstName;
+        } else {
+          console.log("Element with ID 'test' not found.");
+        }
+
+        // Update the content in the <span> element with ID "test"
+        document.getElementById("test").textContent = firstName;
       } else {
         console.log("No such document!");
       }
@@ -270,4 +275,4 @@ function loadUserData(userId) {
 }
 
 // Call the function to load user data when the page loads
-window.addEventListener("load", loadUserData);
+// window.addEventListener("load", loadUserData);
