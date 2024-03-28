@@ -33,5 +33,81 @@
     <header>
       <h1>****insert name's**** Points</h1>
     </header>
+    <!-- Admin Only - Penalty Point System -->
+    <div id="point_container" class="container">
+      <h2>Employee Penalty Point System</h2>
+      <table id="pointTable">
+        <tr>
+          <th>Name</th>
+          <td>
+            <select name="Name" id="employee_name1">
+              <option value="">name1</option>
+              <option value="">name2</option>
+              <!-- use JS to make this list from the database -->
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <td><input type="date" id="date1" /></td>
+        </tr>
+        <tr>
+          <th>Reason</th>
+          <td>
+            <select name="Reason" id="penalty_name">
+              <option value="">Missed Shift</option>
+              <option value="">Dress Code</option>
+              <!-- add more values here -->
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Further Information</th>
+          <td><input type="text" id="moreinfo" /></td>
+        </tr>
+      </table>
+      <button id="penaltyButton">Submit</button>
+    </div>
+    <br />
+    <br />
+
+    <!-- Rewards Points -->
+    <div id="point_container" class="container">
+      <h2>Employee Rewards System</h2>
+      <table id="pointTable">
+        <tr>
+          <th>Name</th>
+          <td>
+            <select name="Name" id="employee_name2">
+              <option value="">name1</option>
+              <option value="">name2</option>
+              <!-- use JS to make this list from the database -->
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <td><input type="date" id="date2" /></td>
+        </tr>
+        <tr>
+          <th>Reason</th>
+          <td>
+            <select name="Reason" id="reward_name">
+              <option value="">Great Teamwork</option>
+              <option value="">Other</option>
+              <!-- add more values here -->
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Further Information</th>
+          <td><input type="text" id="rewardinfo" /></td>
+        </tr>
+      </table>
+      <button id="rewardButton">Submit</button>
+    </div>
+
+    <!-- Point Output -->
+    <h3>Display Employee Name and number of points/rewards here</h3>
   </body>
 </html>

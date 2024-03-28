@@ -392,3 +392,63 @@ p {
   color: #666;
   font-size: 16px;
 }
+
+/* Points CSS  */
+#point_container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #1c1c1c;
+  box-shadow: 0px 0px 5px rgba(245, 243, 243, 0.5);
+  border-radius: 5px;
+}
+
+#point_container h1,
+#point_container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#point_container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#point_container th,
+#point_container td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+#point_container th {
+  font-weight: bold;
+  text-align: left;
+}
+
+#point_container input[type="text"],
+#point_container input[type="tel"],
+#point_container input[type="email"],
+#point_container textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#point_container button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#point_container button:hover {
+  background-color: #45a049;
+}
