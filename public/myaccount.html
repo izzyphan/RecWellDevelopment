@@ -31,8 +31,35 @@
       </ul>
     </nav>
 
-    <header>
-      <h1>Welcome to ***insert name's**** Account</h1>
-    </header>
+    <div id="account_container" class="container">
+      <h1>My Account</h1>
+      <table id="accountTable">
+        <tr>
+          <th>Name</th>
+          <td><input type="text" id="name" /></td>
+        </tr>
+        <tr>
+          <th>Position</th>
+          <td><input type="text" id="position" /></td>
+        </tr>
+        <tr>
+          <th>Department</th>
+          <td><input type="text" id="department" /></td>
+        </tr>
+        <tr>
+          <th>Phone Number</th>
+          <td><input type="tel" id="phoneNumber" /></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><input type="email" id="email" /></td>
+        </tr>
+        <tr>
+          <th>Biography</th>
+          <td><textarea id="biography" rows="4"></textarea></td>
+        </tr>
+      </table>
+      <button onclick="saveAccount()">Save</button>
+    </div>
   </body>
 </html>

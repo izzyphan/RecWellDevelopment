@@ -291,3 +291,62 @@ p {
 .update-card a:hover {
   text-decoration: underline;
 }
+
+/* My Account CSS  */
+#account_container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #1c1c1c;
+  box-shadow: 0px 0px 5px rgba(245, 243, 243, 0.5);
+  border-radius: 5px;
+}
+
+#account_container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#account_container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#account_container th,
+#account_container td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+#account_container th {
+  font-weight: bold;
+  text-align: left;
+}
+
+#account_container input[type="text"],
+#account_container input[type="tel"],
+#account_container input[type="email"],
+#account_container textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#account_container button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#account_container button:hover {
+  background-color: #45a049;
+}
