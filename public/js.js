@@ -183,15 +183,6 @@ function hideModal() {
   r_e("signupModal").style.display = "none";
 }
 
-// Make sure My Account is loaded before loading information
-let myAccountLink = document.getElementById("myaccount");
-myAccountLink.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent the default link behavior
-
-  // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
-  checkAuthStateAndLoadUserData();
-});
-
 // Function to check the authentication state on page load
 function checkAuthState() {
   firebase.auth().onAuthStateChanged(function (user) {
@@ -202,8 +193,6 @@ function checkAuthState() {
 
       // Get the authenticated user's ID
       var userId = user.uid;
-
-      console.log("User ID:", userId);
     } else {
       // User is signed out, show the modal
       showModal();
@@ -287,8 +276,6 @@ function checkAuthStateAndLoadUserData() {
       // User is signed in
       var userId = user.uid;
 
-      console.log("User ID:", userId);
-
       // Load user data based on the user ID
       loadUserData(userId);
     } else {
@@ -297,3 +284,12 @@ function checkAuthStateAndLoadUserData() {
     }
   });
 }
+
+// Make sure My Account is loaded before loading information
+let myAccountLink = document.getElementById("myaccount");
+myAccountLink.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent the default link behavior
+
+  // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
+  checkAuthStateAndLoadUserData();
+});
