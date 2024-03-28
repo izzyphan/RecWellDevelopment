@@ -13,15 +13,15 @@ function toggleNavbar() {
 
 // message bar popup
 function configure_message_bar(message) {
-  r_e("message_bar").style.display = "block";
+  var messageBar = r_e("message_bar");
 
-  r_e("message_bar").innerHTML = message;
+  // Display the message and set its content
+  messageBar.style.display = "block";
+  messageBar.innerHTML = message;
 
-  // hide the message bar
+  // Hide the message bar after 5 seconds
   setTimeout(() => {
-    r_e("message_bar").style.display = "none";
-    // clear values in bar
-    r_e("message_bar").innerHTML = "";
+    messageBar.innerHTML = ""; // Clear the message content
   }, 5000);
 }
 
@@ -110,6 +110,7 @@ function handleLoginFormSubmission(event) {
         hideModal();
         showMainContent();
         configure_message_bar(username + " " + "is now logged in.");
+        console.log(cred.user.uid);
       })
       .catch((error) => {
         let errorMessage = error.message;
@@ -189,6 +190,14 @@ function checkAuthState() {
       // User is signed in
       showMainContent();
       hideModal();
+
+      // Get the authenticated user's ID
+      var userId = user.uid;
+
+      console.log("User ID:", userId);
+
+      // Load user data based on the user ID
+      loadUserData(userId);
     } else {
       // User is signed out, show the modal
       showModal();
@@ -233,3 +242,32 @@ document.addEventListener("DOMContentLoaded", function () {
     signupModal.style.display = "none";
   });
 });
+
+// Function to load user data into the table
+function loadUserData(userId) {
+  var userRef = db.collection("employees").doc(userId); // Replace 'currentUserUid' with the actual user's UID
+  userRef
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        var userData = doc.data();
+        console.log(userData.firstName);
+        // document.getElementById("account_name").value =
+        //   userData.firstName || "";
+        // document.getElementById("position").value = userData.position || "";
+        // document.getElementById("department").value = userData.department || "";
+        // document.getElementById("phoneNumber").value =
+        //   userData.phoneNumber || "";
+        // document.getElementById("email").value = userData.email || "";
+        // document.getElementById("biography").value = userData.biography || "";
+      } else {
+        console.log("No such document!");
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+}
+
+// Call the function to load user data when the page loads
+window.addEventListener("load", loadUserData);
