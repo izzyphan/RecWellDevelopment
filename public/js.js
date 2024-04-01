@@ -293,3 +293,22 @@ myAccountLink.addEventListener("click", function (event) {
   // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
   checkAuthStateAndLoadUserData();
 });
+
+// Upload Blog Post
+const uploadForm = document.getElementById("uploadForm");
+const pdfFileInput = document.getElementById("pdfFile");
+const pdfViewer = document.getElementById("pdfViewer");
+
+uploadForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const file = pdfFileInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const pdfContent = event.target.result;
+      pdfViewer.innerHTML = `<embed src="${pdfContent}" type="application/pdf" width="100%" height="100%">`;
+    };
+    reader.readAsDataURL(file);
+  }
+});
