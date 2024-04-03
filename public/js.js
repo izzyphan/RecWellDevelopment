@@ -319,8 +319,10 @@ function checkPasswordMatch() {
   var confirmPassword = document.getElementById("c_s_password").value;
 
   if (password == confirmPassword) {
-    document.getElementById("").innerHTML = "Passwords match!";
+    document.getElementById("passwordMatchMessage").innerHTML =
+      "Passwords match!";
   } else {
-    document.getElementById("").innerHTML = "Passwords do not match";
+    document.getElementById("passwordMatchMessage").innerHTML =
+      "Passwords do not match";
   }
 }
