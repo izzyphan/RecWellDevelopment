@@ -312,3 +312,15 @@ uploadForm.addEventListener("submit", (e) => {
     reader.readAsDataURL(file);
   }
 });
+
+//Confirm Matching Passwords
+function checkPasswordMatch() {
+  var password = document.getElementById("s_password").value;
+  var confirmPassword = document.getElementById("c_s_password").value;
+
+  if (password == confirmPassword) {
+    document.getElementById("").innerHTML = "Passwords match!";
+  } else {
+    document.getElementById("").innerHTML = "Passwords do not match";
+  }
+}
