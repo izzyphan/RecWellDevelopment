@@ -489,3 +489,8 @@ p {
 .blogContainer input[type="submit"]:hover {
   background-color: grey;
 }
+
+.passwordMatch {
+  margin-top: -10px;
+  text-align: center;
+}
