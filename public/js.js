@@ -320,9 +320,9 @@ function checkPasswordMatch() {
 
   if (password == confirmPassword) {
     document.getElementById("passwordMatchMessage").innerHTML =
-      "Passwords Match";
+      "Passwords match";
   } else {
     document.getElementById("passwordMatchMessage").innerHTML =
-      "Passwords do not Match";
+      "Passwords don't match";
   }
 }
