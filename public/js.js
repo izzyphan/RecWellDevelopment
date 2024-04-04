@@ -85,11 +85,14 @@ document.addEventListener("click", function (event) {
         url = "home.html";
         break;
     }
-
+    // Save the current URL to localStorage
+    saveStateToStorage({ url });
     // Load the content corresponding to the clicked link
     loadContent(url);
   }
 });
+// Call loadLastVisitedUrl when the page loads or is refreshed
+window.addEventListener("load", loadLastVisitedUrl);
 
 // Function to handle login form submission
 function handleLoginFormSubmission(event) {
@@ -169,6 +172,28 @@ function handleSignupFormSubmission(event) {
       document.querySelector(".error_message2").innerHTML =
         "Incorrect Email or Password";
     });
+}
+
+// // Function to save state information in localStorage
+function saveStateToStorage(stateData) {
+  localStorage.setItem("currentState", JSON.stringify(stateData));
+}
+
+// Function to load state information from localStorage
+function loadStateFromStorage() {
+  const storedState = localStorage.getItem("currentState");
+  return storedState ? JSON.parse(storedState) : null;
+}
+
+// Function to load the last visited URL from localStorage
+function loadLastVisitedUrl() {
+  const stateData = loadStateFromStorage();
+  if (stateData && stateData.url) {
+    loadContent(stateData.url);
+  } else {
+    // Default action (e.g., load home page)
+    loadContent("home.html");
+  }
 }
 
 // Attach event listeners to login and signup forms
@@ -301,34 +326,35 @@ function checkAuthStateAndLoadUserData() {
     }
   });
 }
+checkAuthStateAndLoadUserData();
 
 // Make sure My Account is loaded before loading information
-let myAccountLink = document.getElementById("myaccount");
-myAccountLink.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent the default link behavior
+// let myAccountLink = document.getElementById("myaccount");
+// myAccountLink.addEventListener("click", function (event) {
+//   event.preventDefault(); // Prevent the default link behavior
 
-  // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
-  checkAuthStateAndLoadUserData();
-});
+//   // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
+//   checkAuthStateAndLoadUserData();
+// });
 
 // Upload Blog Post
-const uploadForm = document.getElementById("uploadForm");
-const pdfFileInput = document.getElementById("pdfFile");
-const pdfViewer = document.getElementById("pdfViewer");
+// const uploadForm = document.getElementById("uploadForm");
+// const pdfFileInput = document.getElementById("pdfFile");
+// const pdfViewer = document.getElementById("pdfViewer");
 
-uploadForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+// uploadForm.addEventListener("submit", (e) => {
+//   e.preventDefault();
 
-  const file = pdfFileInput.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const pdfContent = event.target.result;
-      pdfViewer.innerHTML = `<embed src="${pdfContent}" type="application/pdf" width="100%" height="100%">`;
-    };
-    reader.readAsDataURL(file);
-  }
-});
+//   const file = pdfFileInput.files[0];
+//   if (file) {
+//     const reader = new FileReader();
+//     reader.onload = (event) => {
+//       const pdfContent = event.target.result;
+//       pdfViewer.innerHTML = `<embed src="${pdfContent}" type="application/pdf" width="100%" height="100%">`;
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// });
 
 //Confirm Matching Passwords
 function checkPasswordMatch() {
