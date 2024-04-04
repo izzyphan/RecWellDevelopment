@@ -10,9 +10,9 @@ ________________________________________________________________________________
 **User Stories:** <br>
 
 **User Story 1:** <br> 
-As an admin, I want to utilize an employee directory for our student staff which holds their personal information such as phone numbers, email, and a biography so I can better understand who they are and how I can contact them if need.
-**User Story 2:** <br> As a professional staff employee, I need to have different privledges on this website that allow me to add points and add blog posts. These are privleges that student staff will not have.
-**User Story 3:** <br> As an admin, I want to be able to upload blog posts at least every month. These blog posts are created as a pdf. I want to be able to easily upload a pdf to this website. 
+As an admin, I want to utilize an employee directory for our student staff which holds their personal information such as phone numbers, email, and a biography so I can better understand who they are and how I can contact them if need.<br> 
+**User Story 2:** <br> As a professional staff employee, I need to have different privledges on this website that allow me to add points and add blog posts. These are privleges that student staff will not have.<br> 
+**User Story 3:** <br> As an admin, I want to be able to upload blog posts at least every month. These blog posts are created as a pdf. I want to be able to easily upload a pdf to this website. <br> 
 
 **Breaking Down User Stories and Burndown Chart:** <br>
 
