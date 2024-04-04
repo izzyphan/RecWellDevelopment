@@ -102,19 +102,35 @@ function handleLoginFormSubmission(event) {
   var submitButtonValue = event.submitter.value;
 
   if (submitButtonValue === "Log In") {
-    // Perform login logic here
-    auth
-      .signInWithEmailAndPassword(username, password)
-      .then((cred) => {
-        document.getElementById("loginform").reset();
-        hideModal();
-        showMainContent();
-        configure_message_bar(username + " " + "is now logged in.");
-        console.log(cred.user.uid);
+    // Check if the username exists in Firestore
+    db.collection("employees")
+      .where("email", "==", username)
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot.empty) {
+          // Username doesn't exist, show "create account" message
+          document.querySelector(".error_message1").innerHTML =
+            "Create An Account!";
+        } else {
+          // Username exists, try to sign in with Firebase Authentication
+          auth
+            .signInWithEmailAndPassword(username, password)
+            .then((cred) => {
+              document.getElementById("loginform").reset();
+              hideModal();
+              showMainContent();
+              configure_message_bar(username + " " + "is now logged in.");
+              console.log(cred.user.uid);
+            })
+            .catch((error) => {
+              let errorMessage = error.message;
+              document.querySelector(".error_message1").innerHTML =
+                "Incorrect Password";
+            });
+        }
       })
       .catch((error) => {
-        let errorMessage = error.message;
-        document.querySelector(".error_message1").innerHTML = errorMessage;
+        console.error("Error checking username in Firestore:", error);
       });
   }
 }
