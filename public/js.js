@@ -114,7 +114,8 @@ function handleLoginFormSubmission(event) {
       })
       .catch((error) => {
         let errorMessage = error.message;
-        document.querySelector(".error_message1").innerHTML = errorMessage;
+        document.querySelector(".error_message1").innerHTML =
+          "Incorrect Email or Password";
       });
   }
 }
@@ -150,7 +151,8 @@ function handleSignupFormSubmission(event) {
     })
     .catch((error) => {
       let errorMessage = error.message;
-      document.querySelector(".error_message2").innerHTML = errorMessage;
+      document.querySelector(".error_message2").innerHTML =
+        "Incorrect Email or Password";
     });
 }
 
