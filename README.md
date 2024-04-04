@@ -3,7 +3,48 @@
 **Trello Board Link:** https://trello.com/invite/b/hF1aqcsp/ATTI1636d6626261721e7069d30e7d136cba7B7F52D6/recwell-employee-professional-development <br>
 
 **Project Description:** This project currently holds the main page of our Rec Well Staff Website which is based on professional development and adding a database to hold their employee's information. This README file holds work conducted for the first sprint of the project as we focused on adding GUI of the home page. Below we have user stories, burndown charts, daily scrum meeting notes, and a review of the sprint.
+___________________________________________________________________________________________________________________________________________________________________
+**MILESTONE 2**
+<br>
+<br>
+**User Stories:** <br>
+**User Story 1:** <br> 
+**User Story 2:** <br> 
 
+**Breaking Down User Stories and Burndown Chart:** <br>
+
+**Burn Down Chart Day 4, Day 9, Day 12** <br>
+Day 4: ![GitGraph](BurnDownChartDay4.png) 
+<br>
+Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
+<br>
+Day 12: ![GitGraph](BurnDownChartDay12.png) <br>
+
+**Evidence of 3 Daily Scrum Meetings:**
+
+**Sprint Review:**
+
+**a. What did you learn from doing our first sprint?** <br>
+
+<br>
+**b. What did go well? Why?** <br>
+
+<br>
+**c. What didn’t go well? Why not?** <br>
+
+<br>
+**d. How can you make things better next time?** <br>
+
+<br>
+**e. Are you satisfied with what you already completed?** <br>
+
+<br>
+**f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
+
+**Evidence Completed** <br>
+
+___________________________________________________________________________________________________________________________________________________________________
+**MILESTONE 1**
 **User Stories:** <br>
 **User Story 1:** <br> 
 As RecWell student staff employee, I want access to a user-friendly website where I can easily manage and update my employee information, so that our professional team can better understand who I am and I can foster a cohesive work environment between other student staff members.
