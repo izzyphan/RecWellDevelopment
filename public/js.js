@@ -122,6 +122,7 @@ function handleLoginFormSubmission(event) {
               document.getElementById("loginform").reset();
               hideModal();
               showMainContent();
+
               configure_message_bar(username + " " + "is now logged in.");
               console.log(cred.user.uid);
             })
@@ -130,6 +131,8 @@ function handleLoginFormSubmission(event) {
               document.querySelector(".error_message1").innerHTML =
                 "Incorrect Password";
             });
+          // Redirect user to home page after successful login
+          loadContent("home.html");
         }
       })
       .catch((error) => {
