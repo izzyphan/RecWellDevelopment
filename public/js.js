@@ -77,7 +77,23 @@ document.addEventListener("click", function (event) {
         break;
       case "myaccount":
         url = "myaccount.html";
-        break;
+        // Load user data when "My Account" link is clicked
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userId = user.uid;
+            loadUserData(userId); // Load user data into the form
+
+            // Set the URL after loading user data (e.g., redirect to myaccount.html)
+            url = "myaccount.html";
+            // Save the current URL to localStorage
+            saveStateToStorage({ url });
+            // Load the content corresponding to the clicked link
+            loadContent(url);
+          } else {
+            console.log("User is not authenticated.");
+          }
+        });
+        return; // Exit the function without loading a URL
       case "points":
         url = "points.html";
         break;
@@ -329,16 +345,28 @@ function checkAuthStateAndLoadUserData() {
     }
   });
 }
+// Call checkAuthStateAndLoadUserData on page load
+window.addEventListener("load", checkAuthStateAndLoadUserData);
+
+// Event listener for clicks on "My Account" link
+document
+  .getElementById("myaccount")
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    // Call loadUserData function to load user data into the form
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var userId = user.uid;
+        loadUserData(userId);
+      } else {
+        console.log("User is not authenticated.");
+      }
+    });
+  });
+
+// Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
 checkAuthStateAndLoadUserData();
-
-// Make sure My Account is loaded before loading information
-// let myAccountLink = document.getElementById("myaccount");
-// myAccountLink.addEventListener("click", function (event) {
-//   event.preventDefault(); // Prevent the default link behavior
-
-//   // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
-//   checkAuthStateAndLoadUserData();
-// });
 
 // Upload Blog Post
 // const uploadForm = document.getElementById("uploadForm");
