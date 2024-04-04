@@ -138,17 +138,20 @@ function handleLoginFormSubmission(event) {
               document.getElementById("loginform").reset();
               hideModal();
               showMainContent();
-
               configure_message_bar(username + " " + "is now logged in.");
               console.log(cred.user.uid);
+
+              // Redirect user to home page after successful login
+              loadContent("home.html");
             })
             .catch((error) => {
               let errorMessage = error.message;
               document.querySelector(".error_message1").innerHTML =
                 "Incorrect Password";
+
+              // Keep the modal visible on incorrect password
+              showModal();
             });
-          // Redirect user to home page after successful login
-          loadContent("home.html");
         }
       })
       .catch((error) => {
@@ -157,39 +160,50 @@ function handleLoginFormSubmission(event) {
   }
 }
 
-// Function to handle signup form submission
+/// Function to handle signup form submission
 function handleSignupFormSubmission(event) {
   event.preventDefault();
   // Get form input values
-  var s_username = document.getElementById("s_username").value; // Get sign-up form username
-  var s_password = document.getElementById("s_password").value; // Get sign-up form password
-  var firstName = document.getElementById("f_name").value; // Get sign-up form password
-  var lastName = document.getElementById("l_name").value; // Get sign-up form password
+  var s_username = document.getElementById("s_username").value;
+  var s_password = document.getElementById("s_password").value;
+  var firstName = document.getElementById("f_name").value;
+  var lastName = document.getElementById("l_name").value;
+
   // Perform sign-up logic here
   auth
     .createUserWithEmailAndPassword(s_username, s_password)
     .then((cred) => {
-      document.getElementById("signupform").reset();
-      hideModal();
-      showMainContent();
-      configure_message_bar(s_username + " " + "is now logged in.");
-
       // Get the authenticated user
       var user = cred.user;
 
       // Store user information in Firestore
-      db.collection("employees").doc(user.uid).set({
+      return db.collection("employees").doc(user.uid).set({
         firstName: firstName,
         email: s_username,
         lastName: lastName,
-
         // Add more employee details as needed
       });
     })
+    .then(() => {
+      // Reset the signup form
+      document.getElementById("signupform").reset();
+      // Show main content
+      showMainContent();
+      // Configure and display success message
+      configure_message_bar(s_username + " " + "is now logged in.");
+      // Redirect user to home page after successful signup
+      loadContent("home.html");
+    })
     .catch((error) => {
-      let errorMessage = error.message;
+      // Handle authentication errors
+      console.error("Error creating user:", error);
+      // Display error message
       document.querySelector(".error_message2").innerHTML =
-        "Incorrect Email or Password";
+        "Error creating user";
+    })
+    .finally(() => {
+      // Hide the modal
+      hideModal();
     });
 }
 
@@ -339,9 +353,6 @@ function checkAuthStateAndLoadUserData() {
 
       // Load user data based on the user ID
       loadUserData(userId);
-    } else {
-      // User is signed out, handle accordingly (e.g., show login modal)
-      console.log("User is not authenticated.");
     }
   });
 }
@@ -359,8 +370,6 @@ document
       if (user) {
         var userId = user.uid;
         loadUserData(userId);
-      } else {
-        console.log("User is not authenticated.");
       }
     });
   });
