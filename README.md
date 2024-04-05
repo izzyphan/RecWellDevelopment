@@ -17,13 +17,14 @@ As an admin, I want to utilize an employee directory for our student staff which
 **Breaking Down User Stories and Burndown Chart:** <br>
 
 **Burn Down Chart Day 4, Day 9, Day 12** <br>
-Day 4: ![GitGraph](BurnDownChartDay4.png) 
+Day 4: ![ChartDay4](BurnDownChart4-S2.png) 
 <br>
-Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
+Day 9: ![ChartDay9](BurnDownChart9-S2.png)
 <br>
-Day 12: ![GitGraph](BurnDownChartDay12.png) <br>
+Day 12: ![ChartDay12](BurnDownChart12-S2.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
+![StandUpNotes](StandUpNotes-S2.png)
 
 **Sprint Review:**
 
