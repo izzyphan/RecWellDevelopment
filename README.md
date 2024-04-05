@@ -4,7 +4,7 @@
 
 **Project Description:** This project currently holds the main page of our Rec Well Staff Website which is based on professional development and adding a database to hold their employee's information. This README file holds work conducted for the first sprint of the project as we focused on adding GUI of the home page. Below we have user stories, burndown charts, daily scrum meeting notes, and a review of the sprint.
 ___________________________________________________________________________________________________________________________________________________________________
-**MILESTONE 2**
+**Sprint 2**
 <br>
 <br>
 **User Stories:** <br>
