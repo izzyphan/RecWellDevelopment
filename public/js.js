@@ -345,11 +345,55 @@ function loadUserData(userId) {
         } else {
           console.log("One or more elements not found.");
         }
+        // Attach event listener to form submission after loading user data
+        document
+          .getElementById("SaveAccount")
+          .addEventListener("click", handleFormSubmission);
       }
     })
     .catch(function (error) {
       console.log("Error getting document:", error);
     });
+}
+
+// Function to handle form submission and update data in Firestore
+function handleFormSubmission(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+
+  // Get form input values
+  var firstName = document.getElementById("account_fname").value;
+  var lastName = document.getElementById("account_lname").value;
+
+  // Get the user ID of the authenticated user
+  var userId = firebase.auth().currentUser.uid;
+
+  // Check if the user ID is available
+  if (userId) {
+    // Reference the user's document in Firestore
+    var userRef = db.collection("employees").doc(userId);
+
+    // Update the user data in Firestore
+    userRef
+      .set(
+        {
+          firstName: firstName,
+          lastName: lastName,
+          // Add more fields as needed
+        },
+        { merge: true } // Merge the new data with existing data
+      )
+      .then(() => {
+        console.log("User data updated successfully.");
+        // Optionally, display a success message or redirect to another page
+      })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+        // Optionally, display an error message to the user
+      });
+  } else {
+    console.error("User ID not available.");
+    // Optionally, handle the case where the user ID is not available
+  }
 }
 
 // Function to check the authentication state and load user data
@@ -383,7 +427,7 @@ document
   });
 
 // Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
-checkAuthStateAndLoadUserData();
+// checkAuthStateAndLoadUserData();
 
 // Upload Blog Post
 // const uploadForm = document.getElementById("uploadForm");
