@@ -22,11 +22,11 @@ function configure_message_bar(message) {
   // Hide the message bar after 5 seconds
   setTimeout(() => {
     messageBar.innerHTML = ""; // Clear the message content
-  }, 10000);
+  }, 5000);
 }
 
 // Function to fetch and load HTML content dynamically
-function loadContent(url) {
+function loadContent(url, options = {}) {
   // Hide the modal
   hideModal();
 
@@ -50,6 +50,11 @@ function loadContent(url) {
         var mainContentHtml =
           tempElement.querySelector("#main-content").innerHTML;
         document.getElementById("main-content").innerHTML = mainContentHtml;
+        // Check if a message is provided in the options
+        if (options.message) {
+          // Configure and display the message bar with the provided message
+          configure_message_bar(options.message);
+        }
       }
     })
     .catch((error) => console.error("Error fetching HTML:", error));
@@ -138,11 +143,11 @@ function handleLoginFormSubmission(event) {
               document.getElementById("loginform").reset();
               hideModal();
               showMainContent();
-              configure_message_bar(username + " " + "is now logged in.");
-              console.log(cred.user.uid);
 
               // Redirect user to home page after successful login
-              loadContent("home.html");
+              loadContent("home.html", {
+                message: username + " " + "is now logged in.",
+              });
             })
             .catch((error) => {
               let errorMessage = error.message;
