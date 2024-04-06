@@ -328,6 +328,8 @@ function loadUserData(userId) {
         var userData = doc.data();
         var firstName = userData.firstName;
         var lastName = userData.lastName;
+        var capitalizedFirstName =
+          firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
         // Check if the elements exist before accessing them
         var nameHeader = document.getElementById("NameHeader");
@@ -336,7 +338,8 @@ function loadUserData(userId) {
 
         if (nameHeader && account_fname && account_lname) {
           // Change value of elements
-          nameHeader.innerHTML = firstName;
+          // Update the inner HTML of nameHeader with the modified firstName
+          nameHeader.innerHTML = capitalizedFirstName + "'s Account";
           account_fname.value = firstName;
           account_lname.value = lastName;
         } else {
