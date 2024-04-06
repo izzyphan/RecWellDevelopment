@@ -331,10 +331,21 @@ function loadUserData(userId) {
         var capitalizedFirstName =
           firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
+        var position = userData.position;
+        var department = userData.department;
+        var phoneNumber = userData.phoneNumber;
+        var email = userData.email;
+        var biography = userData.biography;
+
         // Check if the elements exist before accessing them
         var nameHeader = document.getElementById("NameHeader");
         var account_fname = document.getElementById("account_fname");
         var account_lname = document.getElementById("account_lname");
+        var account_position = document.getElementById("position");
+        var account_department = document.getElementById("department");
+        var account_phoneNumber = document.getElementById("phoneNumber");
+        var account_email = document.getElementById("email");
+        var account_biography = document.getElementById("biography");
 
         if (nameHeader && account_fname && account_lname) {
           // Change value of elements
@@ -342,6 +353,11 @@ function loadUserData(userId) {
           nameHeader.innerHTML = capitalizedFirstName + "'s Account";
           account_fname.value = firstName;
           account_lname.value = lastName;
+          account_position.value = position;
+          account_department.value = department;
+          account_phoneNumber.value = phoneNumber;
+          account_email.value = email;
+          account_biography.value = biography;
         } else {
           console.log("One or more elements not found.");
         }
@@ -393,7 +409,7 @@ function handleFormSubmission(event) {
         { merge: true } // Merge the new data with existing data
       )
       .then(() => {
-        alert("profile updated");
+        configure_message_bar("Account Has Been Saved!");
         // Optionally, display a success message or redirect to another page
       })
       .catch((error) => {
