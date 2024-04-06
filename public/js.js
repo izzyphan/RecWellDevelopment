@@ -194,10 +194,10 @@ function handleSignupFormSubmission(event) {
       document.getElementById("signupform").reset();
       // Show main content
       showMainContent();
-      loadContent("home.html");
-      // Configure and display success message
-      configure_message_bar(s_username + " " + "is now logged in.");
-      // Redirect user to home page after successful signup
+      // Redirect user to home page after successful login
+      loadContent("home.html", {
+        message: s_username + " " + "is now logged in.",
+      });
     })
     .catch((error) => {
       // Handle authentication errors
@@ -285,6 +285,7 @@ function checkAuthState() {
 function handleLogout() {
   auth.signOut().then(() => {
     // Reload the page to trigger the onAuthStateChanged listener
+    window.location.href = "home.html";
     window.location.reload();
   });
 }
@@ -410,7 +411,10 @@ function handleFormSubmission(event) {
       )
       .then(() => {
         configure_message_bar("Account Has Been Saved!");
-        // Optionally, display a success message or redirect to another page
+        // Scroll to the message bar
+        document
+          .getElementById("message_bar")
+          .scrollIntoView({ behavior: "smooth" });
       })
       .catch((error) => {
         console.error("Error updating user data:", error);
