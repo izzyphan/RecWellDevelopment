@@ -22,7 +22,7 @@ function configure_message_bar(message) {
   // Hide the message bar after 5 seconds
   setTimeout(() => {
     messageBar.innerHTML = ""; // Clear the message content
-  }, 5000);
+  }, 10000);
 }
 
 // Function to fetch and load HTML content dynamically
@@ -189,10 +189,10 @@ function handleSignupFormSubmission(event) {
       document.getElementById("signupform").reset();
       // Show main content
       showMainContent();
+      loadContent("home.html");
       // Configure and display success message
       configure_message_bar(s_username + " " + "is now logged in.");
       // Redirect user to home page after successful signup
-      loadContent("home.html");
     })
     .catch((error) => {
       // Handle authentication errors
