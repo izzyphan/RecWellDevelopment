@@ -363,6 +363,11 @@ function handleFormSubmission(event) {
   // Get form input values
   var firstName = document.getElementById("account_fname").value;
   var lastName = document.getElementById("account_lname").value;
+  var position = document.getElementById("position").value;
+  var department = document.getElementById("department").value;
+  var phoneNumber = document.getElementById("phoneNumber").value;
+  var email = document.getElementById("email").value;
+  var biography = document.getElementById("biography").value;
 
   // Get the user ID of the authenticated user
   var userId = firebase.auth().currentUser.uid;
@@ -378,12 +383,17 @@ function handleFormSubmission(event) {
         {
           firstName: firstName,
           lastName: lastName,
+          position: position,
+          department: department,
+          phoneNumber: phoneNumber,
+          email: email,
+          biography: biography,
           // Add more fields as needed
         },
         { merge: true } // Merge the new data with existing data
       )
       .then(() => {
-        console.log("User data updated successfully.");
+        alert("profile updated");
         // Optionally, display a success message or redirect to another page
       })
       .catch((error) => {
