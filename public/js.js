@@ -80,6 +80,7 @@ document.addEventListener("click", function (event) {
       case "talent":
         url = "talent.html";
         displayMostRecentBlog();
+
         break;
       case "myaccount":
         url = "myaccount.html";
@@ -496,7 +497,7 @@ async function handlePostBlogClick(event) {
       reader.readAsDataURL(file);
       reader.onload = async () => {
         const pdfDataUrl = reader.result; // Get the base64-encoded string
-        const publishDate = new Date(); // Assuming you want to store the upload date
+        const publishDate = new Date();
 
         // Add the PDF details to Firestore
         await db.collection("Blog").add({
@@ -554,3 +555,31 @@ async function displayMostRecentBlog() {
 }
 
 displayMostRecentBlog();
+
+// Function to fetch employee data from Firestore and populate the dropdown
+async function populateEmployeeDropdown() {
+  const employeeSelect = document.getElementById("employeeSelect");
+
+  try {
+    // Query Firestore to get employee data
+    const querySnapshot = await db.collection("employees").get();
+
+    // Iterate over each document in the query snapshot
+    querySnapshot.forEach((doc) => {
+      // Get the data of the employee
+      const employeeData = doc.data();
+      const firstName = employeeData.firstName;
+
+      // Create an <option> element for the employee and append it to the dropdown
+      const option = document.createElement("option");
+      option.value = doc.id; // Use employee ID or another unique identifier as the value
+      option.text = firstName; // Display the employee's first name
+
+      employeeSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error fetching employee data:", error);
+  }
+}
+
+populateEmployeeDropdown();
