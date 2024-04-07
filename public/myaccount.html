@@ -30,40 +30,44 @@
         <li><a href="#" id="signout">Sign Out</a></li>
       </ul>
     </nav>
-
-    <div id="account_container" class="container">
-      <h1 id="NameHeader">My Account</h1>
-      <table id="accountTable">
-        <tr>
-          <th>First Name</th>
-          <td><input type="text" id="account_fname" /></td>
-        </tr>
-        <tr>
-          <th>Last Name</th>
-          <td><input type="text" id="account_lname" /></td>
-        </tr>
-        <tr>
-          <th>Position</th>
-          <td><input type="text" id="position" /></td>
-        </tr>
-        <tr>
-          <th>Department</th>
-          <td><input type="text" id="department" /></td>
-        </tr>
-        <tr>
-          <th>Phone Number</th>
-          <td><input type="tel" id="phoneNumber" /></td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td><input type="email" id="email" /></td>
-        </tr>
-        <tr>
-          <th>Biography</th>
-          <td><textarea id="biography" rows="4"></textarea></td>
-        </tr>
-      </table>
-      <button onclick="saveAccount()">Save</button>
+    <!-- message bar -->
+    <div id="message_bar"></div>
+    <div class="new-content">
+      <div id="account_container" class="container">
+        <h1 id="NameHeader"></h1>
+        <table id="accountTable">
+          <tr>
+            <th>First Name</th>
+            <td><input type="text" id="account_fname" /></td>
+          </tr>
+          <tr>
+            <th>Last Name</th>
+            <td><input type="text" id="account_lname" /></td>
+          </tr>
+          <tr>
+            <th>Position</th>
+            <td><input type="text" id="position" /></td>
+          </tr>
+          <tr>
+            <th>Department</th>
+            <td><input type="text" id="department" /></td>
+          </tr>
+          <tr>
+            <th>Phone Number</th>
+            <td><input type="tel" id="phoneNumber" /></td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td><input type="email" id="email" /></td>
+          </tr>
+          <tr>
+            <th>Biography</th>
+            <td><textarea id="biography" rows="4"></textarea></td>
+          </tr>
+        </table>
+        <button id="SaveAccount">Save</button>
+        <div id="account_save_message"></div>
+      </div>
     </div>
 
     <div id="account_container" class="container">

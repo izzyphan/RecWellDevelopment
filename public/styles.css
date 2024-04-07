@@ -490,7 +490,8 @@ p {
   background-color: grey;
 }
 
-.passwordMatch {
+.passwordMatch,
+.error_message1 {
   margin-top: -10px;
   text-align: center;
 }
