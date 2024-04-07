@@ -81,6 +81,8 @@ document.addEventListener("click", function (event) {
         break;
       case "talent":
         url = "talent.html";
+        displayMostRecentBlog();
+
         break;
       case "myaccount":
         url = "myaccount.html";
@@ -361,13 +363,14 @@ function loadUserData(userId) {
           account_phoneNumber.value = phoneNumber;
           account_email.value = email;
           account_biography.value = biography;
-        } else {
-          console.log("One or more elements not found.");
         }
-        // Attach event listener to form submission after loading user data
-        document
-          .getElementById("SaveAccount")
-          .addEventListener("click", handleFormSubmission);
+        // Add event listener for "SaveAccount" button click
+        document.addEventListener("click", (e) => {
+          // Check if the clicked element is the "SaveAccount" button
+          if (e.target.id === "SaveAccount") {
+            handleFormSubmission(e); // Call handleFormSubmission function
+          }
+        });
       }
     })
     .catch(function (error) {
@@ -458,28 +461,6 @@ document
     });
   });
 
-// Call the checkAuthStateAndLoadUserData function to ensure user is authenticated and load data
-// checkAuthStateAndLoadUserData();
-
-// Upload Blog Post
-// const uploadForm = document.getElementById("uploadForm");
-// const pdfFileInput = document.getElementById("pdfFile");
-// const pdfViewer = document.getElementById("pdfViewer");
-
-// uploadForm.addEventListener("submit", (e) => {
-//   e.preventDefault();
-
-//   const file = pdfFileInput.files[0];
-//   if (file) {
-//     const reader = new FileReader();
-//     reader.onload = (event) => {
-//       const pdfContent = event.target.result;
-//       pdfViewer.innerHTML = `<embed src="${pdfContent}" type="application/pdf" width="100%" height="100%">`;
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// });
-
 //Confirm Matching Passwords
 function checkPasswordMatch() {
   var password = document.getElementById("s_password").value;
@@ -547,3 +528,114 @@ function makeAdmin() {
       console.error("Error fetching users:", error);
     });
 }
+
+// Function to handle the "postBlog" button click and handle PDF uploads
+async function handlePostBlogClick(event) {
+  // Check if the clicked element is the "postBlog" button
+  if (event.target.id === "postBlog") {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    // Code for handling PDF uploads
+    const pdfInput = document.getElementById("pdfFile");
+    const file = pdfInput.files[0];
+
+    if (!file) {
+      console.error("No file selected.");
+      return;
+    }
+
+    // Display an alert message when the button is clicked
+    alert("PDF upload in progress...");
+
+    try {
+      // Read the file as a base64-encoded string
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const pdfDataUrl = reader.result; // Get the base64-encoded string
+        const publishDate = new Date();
+
+        // Add the PDF details to Firestore
+        await db.collection("Blog").add({
+          title: file.name,
+          content: pdfDataUrl, // Store the base64-encoded string
+          publishDate: publishDate,
+          // Add other attributes as needed (e.g., authorId, blogId)
+        });
+
+        console.log("PDF uploaded and added to Firestore.");
+      };
+    } catch (error) {
+      console.error("Error uploading PDF:", error);
+    }
+  }
+}
+
+document.addEventListener("click", (e) => {
+  // Check if the clicked element is the "SaveAccount" button
+  if (e.target.id === "postBlog") {
+    handlePostBlogClick(e); // Call handleFormSubmission function
+  }
+});
+
+// Reference to the Firestore collection
+const blogRef = db.collection("Blog");
+
+// Function to fetch and display the most recent blog post
+async function displayMostRecentBlog() {
+  try {
+    // Query Firestore to get the most recent blog post
+    const querySnapshot = await blogRef
+      .orderBy("publishDate", "desc")
+      .limit(1)
+      .get();
+
+    // Check if there are any documents in the query snapshot
+    if (!querySnapshot.empty) {
+      // Get the data of the most recent blog post
+      const blogPost = querySnapshot.docs[0].data();
+
+      // Update the HTML content of the "output" div with the blog post information
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = `
+        <h2>${blogPost.title}</h2>
+        <p>${blogPost.content}</p>
+        <!-- Add other fields as needed -->
+      `;
+    } else {
+      console.log("No blog posts found.");
+    }
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+  }
+}
+
+displayMostRecentBlog();
+
+// Function to fetch employee data from Firestore and populate the dropdown
+async function populateEmployeeDropdown() {
+  const employeeSelect = document.getElementById("employeeSelect");
+
+  try {
+    // Query Firestore to get employee data
+    const querySnapshot = await db.collection("employees").get();
+
+    // Iterate over each document in the query snapshot
+    querySnapshot.forEach((doc) => {
+      // Get the data of the employee
+      const employeeData = doc.data();
+      const firstName = employeeData.firstName;
+
+      // Create an <option> element for the employee and append it to the dropdown
+      const option = document.createElement("option");
+      option.value = doc.id; // Use employee ID or another unique identifier as the value
+      option.text = firstName; // Display the employee's first name
+
+      employeeSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error fetching employee data:", error);
+  }
+}
+
+populateEmployeeDropdown();
