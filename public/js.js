@@ -59,7 +59,9 @@ function loadContent(url) {
 document.addEventListener("click", function (event) {
   // Check if the clicked element is a link with one of the specified IDs
   if (
-    event.target.matches("#directory, #talent, #myaccount, #points, #home-logo")
+    event.target.matches(
+      "#directory, #talent, #myaccount, #points, #home-logo, #admin"
+    )
   ) {
     event.preventDefault(); // Prevent default link behavior
 
@@ -325,4 +327,58 @@ function checkPasswordMatch() {
     document.getElementById("passwordMatchMessage").innerHTML =
       "Passwords don't match";
   }
+}
+
+function makeAdmin() {
+  var firstName = document.getElementById("adminAccount_fname").value.trim();
+  var lastName = document.getElementById("adminAccount_lname").value.trim();
+  var email = document.getElementById("adminAccount_email").value.trim();
+
+  if (!firstName || !lastName || !email) {
+    console.log("First name, last name, and email are required.");
+    return;
+  }
+
+  // Query Firestore for the user with the given first name, last name, and email
+  db.collection("employees")
+    .where("firstName", "==", firstName)
+    .where("lastName", "==", lastName)
+    .where("email", "==", email)
+    .get()
+    .then((querySnapshot) => {
+      if (querySnapshot.empty) {
+        console.log(
+          "No user found with the provided information:",
+          firstName,
+          lastName,
+          email
+        );
+        return;
+      }
+
+      // Get the first matching document
+      const userDoc = querySnapshot.docs[0];
+
+      // Update the user's isAdmin field to true
+      db.collection("employees")
+        .doc(userDoc.id)
+        .update({
+          isAdmin: true,
+        })
+        .then(() => {
+          console.log(
+            "User successfully made an admin:",
+            firstName,
+            lastName,
+            email
+          );
+          // Optionally, update the UI to reflect the change
+        })
+        .catch((error) => {
+          console.error("Error updating user admin status:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Error fetching users:", error);
+    });
 }

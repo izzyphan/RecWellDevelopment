@@ -28,11 +28,17 @@
         <li><a href="#" id="myaccount">My Account</a></li>
         <li><a href="#" id="points">Points</a></li>
         <li><a href="#" id="signout">Sign Out</a></li>
+        <li><a href="#" id="admin">Admin</a></li>
       </ul>
     </nav>
 
+    <header>
+      <h1>Admin</h1>
+    </header>
+    <!-- Module For Admin -->
+    <div id="message"></div>
     <div id="account_container" class="container">
-      <h1 id="NameHeader">My Account</h1>
+      <h1 id="NameHeader">Make Worker Admin</h1>
       <table id="accountTable">
         <tr>
           <th>First Name</th>
@@ -42,47 +48,9 @@
           <th>Last Name</th>
           <td><input type="text" id="account_lname" /></td>
         </tr>
-        <tr>
-          <th>Position</th>
-          <td><input type="text" id="position" /></td>
-        </tr>
-        <tr>
-          <th>Department</th>
-          <td><input type="text" id="department" /></td>
-        </tr>
-        <tr>
-          <th>Phone Number</th>
-          <td><input type="tel" id="phoneNumber" /></td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td><input type="email" id="email" /></td>
-        </tr>
-        <tr>
-          <th>Biography</th>
-          <td><textarea id="biography" rows="4"></textarea></td>
-        </tr>
+        <tr></tr>
       </table>
-      <button onclick="saveAccount()">Save</button>
-    </div>
 
-    <div id="account_container" class="container">
-      <h1 id="NameHeader">Add Admin Status</h1>
-      <table id="accountTable">
-        <tr>
-          <th>First Name</th>
-          <td><input type="text" id="adminAccount_fname" /></td>
-        </tr>
-
-        <tr>
-          <th>Last Name</th>
-          <td><input type="text" id="adminAccount_lname" /></td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td><input type="text" id="adminAccount_email" /></td>
-        </tr>
-      </table>
       <button onclick="makeAdmin()">Make Admin</button>
     </div>
   </body>
