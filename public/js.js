@@ -409,3 +409,5 @@ function checkPasswordMatch() {
       "Passwords don't match";
   }
 }
+
+db.collection("employee").get();
