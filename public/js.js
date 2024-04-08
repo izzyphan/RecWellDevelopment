@@ -529,7 +529,6 @@ function makeAdmin() {
     });
 }
 
-// Function to handle the "postBlog" button click and handle PDF uploads
 async function handlePostBlogClick(event) {
   // Check if the clicked element is the "postBlog" button
   if (event.target.id === "postBlog") {
@@ -548,23 +547,41 @@ async function handlePostBlogClick(event) {
     alert("PDF upload in progress...");
 
     try {
-      // Read the file as a base64-encoded string
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        const pdfDataUrl = reader.result; // Get the base64-encoded string
-        const publishDate = new Date();
+      // Upload the PDF file to Firebase Storage
+      const storageRef = firebase.storage().ref("pdfs/" + file.name); // Specify the path in Storage
+      const uploadTask = storageRef.put(file);
 
-        // Add the PDF details to Firestore
-        await db.collection("Blog").add({
-          title: file.name,
-          content: pdfDataUrl, // Store the base64-encoded string
-          publishDate: publishDate,
-          // Add other attributes as needed (e.g., authorId, blogId)
-        });
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Handle upload progress if needed
+        },
+        (error) => {
+          console.error("Error uploading PDF to Storage:", error);
+        },
+        async () => {
+          // Get the download URL of the uploaded file
+          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+          const publishDate = new Date();
 
-        console.log("PDF uploaded and added to Firestore.");
-      };
+          // Add the PDF details to Firestore
+          await db.collection("Blog").add({
+            title: file.name,
+            content: downloadURL, // Store the download URL
+            publishDate: publishDate,
+            // Add other attributes as needed (e.g., authorId, blogId)
+          });
+
+          console.log("PDF uploaded to Storage and added to Firestore.");
+
+          // Update the embed element with the new PDF URL
+          const embedElement = document.getElementById("output");
+          embedElement.src = downloadURL;
+
+          // Optionally, fetch and display the most recent blog post after upload
+          await displayMostRecentBlog();
+        }
+      );
     } catch (error) {
       console.error("Error uploading PDF:", error);
     }
@@ -598,9 +615,9 @@ async function displayMostRecentBlog() {
       // Update the HTML content of the "output" div with the blog post information
       const outputDiv = document.getElementById("output");
       outputDiv.innerHTML = `
-        <h2>${blogPost.title}</h2>
-        <p>${blogPost.content}</p>
-        <!-- Add other fields as needed -->
+      <h2>${blogPost.title}</h2>
+      <embed id="embedPdf" src="${blogPost.content}" type="application/pdf" width="100%" height="600px" />
+      <!-- Add other fields as needed -->
       `;
     } else {
       console.log("No blog posts found.");
