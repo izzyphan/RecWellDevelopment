@@ -473,7 +473,6 @@ function checkPasswordMatch() {
   }
 }
 
-// Function to handle the "postBlog" button click and handle PDF uploads
 async function handlePostBlogClick(event) {
   // Check if the clicked element is the "postBlog" button
   if (event.target.id === "postBlog") {
@@ -518,6 +517,13 @@ async function handlePostBlogClick(event) {
           });
 
           console.log("PDF uploaded to Storage and added to Firestore.");
+
+          // Update the embed element with the new PDF URL
+          const embedElement = document.getElementById("output");
+          embedElement.src = downloadURL;
+
+          // Optionally, fetch and display the most recent blog post after upload
+          await displayMostRecentBlog();
         }
       );
     } catch (error) {
