@@ -33,12 +33,13 @@
 
     <div class="new-content">
       <header>
-        <h1>Welcome to the Talent Tunstile Blog</h1>
+        <h1>Welcome to the Talent Turnstile Blog</h1>
       </header>
       <div class="blogContainer">
         <h1>Upload PDF Form</h1>
 
         <label for="pdfFile">Choose a PDF file:</label>
+
         <input type="file" id="pdfFile" name="pdfFile" accept=".pdf" required />
         <br />
         <label for="employeeSelect">Select Author Name:</label>
@@ -49,7 +50,9 @@
         <br />
         <button id="postBlog">Upload PDF</button>
       </div>
-      <div id="output"></div>
+      <div id="output">
+        <embed src="" type="" id="pdfViewer" />
+      </div>
     </div>
   </body>
 </html>
