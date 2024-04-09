@@ -105,6 +105,14 @@ document.addEventListener("click", function (event) {
         return; // Exit the function without loading a URL
       case "points":
         url = "points.html";
+        // Call checkAdminStatusAndHideElement when loading points.html
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+            var elementIdToHide = "point_container"; // Replace with ID of the element to hide
+            checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+          }
+        });
         break;
       case "home-logo":
         url = "home.html";
@@ -351,6 +359,9 @@ function loadUserData(userId) {
         var account_phoneNumber = document.getElementById("phoneNumber");
         var account_email = document.getElementById("email");
         var account_biography = document.getElementById("biography");
+        var adminAccount_fname = document.getElementById("adminAccount_fname");
+        var adminAccount_lname = document.getElementById("adminAccount_lname");
+        var adminAccount_email = document.getElementById("adminAccount_email");
 
         if (nameHeader && account_fname && account_lname) {
           // Change value of elements
@@ -363,6 +374,9 @@ function loadUserData(userId) {
           account_phoneNumber.value = phoneNumber;
           account_email.value = email;
           account_biography.value = biography;
+          adminAccount_fname.value = firstName;
+          adminAccount_lname.value = lastName;
+          adminAccount_email.value = email;
         }
         // Add event listener for "SaveAccount" button click
         document.addEventListener("click", (e) => {
@@ -440,6 +454,8 @@ function checkAuthStateAndLoadUserData() {
 
       // Load user data based on the user ID
       loadUserData(userId);
+      // Get the current user's email
+      var currentUserEmail = user.email;
     }
   });
 }
@@ -479,9 +495,15 @@ function makeAdmin() {
   var firstName = document.getElementById("adminAccount_fname").value.trim();
   var lastName = document.getElementById("adminAccount_lname").value.trim();
   var email = document.getElementById("adminAccount_email").value.trim();
+  var keyword = document.getElementById("adminAccount_keyword").value.trim();
 
   if (!firstName || !lastName || !email) {
     console.log("First name, last name, and email are required.");
+    return;
+  }
+
+  if (keyword !== "admin2024") {
+    alert("Incorrect keyword. Admin privileges cannot be granted.");
     return;
   }
 
@@ -627,35 +649,33 @@ async function displayMostRecentBlog() {
   }
 }
 
-displayMostRecentBlog();
-
 // Function to fetch employee data from Firestore and populate the dropdown
-async function populateEmployeeDropdown() {
-  const employeeSelect = document.getElementById("employeeSelect");
+// async function populateEmployeeDropdown() {
+//   const employeeSelect = document.getElementById("employeeSelect");
 
-  try {
-    // Query Firestore to get employee data
-    const querySnapshot = await db.collection("employees").get();
+//   try {
+//     // Query Firestore to get employee data
+//     const querySnapshot = await db.collection("employees").get();
 
-    // Iterate over each document in the query snapshot
-    querySnapshot.forEach((doc) => {
-      // Get the data of the employee
-      const employeeData = doc.data();
-      const firstName = employeeData.firstName;
+//     // Iterate over each document in the query snapshot
+//     querySnapshot.forEach((doc) => {
+//       // Get the data of the employee
+//       const employeeData = doc.data();
+//       const firstName = employeeData.firstName;
 
-      // Create an <option> element for the employee and append it to the dropdown
-      const option = document.createElement("option");
-      option.value = doc.id; // Use employee ID or another unique identifier as the value
-      option.text = firstName; // Display the employee's first name
+//       // Create an <option> element for the employee and append it to the dropdown
+//       const option = document.createElement("option");
+//       option.value = doc.id; // Use employee ID or another unique identifier as the value
+//       option.text = firstName; // Display the employee's first name
 
-      employeeSelect.appendChild(option);
-    });
-  } catch (error) {
-    console.error("Error fetching employee data:", error);
-  }
-}
+//       employeeSelect.appendChild(option);
+//     });
+//   } catch (error) {
+//     console.error("Error fetching employee data:", error);
+//   }
+// }
 
-populateEmployeeDropdown();
+// populateEmployeeDropdown();
 //dynamic directory loading
 // db.collection("employees")
 //   .get()
@@ -674,4 +694,30 @@ populateEmployeeDropdown();
 //     document.querySelector("#employee_directory").innerHTML += html;
 //   });
 
-function formatPhoneNumber() {}
+// function formatPhoneNumber() {}
+// Function to check if the current user is an admin
+// Function to check if the current user is an admin
+// Function to check admin status and hide an element based on admin status
+function checkAdminStatusAndHideElement(email, elementId) {
+  var elementToHide = document.getElementById(elementId);
+  if (!elementToHide) {
+    console.error("Error: Element with ID '" + elementId + "' not found.");
+    return; // Exit the function if element not found
+  }
+
+  db.collection("employees")
+    .where("email", "==", email)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        if (!userData.isAdmin) {
+          // show the element
+          elementToHide.style.display = "none";
+        }
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking admin status:", error);
+    });
+}
