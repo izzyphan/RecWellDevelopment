@@ -678,10 +678,10 @@ loadDirectory();
 function formatPhoneNumber(phoneNumber) {
   // Remove all non-digit characters from the phone number
   phoneNumber = phoneNumber.replace(/\D/g, "");
-
   if (phoneNumber.length === 10) {
     return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
   } else {
-    return "Invalid phone number. Please provide a 10-digit number.";
+    return "Invalid phone number";
   }
 }
+console.log(formatPhoneNumber("1234567890"));
