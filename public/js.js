@@ -109,7 +109,7 @@ document.addEventListener("click", function (event) {
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             var userEmail = user.email;
-            var elementIdToHide = "point_container"; // Replace with ID of the element to hide
+            var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
           }
         });
@@ -160,6 +160,9 @@ function handleLoginFormSubmission(event) {
               loadContent("home.html", {
                 message: username + " " + "is now logged in.",
               });
+              if (window.location.pathname.endsWith("/points.html")) {
+                checkAdminStatusAndHideElement(username, "penalty_container");
+              }
             })
             .catch((error) => {
               let errorMessage = error.message;
@@ -236,6 +239,7 @@ function loadStateFromStorage() {
 }
 
 // Function to load the last visited URL from localStorage
+// Function to load the last visited URL from localStorage
 function loadLastVisitedUrl() {
   const stateData = loadStateFromStorage();
   if (stateData && stateData.url) {
@@ -248,6 +252,15 @@ function loadLastVisitedUrl() {
     // Default action (e.g., load home page)
     loadContent("home.html");
   }
+
+  // Check admin status when the page loads
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      var userEmail = user.email;
+      var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
+      checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+    }
+  });
 }
 
 // Attach event listeners to login and signup forms
@@ -702,29 +715,29 @@ if (window.location.href.includes("talent.html")) {
 //   });
 
 // function formatPhoneNumber() {}
-// Function to check if the current user is an admin
-// Function to check if the current user is an admin
-// Function to check admin status and hide an element based on admin status
-function checkAdminStatusAndHideElement(email, elementId) {
-  var elementToHide = document.getElementById(elementId);
-  if (!elementToHide) {
-    console.error("Error: Element with ID '" + elementId + "' not found.");
-    return; // Exit the function if element not found
-  }
 
-  db.collection("employees")
-    .where("email", "==", email)
+// Function to check admin status and hide/show element based on isAdmin field
+function checkAdminStatusAndHideElement(userEmail, elementId) {
+  const employeesRef = db.collection("employees");
+  employeesRef
+    .where("email", "==", userEmail)
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        const userData = querySnapshot.docs[0].data();
-        if (!userData.isAdmin) {
-          // show the element
-          elementToHide.style.display = "none";
+        const isAdmin = querySnapshot.docs[0].data().isAdmin;
+        const element = document.getElementById(elementId);
+        if (isAdmin && element) {
+          element.style.display = "block"; // Show the element
+        } else {
+          element.style.display = "none"; // Hide the element
         }
+      } else {
+        console.log("User not found.");
       }
     })
     .catch((error) => {
       console.error("Error checking admin status:", error);
     });
 }
+
+// checkAdminStatusAndHideElement("emfiretruck@gmail.com", "penalty_container");
