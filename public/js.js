@@ -240,6 +240,10 @@ function loadLastVisitedUrl() {
   const stateData = loadStateFromStorage();
   if (stateData && stateData.url) {
     loadContent(stateData.url);
+    // Check if the last visited URL ends with "talent.html" and call displayMostRecentBlog
+    if (stateData.url.endsWith("talent.html")) {
+      displayMostRecentBlog();
+    }
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
@@ -648,7 +652,10 @@ async function displayMostRecentBlog() {
     console.error("Error fetching blog posts:", error);
   }
 }
-
+// Check if the current page URL contains "talent.html" before calling the function
+if (window.location.href.includes("talent.html")) {
+  displayMostRecentBlog();
+}
 // Function to fetch employee data from Firestore and populate the dropdown
 // async function populateEmployeeDropdown() {
 //   const employeeSelect = document.getElementById("employeeSelect");
