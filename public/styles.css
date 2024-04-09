@@ -397,8 +397,8 @@ p {
   font-size: 16px;
 }
 
-/* Points CSS  */
-#point_container {
+#point_container,
+#penalty_container {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
@@ -408,25 +408,31 @@ p {
 }
 
 #point_container h1,
-#point_container h2 {
+#point_container h2,
+#penalty_container h1,
+#penalty_container h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-#point_container table {
+#point_container table,
+#penalty_container table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
 #point_container th,
-#point_container td {
+#point_container td,
+#penalty_container th,
+#penalty_container td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
   text-align: left;
 }
 
-#point_container th {
+#point_container th,
+#penalty_container th {
   font-weight: bold;
   text-align: left;
 }
@@ -434,7 +440,11 @@ p {
 #point_container input[type="text"],
 #point_container input[type="tel"],
 #point_container input[type="email"],
-#point_container textarea {
+#point_container textarea,
+#penalty_container input[type="text"],
+#penalty_container input[type="tel"],
+#penalty_container input[type="email"],
+#penalty_container textarea {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
@@ -443,7 +453,8 @@ p {
   margin-bottom: 10px;
 }
 
-#point_container button {
+#point_container button,
+#penalty_container button {
   background-color: red;
   color: #fff;
   border: none;
@@ -453,10 +464,10 @@ p {
   font-size: 16px;
 }
 
-#point_container button:hover {
+#point_container button:hover,
+#penalty_container button:hover {
   background-color: #45a049;
 }
-
 /* Talent Tunstile CSS */
 .blogContainer {
   max-width: 500px;
