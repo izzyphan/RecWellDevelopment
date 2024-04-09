@@ -85,13 +85,12 @@ document.addEventListener("click", function (event) {
             let data = res.docs;
             let html = ``;
             data.forEach((d) => {
-              html += `<div class="card">
-      <img src="john-doe.jpg" alt="johndoe" class="employee-image" />
-      <div class="employee-name">${d.data().firstName} ${
+              html += `<div class="card"> 
+              <img src="john-doe.jpg" alt="johndoe" class="employee-image" /> 
+              <div class="employee-name">${d.data().firstName} ${
                 d.data().lastName
               }</div>
-      <div class="employee-phone">${d.data().phoneNumber}</div>
-    </div>`;
+              <div class="employee-phone">${d.data().phoneNumber}</div></div>`;
             });
             document.querySelector("#employee_directory").innerHTML += html;
           });
