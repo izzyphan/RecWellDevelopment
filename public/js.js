@@ -694,6 +694,17 @@ function formatPhoneNumber(phoneNumber) {
   }
 }
 function findHeadshot(first, last) {
-  let filePath = `${first}-${last}.jpg`;
-  return filePath;
+  let url = `${first}-${last}.jpg`;
+  fetch(url)
+    .then((response) => {
+      if (response.ok) {
+        return url;
+      } else {
+        return placeholder - headshot.png;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
+findHeadshot("Henry", "Potter");
