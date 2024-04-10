@@ -105,12 +105,14 @@ document.addEventListener("click", function (event) {
         return; // Exit the function without loading a URL
       case "points":
         url = "points.html";
-        // Call checkAdminStatusAndHideElement when loading points.html
+        // Call checkAdminStatusAndHideElement when loading points.html and talent.html
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             var userEmail = user.email;
             var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
+            var blogForm = "blogContainer";
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+            // checkAdminStatusAndHideElement(userEmail, blogForm);
           }
         });
         break;
@@ -254,13 +256,16 @@ function loadLastVisitedUrl() {
   }
 
   // Check admin status when the page loads
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      var userEmail = user.email;
-      var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
-      checkAdminStatusAndHideElement(userEmail, elementIdToHide);
-    }
-  });
+  // Check if the current page is points.html before calling the function
+  if (window.location.pathname.endsWith("points.html")) {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var userEmail = user.email;
+        var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
+        checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+      }
+    });
+  }
 }
 
 // Attach event listeners to login and signup forms
