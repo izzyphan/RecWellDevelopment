@@ -747,8 +747,5 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
       } else {
         console.log("User not found.");
       }
-    })
-    .catch((error) => {
-      console.error("Error checking admin status:", error);
     });
 }
