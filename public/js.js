@@ -701,6 +701,7 @@ function findHeadshot(first, last) {
 
 function testImage(first, last) {
   let imageFile = `${first}-${last}.jpg`;
+  console.log(imageFile);
   let img = new Image();
   img.src = imageFile;
   img.onload = function () {
