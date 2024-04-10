@@ -411,6 +411,7 @@ function loadUserData(userId) {
         var phoneNumber = userData.phoneNumber;
         var email = userData.email;
         var biography = userData.biography;
+        var status = userData.isAdmin;
 
         // Check if the elements exist before accessing them
         var nameHeader = document.getElementById("NameHeader");
@@ -424,6 +425,9 @@ function loadUserData(userId) {
         var adminAccount_fname = document.getElementById("adminAccount_fname");
         var adminAccount_lname = document.getElementById("adminAccount_lname");
         var adminAccount_email = document.getElementById("adminAccount_email");
+        var adminAccount_status = document.getElementById(
+          "adminAccount_status"
+        );
 
         if (nameHeader && account_fname && account_lname) {
           // Change value of elements
@@ -439,6 +443,7 @@ function loadUserData(userId) {
           adminAccount_fname.value = firstName;
           adminAccount_lname.value = lastName;
           adminAccount_email.value = email;
+          adminAccount_status.value = status;
         }
         // Add event listener for "SaveAccount" button click
         document.addEventListener("click", (e) => {
@@ -560,7 +565,7 @@ function makeAdmin() {
   var keyword = document.getElementById("adminAccount_keyword").value.trim();
 
   if (!firstName || !lastName || !email) {
-    console.log("First name, last name, and email are required.");
+    alert("First name, last name, and email are required.");
     return;
   }
 
@@ -589,6 +594,13 @@ function makeAdmin() {
       // Get the first matching document
       const userDoc = querySnapshot.docs[0];
 
+      // Check if the user is already an admin
+      const isAdmin = userDoc.data().isAdmin;
+      if (isAdmin) {
+        alert("This user is already an admin.");
+        return;
+      }
+
       // Update the user's isAdmin field to true
       db.collection("employees")
         .doc(userDoc.id)
@@ -596,12 +608,7 @@ function makeAdmin() {
           isAdmin: true,
         })
         .then(() => {
-          console.log(
-            "User successfully made an admin:",
-            firstName,
-            lastName,
-            email
-          );
+          alert("User successfully made an admin:", firstName, lastName, email);
           // Optionally, update the UI to reflect the change
         })
         .catch((error) => {
