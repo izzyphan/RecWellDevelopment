@@ -666,9 +666,13 @@ function loadDirectory() {
       let data = res.docs;
       let html = ``;
       data.forEach((d) => {
+        console.log(d.data().phoneNumber);
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
+        // console.log(phoneNumber);
         html += `<div class="card"> 
-    <img src="john-doe.jpg" alt="johndoe" class="employee-image" /> 
+    <img src="${d.data().firstName}-${d.data().lastName}.jpg" alt="${
+          d.data().firstName
+        } ${d.data().lastName}" class="employee-image" /> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
@@ -677,9 +681,7 @@ function loadDirectory() {
 }
 loadDirectory();
 function formatPhoneNumber(phoneNumber) {
-  // Convert phoneNumber to string
   phoneNumber = String(phoneNumber);
-
   if (phoneNumber === undefined || phoneNumber.trim() === "") {
     return "";
   }
@@ -691,4 +693,3 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
-console.log(formatPhoneNumber("1234567890"));
