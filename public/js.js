@@ -88,6 +88,7 @@ document.addEventListener("click", function (event) {
             var blogForm = "blogContainer";
             checkAdminStatusAndHideElement(userEmail, blogForm);
           }
+          adminDropdown();
         });
 
         break;
@@ -261,6 +262,7 @@ function loadLastVisitedUrl() {
           checkAdminStatusAndHideElement(userEmail, blogForm);
         }
       });
+      adminDropdown();
     } else if (stateData.url.endsWith("points.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -682,34 +684,42 @@ async function displayMostRecentBlog() {
 if (window.location.href.includes("talent.html")) {
   displayMostRecentBlog();
 }
-// Function to fetch employee data from Firestore and populate the dropdown
-// async function populateEmployeeDropdown() {
-//   const employeeSelect = document.getElementById("employeeSelect");
+function adminDropdown() {
+  db.collection("employees")
+    .where("isAdmin", "==", true)
+    .get()
+    .then((response) => {
+      let mydocs = response.docs;
+      let all_names = [];
+      mydocs.forEach((doc) => {
+        let firstName = doc.data().firstName;
+        let lastName = doc.data().lastName;
+        if (firstName !== "" && lastName !== "") {
+          // Concatenate first name and last name
+          let fullName = `${firstName} ${lastName}`;
+          all_names.push(fullName);
+        }
+      });
+      // Get the dropdown element
+      let employee_dropdown = document.getElementById("employeeSelect");
 
-//   try {
-//     // Query Firestore to get employee data
-//     const querySnapshot = await db.collection("employees").get();
+      // Clear existing options
+      employee_dropdown.innerHTML = "";
 
-//     // Iterate over each document in the query snapshot
-//     querySnapshot.forEach((doc) => {
-//       // Get the data of the employee
-//       const employeeData = doc.data();
-//       const firstName = employeeData.firstName;
+      // Loop through all names to add option values
+      all_names.forEach(function (item) {
+        let option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        employee_dropdown.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+}
 
-//       // Create an <option> element for the employee and append it to the dropdown
-//       const option = document.createElement("option");
-//       option.value = doc.id; // Use employee ID or another unique identifier as the value
-//       option.text = firstName; // Display the employee's first name
-
-//       employeeSelect.appendChild(option);
-//     });
-//   } catch (error) {
-//     console.error("Error fetching employee data:", error);
-//   }
-// }
-
-// populateEmployeeDropdown();
-//dynamic directory loading
+// dynamic directory loading
 // db.collection("employees")
 //   .get()
 //   .then((res) => {
