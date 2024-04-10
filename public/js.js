@@ -670,9 +670,9 @@ function loadDirectory() {
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
         // console.log(phoneNumber);
         html += `<div class="card"> 
-    <img src="${d.data().firstName}-${d.data().lastName}.jpeg" alt="${
+    <img src="${d.data().firstName}-${d.data().lastName}.jpg" alt="${
           d.data().firstName
-        } ${d.data().lastName}" class="employee-image" /> 
+        } ${d.data().lastName}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
@@ -692,4 +692,8 @@ function formatPhoneNumber(phoneNumber) {
   } else {
     return "";
   }
+}
+function findHeadshot(first, last) {
+  let filePath = `${first}-${last}.jpg`;
+  return filePath;
 }
