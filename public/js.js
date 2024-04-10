@@ -670,7 +670,7 @@ function loadDirectory() {
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
         // console.log(phoneNumber);
         html += `<div class="card"> 
-    <img src="${d.data().firstName}-${d.data().lastName}.jpg" alt="${
+    <img src="${d.data().firstName}-${d.data().lastName}.jpeg" alt="${
           d.data().firstName
         } ${d.data().lastName}" class="employee-image" /> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
