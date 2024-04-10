@@ -82,6 +82,13 @@ document.addEventListener("click", function (event) {
       case "talent":
         url = "talent.html";
         displayMostRecentBlog();
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+            var blogForm = "blogContainer";
+            checkAdminStatusAndHideElement(userEmail, blogForm);
+          }
+        });
 
         break;
       case "myaccount":
@@ -110,9 +117,8 @@ document.addEventListener("click", function (event) {
           if (user) {
             var userEmail = user.email;
             var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
-            var blogForm = "blogContainer";
+
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
-            // checkAdminStatusAndHideElement(userEmail, blogForm);
           }
         });
         break;
@@ -241,7 +247,6 @@ function loadStateFromStorage() {
 }
 
 // Function to load the last visited URL from localStorage
-// Function to load the last visited URL from localStorage
 function loadLastVisitedUrl() {
   const stateData = loadStateFromStorage();
   if (stateData && stateData.url) {
@@ -249,22 +254,25 @@ function loadLastVisitedUrl() {
     // Check if the last visited URL ends with "talent.html" and call displayMostRecentBlog
     if (stateData.url.endsWith("talent.html")) {
       displayMostRecentBlog();
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+          var blogForm = "blogContainer"; // Replace with ID of the element to hide on talent.html
+          checkAdminStatusAndHideElement(userEmail, blogForm);
+        }
+      });
+    } else if (stateData.url.endsWith("points.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+          var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
+          checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+        }
+      });
     }
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
-  }
-
-  // Check admin status when the page loads
-  // Check if the current page is points.html before calling the function
-  if (window.location.pathname.endsWith("points.html")) {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        var userEmail = user.email;
-        var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
-        checkAdminStatusAndHideElement(userEmail, elementIdToHide);
-      }
-    });
   }
 }
 
@@ -745,4 +753,4 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
     });
 }
 
-// checkAdminStatusAndHideElement("emfiretruck@gmail.com", "penalty_container");
+// checkAdminStatusAndHideElement("emfiretruck@gmail.com", "blogContainer");
