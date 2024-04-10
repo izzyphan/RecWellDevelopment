@@ -666,13 +666,13 @@ function loadDirectory() {
       let data = res.docs;
       let html = ``;
       data.forEach((d) => {
-        console.log(d.data().phoneNumber);
+        // console.log(d.data().phoneNumber);
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
-        // console.log(phoneNumber);
+        let headshot = findHeadshot(d.data().firstName, d.data().lastName);
         html += `<div class="card"> 
-    <img src="${d.data().firstName}-${d.data().lastName}.jpg" alt="${
-          d.data().firstName
-        } ${d.data().lastName}" class="employee-image"/> 
+    <img src="${headshot}" alt="${d.data().firstName} ${
+          d.data().lastName
+        }" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
@@ -695,16 +695,16 @@ function formatPhoneNumber(phoneNumber) {
 }
 function findHeadshot(first, last) {
   let url = `${first}-${last}.jpg`;
-  fetch(url)
+  return fetch(url)
     .then((response) => {
       if (response.ok) {
         return url;
       } else {
-        return placeholder - headshot.png;
+        return "placeholder-headshot.png";
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error fetching headshot:", error);
+      return "placeholder-headshot.png"; // Return placeholder image in case of error
     });
 }
-findHeadshot("Henry", "Potter");
