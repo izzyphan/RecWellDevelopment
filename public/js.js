@@ -752,5 +752,3 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
       console.error("Error checking admin status:", error);
     });
 }
-
-// checkAdminStatusAndHideElement("emfiretruck@gmail.com", "blogContainer");
