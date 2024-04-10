@@ -78,6 +78,14 @@ document.addEventListener("click", function (event) {
     switch (id) {
       case "directory":
         url = "directory.html";
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+
+            checkAdminStatusAndHideElement(userEmail, "admin-status");
+          }
+        });
+
         break;
       case "talent":
         url = "talent.html";
@@ -87,6 +95,7 @@ document.addEventListener("click", function (event) {
             var userEmail = user.email;
             var blogForm = "blogContainer";
             checkAdminStatusAndHideElement(userEmail, blogForm);
+            checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
           adminDropdown();
         });
@@ -120,11 +129,20 @@ document.addEventListener("click", function (event) {
             var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
 
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+            checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
         });
         break;
       case "home-logo":
         url = "home.html";
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+            var elementIdToHide = "admin-status"; // Replace with ID of the element to hide
+
+            checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+          }
+        });
         break;
     }
     // Save the current URL to localStorage
@@ -258,16 +276,28 @@ function loadLastVisitedUrl() {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
-          var blogForm = "blogContainer"; // Replace with ID of the element to hide on talent.html
+          var blogForm = "blogContainer";
+
           checkAdminStatusAndHideElement(userEmail, blogForm);
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
         }
       });
       adminDropdown();
-    } else if (stateData.url.endsWith("points.html")) {
+    }
+    if (stateData.url.endsWith("points.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
           var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
+          checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+        }
+      });
+    }
+    if (stateData.url.endsWith("home.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+          var elementIDToHide = "admin-status"; // Replace with ID of the element to hide/show on the home page
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
       });
