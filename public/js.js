@@ -668,7 +668,8 @@ function loadDirectory() {
       data.forEach((d) => {
         // console.log(d.data().phoneNumber);
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
-        let headshot = findHeadshot(d.data().firstName, d.data().lastName);
+        let headshot = testImage(d.data().firstName, d.data().lastName);
+        console.log(headshot);
         html += `<div class="card"> 
     <img src="${headshot}" alt="${d.data().firstName} ${
           d.data().lastName
@@ -694,17 +695,22 @@ function formatPhoneNumber(phoneNumber) {
   }
 }
 function findHeadshot(first, last) {
-  let url = `${first}-${last}.jpg`;
-  return fetch(url)
-    .then((response) => {
-      if (response.ok) {
-        return url;
-      } else {
-        return "placeholder-headshot.png";
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching headshot:", error);
-      return "placeholder-headshot.png"; // Return placeholder image in case of error
-    });
+  let imageFile = `${first}-${last}.jpg`;
+  return imageFile;
+}
+
+function testImage(first, last) {
+  let imageFile = `${first}-${last}.jpg`;
+  let img = new Image();
+  img.src = imageFile;
+  img.onload = function () {
+    console.log("Image loaded successfully.");
+    return imageFile;
+  };
+  img.onerror = function () {
+    console.log("Error loading image.");
+    imageFile = "placeholder-headshot.png";
+    return "placeholder-headshot.png";
+  };
+  return imageFile;
 }
