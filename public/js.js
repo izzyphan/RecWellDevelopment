@@ -672,7 +672,7 @@ function loadDirectory() {
         if (imageType === "default") {
           headshot = "placeholder-headshot.jpg";
         } else if (imageType === "custom") {
-          headshot = `${first}-${last}.jpg`;
+          headshot = `${d.data().firstName}-${d.data().lastName}.jpg`;
         } else if (typeof imageType === "undefined") {
           headshot = "placeholder-headshot.jpg";
         } else {
@@ -680,9 +680,7 @@ function loadDirectory() {
         }
         console.log(headshot);
         html += `<div class="card"> 
-        <img src="${headshot}" alt="${d.data().firstName} ${
-          d.data().lastName
-        }" class="employee-image"/> 
+        <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
@@ -703,40 +701,3 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
-// function getimage(first, last) {
-//   db.collection("employees")
-//     .get()
-//     .then((res) => {
-//       let data = res.docs;
-//       let html = ``;
-//       data.forEach((d) => {
-//         imageType = d.data().imageType;
-//         if (imageType === "default") {
-//           return placeholder - headshot.jpg;
-//         } else if (imageType === "custom") {
-//           return `${first}-${last}.jpg`;
-//         } else if (typeof imageType === "undefined") {
-//           return "placeholder-headshot.jpg";
-//         } else {
-//           return "placeholder-headshot.jpg";
-//         }
-//       });
-//     });
-// }
-// getimage();
-// function testImage(first, last) {
-//   let imageFile = `${first}-${last}.jpg`;
-//   let img = new Image();
-//   img.src = imageFile;
-//   img.onload = function () {
-//     console.log("Image loaded successfully. 3");
-//     return imageFile;
-//   };
-//   img.onerror = function () {
-//     console.log("Error loading image. 3.5");
-//     return imageError;
-//     testImage("placeholder", "headshot");
-//   };
-//   console.log("HERE 1");
-//   return imageFile;
-// }
