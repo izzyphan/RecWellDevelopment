@@ -513,6 +513,7 @@ p {
   width: 300px;
   background-color: #1c1c1c;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: block;
 }
 
 .EmployeeCard img {
