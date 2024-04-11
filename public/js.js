@@ -668,15 +668,18 @@ function loadDirectory() {
       data.forEach((d) => {
         // console.log(d.data().phoneNumber);
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
+
         let headshot = testImage(d.data().firstName, d.data().lastName);
-        console.log(headshot);
+        console.log(headshot, "2");
+        // craete an image default vs custom variable
         html += `<div class="card"> 
-    <img src="${headshot}" alt="${d.data().firstName} ${
+        <img src="${headshot}" alt="${d.data().firstName} ${
           d.data().lastName
         }" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
+      console.log("4");
       document.querySelector("#employee_directory").innerHTML += html;
     });
 }
@@ -694,24 +697,20 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
-function findHeadshot(first, last) {
-  let imageFile = `${first}-${last}.jpg`;
-  return imageFile;
-}
 
-function testImage(first, last) {
-  let imageFile = `${first}-${last}.jpg`;
-  console.log(imageFile);
-  let img = new Image();
-  img.src = imageFile;
-  img.onload = function () {
-    console.log("Image loaded successfully.");
-    return imageFile;
-  };
-  img.onerror = function () {
-    console.log("Error loading image.");
-    imageFile = "placeholder-headshot.png";
-    return "placeholder-headshot.png";
-  };
-  return imageFile;
-}
+// function testImage(first, last) {
+//   let imageFile = `${first}-${last}.jpg`;
+//   let img = new Image();
+//   img.src = imageFile;
+//   img.onload = function () {
+//     console.log("Image loaded successfully. 3");
+//     return imageFile;
+//   };
+//   img.onerror = function () {
+//     console.log("Error loading image. 3.5");
+//     return imageError;
+//     testImage("placeholder", "headshot");
+//   };
+//   console.log("HERE 1");
+//   return imageFile;
+// }
