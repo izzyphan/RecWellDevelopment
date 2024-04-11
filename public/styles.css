@@ -546,3 +546,7 @@ p {
   object-position: center;
   border-bottom: 1px solid #ddd;
 }
+
+.searchStaff {
+  color: black;
+}
