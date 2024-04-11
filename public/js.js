@@ -154,6 +154,7 @@ document.addEventListener("click", function (event) {
 });
 // Call loadLastVisitedUrl when the page loads or is refreshed
 window.addEventListener("load", loadLastVisitedUrl);
+window.addEventListener("load", loadDirectory());
 
 // Function to handle login form submission
 function handleLoginFormSubmission(event) {
