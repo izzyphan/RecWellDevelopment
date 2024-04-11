@@ -86,6 +86,7 @@ document.addEventListener("click", function (event) {
           }
         });
 
+        loadDirectory();
         break;
       case "talent":
         url = "talent.html";
@@ -153,6 +154,7 @@ document.addEventListener("click", function (event) {
 });
 // Call loadLastVisitedUrl when the page loads or is refreshed
 window.addEventListener("load", loadLastVisitedUrl);
+window.addEventListener("load", loadDirectory());
 
 // Function to handle login form submission
 function handleLoginFormSubmission(event) {
@@ -788,22 +790,6 @@ function adminDropdown() {
 }
 
 // dynamic directory loading
-// db.collection("employees")
-//   .get()
-//   .then((res) => {
-//     let data = res.docs;
-//     let html = ``;
-//     data.forEach((d) => {
-//       html += `<div class="card">
-//       <img src="john-doe.jpg" alt="johndoe" class="employee-image" />
-//       <div class="employee-name">${d.data().firstName} ${
-//         d.data().lastName
-//       }</div>
-//       <div class="employee-phone">${d.data().phoneNumber}</div>
-//     </div>`;
-//     });
-//     document.querySelector("#employee_directory").innerHTML += html;
-//   });
 
 // function formatPhoneNumber() {}
 
@@ -825,5 +811,92 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
       } else {
         console.log("User not found.");
       }
+    });
+}
+populateEmployeeDropdown();
+
+//dynamic directory loading
+function loadDirectory() {
+  db.collection("employees")
+    .get()
+    .then((res) => {
+      let data = res.docs;
+      let html = ``;
+      data.forEach((d) => {
+        let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
+        // let headshot = getimage(d.data().firstName, d.data().lastName);
+        imageType = d.data().imageUrl;
+        if (typeof imageType === "undefined") {
+          headshot = "placeholder-headshot.jpg";
+        } else {
+          headshot = imageType;
+        }
+        console.log(headshot);
+        html += `<div class="EmployeeCard" id="${d.data().email}"> 
+        <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
+    <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
+    <div class="employee-phone">${phoneNumber}</div></div>`;
+      });
+      document.querySelector("#employee_directory").innerHTML += html;
+    });
+}
+loadDirectory();
+function formatPhoneNumber(phoneNumber) {
+  phoneNumber = String(phoneNumber);
+  if (phoneNumber === undefined || phoneNumber.trim() === "") {
+    return "";
+  }
+  // Remove all non-digit characters from the phone number
+  phoneNumber = phoneNumber.replace(/\D/g, "");
+  if (phoneNumber.length === 10) {
+    return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+  } else {
+    return "";
+  }
+}
+
+function findStaff() {
+  let inputSearch = document.getElementById("searchStaff").value;
+  let trueNames = [];
+  db.collection("employees")
+    .where("firstName", ">=", inputSearch)
+    .where("firstName", "<", inputSearch + "\uf8ff")
+    .get()
+    .then((res) => {
+      let data = res.docs;
+      data.forEach((d) => {
+        let fullName = d.data().email;
+        trueNames.push(fullName);
+      });
+      db.collection("employees")
+        .where("lastName", ">=", inputSearch)
+        .where("lastName", "<", inputSearch + "\uf8ff")
+        .get()
+        .then((res) => {
+          let data = res.docs;
+          data.forEach((d) => {
+            let fullName = d.data().email;
+            trueNames.push(fullName);
+          });
+          // Remove duplicates
+          trueNames = Array.from(new Set(trueNames));
+          //duplicate names arent hidden the 2nd time
+          console.log(trueNames);
+          let allStaffArray = document.getElementsByClassName("EmployeeCard");
+          console.log(allStaffArray);
+          let idList = [];
+          for (let i = 0; i < allStaffArray.length; i++) {
+            idList.push(allStaffArray[i].id);
+          }
+          idList = Array.from(new Set(idList));
+          for (let i = 0; i < idList.length; i++) {
+            let testName = idList[i];
+            document.getElementById(testName).style.display = "none";
+          }
+          for (let i = 0; i < trueNames.length; i++) {
+            let testName = trueNames[i];
+            document.getElementById(testName).style.display = "block";
+          }
+        });
     });
 }

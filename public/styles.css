@@ -518,3 +518,31 @@ p {
   font-weight: bold;
   text-align: center;
 }
+
+#filtering {
+  text-align: center;
+  margin-top: -50px;
+}
+
+#staffSearch {
+  margin: 0 10px;
+}
+
+.EmployeeCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 10px;
+  width: 300px;
+  background-color: #1c1c1c;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.EmployeeCard img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: 1px solid #ddd;
+}
