@@ -457,7 +457,7 @@ function loadUserData(userId) {
           account_position.value = position;
           account_department.value = department;
           account_phoneNumber.value = phoneNumber;
-          account_email.value = email;
+          account_email.innerHTML = email; // Update the inner HTML of account_email with the email
           account_biography.value = biography;
           adminAccount_fname.value = firstName;
           adminAccount_lname.value = lastName;

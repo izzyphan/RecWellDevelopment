@@ -560,3 +560,15 @@ p {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
+
+#email {
+  color: red; /* Text color */
+  font-size: 16px; /* Font size */
+  text-align: center;
+  font-weight: bold; /* Font weight */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+#email:hover {
+  color: #dbcdc8; /* New color on hover */
+}
