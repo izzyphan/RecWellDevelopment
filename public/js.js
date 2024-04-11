@@ -930,3 +930,56 @@ function findStaff() {
         });
     });
 }
+function loadUserData(userId) {
+  var userRef = db.collection("employees").doc(userId);
+  userRef
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        var userData = doc.data();
+        var firstName = userData.firstName || ""; 
+        var lastName = userData.lastName || ""; 
+        var capitalizedFirstName =
+          firstName.charAt(0).toUpperCase() + firstName.slice(1);
+
+        var position = userData.position || ""; 
+        var department = userData.department || ""; 
+        var phoneNumber = userData.phoneNumber || ""; 
+        var email = userData.email || ""; 
+        var biography = userData.biography || ""; 
+
+        // Check if the elements exist before accessing them
+        var nameHeader = document.getElementById("NameHeader");
+        var account_fname = document.getElementById("account_fname");
+        var account_lname = document.getElementById("account_lname");
+        var account_position = document.getElementById("position");
+        var account_department = document.getElementById("department");
+        var account_phoneNumber = document.getElementById("phoneNumber");
+        var account_email = document.getElementById("email");
+        var account_biography = document.getElementById("biography");
+
+        if (nameHeader && account_fname && account_lname) {
+          // Change value of elements
+          // Update the inner HTML of nameHeader with the modified firstName
+          nameHeader.innerHTML = capitalizedFirstName + "'s Account";
+          account_fname.value = firstName;
+          account_lname.value = lastName;
+          account_position.value = position;
+          account_department.value = department;
+          account_phoneNumber.value = phoneNumber;
+          account_email.value = email;
+          account_biography.value = biography;
+        }
+        // Add event listener for "SaveAccount" button click
+        document.addEventListener("click", (e) => {
+          // Check if the clicked element is the "SaveAccount" button
+          if (e.target.id === "SaveAccount") {
+            handleFormSubmission(e); // Call handleFormSubmission function
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+}
