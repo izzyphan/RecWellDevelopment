@@ -293,6 +293,15 @@ function loadLastVisitedUrl() {
         }
       });
     }
+    if (stateData.url.endsWith("directory.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+
+          checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+        }
+      });
+    }
     if (stateData.url.endsWith("home.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
