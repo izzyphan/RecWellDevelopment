@@ -78,11 +78,28 @@ document.addEventListener("click", function (event) {
     switch (id) {
       case "directory":
         url = "directory.html";
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+
+            checkAdminStatusAndHideElement(userEmail, "admin-status");
+          }
+        });
+
         loadDirectory();
         break;
       case "talent":
         url = "talent.html";
         displayMostRecentBlog();
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+            var blogForm = "blogContainer";
+            checkAdminStatusAndHideElement(userEmail, blogForm);
+            checkAdminStatusAndHideElement(userEmail, "admin-status");
+          }
+          adminDropdown();
+        });
 
         break;
       case "myaccount":
@@ -106,9 +123,27 @@ document.addEventListener("click", function (event) {
         return; // Exit the function without loading a URL
       case "points":
         url = "points.html";
+        // Call checkAdminStatusAndHideElement when loading points.html and talent.html
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+            var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
+
+            checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+            checkAdminStatusAndHideElement(userEmail, "admin-status");
+          }
+        });
         break;
       case "home-logo":
         url = "home.html";
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var userEmail = user.email;
+            var elementIdToHide = "admin-status"; // Replace with ID of the element to hide
+
+            checkAdminStatusAndHideElement(userEmail, elementIdToHide);
+          }
+        });
         break;
     }
     // Save the current URL to localStorage
@@ -153,6 +188,9 @@ function handleLoginFormSubmission(event) {
               loadContent("home.html", {
                 message: username + " " + "is now logged in.",
               });
+              if (window.location.pathname.endsWith("/points.html")) {
+                checkAdminStatusAndHideElement(username, "penalty_container");
+              }
             })
             .catch((error) => {
               let errorMessage = error.message;
@@ -233,6 +271,46 @@ function loadLastVisitedUrl() {
   const stateData = loadStateFromStorage();
   if (stateData && stateData.url) {
     loadContent(stateData.url);
+    // Check if the last visited URL ends with "talent.html" and call displayMostRecentBlog
+    if (stateData.url.endsWith("talent.html")) {
+      displayMostRecentBlog();
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+          var blogForm = "blogContainer";
+
+          checkAdminStatusAndHideElement(userEmail, blogForm);
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
+        }
+      });
+      adminDropdown();
+    }
+    if (stateData.url.endsWith("points.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+          var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
+          checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+        }
+      });
+    }
+    if (stateData.url.endsWith("home.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+          var elementIDToHide = "admin-status"; // Replace with ID of the element to hide/show on the home page
+          checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+        }
+      });
+    }
+    if (stateData.url.endsWith("myaccount.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userId = user.uid;
+          loadUserData(userId); // Load user data into the form
+        }
+      });
+    }
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
@@ -342,6 +420,7 @@ function loadUserData(userId) {
         var phoneNumber = userData.phoneNumber;
         var email = userData.email;
         var biography = userData.biography;
+        var status = userData.isAdmin;
 
         // Check if the elements exist before accessing them
         var nameHeader = document.getElementById("NameHeader");
@@ -352,6 +431,12 @@ function loadUserData(userId) {
         var account_phoneNumber = document.getElementById("phoneNumber");
         var account_email = document.getElementById("email");
         var account_biography = document.getElementById("biography");
+        var adminAccount_fname = document.getElementById("adminAccount_fname");
+        var adminAccount_lname = document.getElementById("adminAccount_lname");
+        var adminAccount_email = document.getElementById("adminAccount_email");
+        var adminAccount_status = document.getElementById(
+          "adminAccount_status"
+        );
 
         if (nameHeader && account_fname && account_lname) {
           // Change value of elements
@@ -364,12 +449,33 @@ function loadUserData(userId) {
           account_phoneNumber.value = phoneNumber;
           account_email.value = email;
           account_biography.value = biography;
+          adminAccount_fname.value = firstName;
+          adminAccount_lname.value = lastName;
+          adminAccount_email.value = email;
+          adminAccount_status.value = status;
+          // Update image preview if imageUrl exists in userData
+          if (userData.imageUrl) {
+            imagePreview.src = userData.imageUrl;
+          }
         }
         // Add event listener for "SaveAccount" button click
         document.addEventListener("click", (e) => {
           // Check if the clicked element is the "SaveAccount" button
           if (e.target.id === "SaveAccount") {
             handleFormSubmission(e); // Call handleFormSubmission function
+          }
+        }); // Add event listener for image upload change
+        const imageUpload = document.getElementById("imageUpload");
+        imageUpload.addEventListener("change", function () {
+          const file = this.files[0]; // Get the selected file
+          if (file) {
+            const reader = new FileReader(); // Create a FileReader object
+            reader.onload = function (e) {
+              imagePreview.src = e.target.result; // Set the preview image source
+            };
+            reader.readAsDataURL(file); // Read the selected file as a data URL
+          } else {
+            imagePreview.src = ""; // Clear the preview if no file is selected
           }
         });
       }
@@ -379,7 +485,6 @@ function loadUserData(userId) {
     });
 }
 
-// Function to handle form submission and update data in Firestore
 function handleFormSubmission(event) {
   event.preventDefault(); // Prevent the default form submission behavior
 
@@ -392,60 +497,60 @@ function handleFormSubmission(event) {
   var email = document.getElementById("email").value;
   var biography = document.getElementById("biography").value;
 
+  // Get the image file from the file input
+  var imageFile = document.getElementById("imageUpload").files[0];
+
   // Get the user ID of the authenticated user
   var userId = firebase.auth().currentUser.uid;
 
   // Check if the user ID is available
-  if (userId) {
+  if (userId && imageFile) {
     // Reference the user's document in Firestore
     var userRef = db.collection("employees").doc(userId);
 
-    // Update the user data in Firestore
-    userRef
-      .set(
-        {
-          firstName: firstName,
-          lastName: lastName,
-          position: position,
-          department: department,
-          phoneNumber: phoneNumber,
-          email: email,
-          biography: biography,
-          // Add more fields as needed
-        },
-        { merge: true } // Merge the new data with existing data
-      )
-      .then(() => {
-        configure_message_bar("Account Has Been Saved!");
-        // Scroll to the message bar
-        document
-          .getElementById("message_bar")
-          .scrollIntoView({ behavior: "smooth" });
-      })
-      .catch((error) => {
-        console.error("Error updating user data:", error);
-        // Optionally, display an error message to the user
+    // Create a storage reference for the image file
+    var storageRef = firebase
+      .storage()
+      .ref()
+      .child("user_images/" + userId + "/" + imageFile.name);
+
+    // Upload the image file to Firebase Storage
+    storageRef.put(imageFile).then(function (snapshot) {
+      // Get the download URL of the uploaded image
+      storageRef.getDownloadURL().then(function (imageUrl) {
+        // Update the user data in Firestore, including imageUrl
+        userRef
+          .set(
+            {
+              firstName: firstName,
+              lastName: lastName,
+              position: position,
+              department: department,
+              phoneNumber: phoneNumber,
+              email: email,
+              biography: biography,
+              imageUrl: imageUrl, // Add imageUrl to the update data
+            },
+            { merge: true } // Merge the new data with existing data
+          )
+          .then(() => {
+            configure_message_bar("Account Has Been Saved!");
+            // Scroll to the message bar
+            document
+              .getElementById("message_bar")
+              .scrollIntoView({ behavior: "smooth" });
+          })
+          .catch((error) => {
+            console.error("Error updating user data:", error);
+            // Optionally, display an error message to the user
+          });
       });
+    });
   } else {
-    console.error("User ID not available.");
-    // Optionally, handle the case where the user ID is not available
+    console.error("User ID not available or no image selected.");
+    // Optionally, handle the case where the user ID is not available or no image is selected
   }
 }
-
-// Function to check the authentication state and load user data
-function checkAuthStateAndLoadUserData() {
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      // User is signed in
-      var userId = user.uid;
-
-      // Load user data based on the user ID
-      loadUserData(userId);
-    }
-  });
-}
-// Call checkAuthStateAndLoadUserData on page load
-window.addEventListener("load", checkAuthStateAndLoadUserData);
 
 // Event listener for clicks on "My Account" link
 document
@@ -480,9 +585,15 @@ function makeAdmin() {
   var firstName = document.getElementById("adminAccount_fname").value.trim();
   var lastName = document.getElementById("adminAccount_lname").value.trim();
   var email = document.getElementById("adminAccount_email").value.trim();
+  var keyword = document.getElementById("adminAccount_keyword").value.trim();
 
   if (!firstName || !lastName || !email) {
-    console.log("First name, last name, and email are required.");
+    alert("First name, last name, and email are required.");
+    return;
+  }
+
+  if (keyword !== "admin2024") {
+    alert("Incorrect keyword. Admin privileges cannot be granted.");
     return;
   }
 
@@ -506,6 +617,13 @@ function makeAdmin() {
       // Get the first matching document
       const userDoc = querySnapshot.docs[0];
 
+      // Check if the user is already an admin
+      const isAdmin = userDoc.data().isAdmin;
+      if (isAdmin) {
+        alert("This user is already an admin.");
+        return;
+      }
+
       // Update the user's isAdmin field to true
       db.collection("employees")
         .doc(userDoc.id)
@@ -513,12 +631,7 @@ function makeAdmin() {
           isAdmin: true,
         })
         .then(() => {
-          console.log(
-            "User successfully made an admin:",
-            firstName,
-            lastName,
-            email
-          );
+          alert("User successfully made an admin:", firstName, lastName, email);
           // Optionally, update the UI to reflect the change
         })
         .catch((error) => {
@@ -627,35 +740,69 @@ async function displayMostRecentBlog() {
     console.error("Error fetching blog posts:", error);
   }
 }
+// Check if the current page URL contains "talent.html" before calling the function
+if (window.location.href.includes("talent.html")) {
+  displayMostRecentBlog();
+}
+function adminDropdown() {
+  db.collection("employees")
+    .where("isAdmin", "==", true)
+    .get()
+    .then((response) => {
+      let mydocs = response.docs;
+      let all_names = [];
+      mydocs.forEach((doc) => {
+        let firstName = doc.data().firstName;
+        let lastName = doc.data().lastName;
+        if (firstName !== "" && lastName !== "") {
+          // Concatenate first name and last name
+          let fullName = `${firstName} ${lastName}`;
+          all_names.push(fullName);
+        }
+      });
+      // Get the dropdown element
+      let employee_dropdown = document.getElementById("employeeSelect");
 
-displayMostRecentBlog();
+      // Clear existing options
+      employee_dropdown.innerHTML = "";
 
-// Function to fetch employee data from Firestore and populate the dropdown
-async function populateEmployeeDropdown() {
-  const employeeSelect = document.getElementById("employeeSelect");
-
-  try {
-    // Query Firestore to get employee data
-    const querySnapshot = await db.collection("employees").get();
-
-    // Iterate over each document in the query snapshot
-    querySnapshot.forEach((doc) => {
-      // Get the data of the employee
-      const employeeData = doc.data();
-      const firstName = employeeData.firstName;
-
-      // Create an <option> element for the employee and append it to the dropdown
-      const option = document.createElement("option");
-      option.value = doc.id; // Use employee ID or another unique identifier as the value
-      option.text = firstName; // Display the employee's first name
-
-      employeeSelect.appendChild(option);
+      // Loop through all names to add option values
+      all_names.forEach(function (item) {
+        let option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        employee_dropdown.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
     });
-  } catch (error) {
-    console.error("Error fetching employee data:", error);
-  }
 }
 
+// dynamic directory loading
+
+// function formatPhoneNumber() {}
+
+// Function to check admin status and hide/show element based on isAdmin field
+function checkAdminStatusAndHideElement(userEmail, elementId) {
+  const employeesRef = db.collection("employees");
+  employeesRef
+    .where("email", "==", userEmail)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const isAdmin = querySnapshot.docs[0].data().isAdmin;
+        const element = document.getElementById(elementId);
+        if (isAdmin && element) {
+          element.style.display = "block"; // Show the element
+        } else {
+          element.style.display = "none"; // Hide the element
+        }
+      } else {
+        console.log("User not found.");
+      }
+    });
+}
 populateEmployeeDropdown();
 
 //dynamic directory loading

@@ -50,7 +50,7 @@
         <div class="form-group">
           <input type="submit" value="Log In" id="log_in_button" />
 
-          <button id="new_user">New User?</button>
+          <button type="button" id="new_user">New User?</button>
         </div>
       </form>
     </div>
@@ -112,15 +112,15 @@
             type="password"
             id="c_s_password"
             name="c_s_password"
-            required
             placeholder="Confirm Password"
+            required
             oninput="checkPasswordMatch()"
           />
         </div>
         <div id="passwordMatchMessage" class="passwordMatch"></div>
         <div class="form-group">
           <input type="submit" value="Sign Up" id="sign_up_button" />
-          <button id="old_user">Already a User</button>
+          <button type="button" id="old_user">Already a User</button>
         </div>
       </form>
       <!-- error message -->
@@ -158,6 +158,9 @@
         <div id="message_bar"></div>
         <div class="new-content">
           <!-- Content will be dynamically inserted here -->
+          <div id="admin-status" class="admin-status-banner">
+            <span id="admin-status-text">Admin View</span>
+          </div>
           <header>
             <h1>Welcome Rec Well Staff!</h1>
           </header>

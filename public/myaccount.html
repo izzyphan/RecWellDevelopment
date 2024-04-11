@@ -64,30 +64,56 @@
             <th>Biography</th>
             <td><textarea id="biography" rows="4"></textarea></td>
           </tr>
+          <tr>
+            <th>Image</th>
+            <td>
+              <input type="file" id="imageUpload" accept="image/*" />
+              <!-- Image preview -->
+              <img
+                id="imagePreview"
+                alt=""
+                style="max-width: 200px; max-height: 200px"
+              />
+            </td>
+          </tr>
         </table>
         <button id="SaveAccount">Save</button>
         <div id="account_save_message"></div>
       </div>
-    </div>
 
-    <div id="account_container" class="container">
-      <h1 id="NameHeader">Add Admin Status</h1>
-      <table id="accountTable">
-        <tr>
-          <th>First Name</th>
-          <td><input type="text" id="adminAccount_fname" /></td>
-        </tr>
+      <div id="account_container" class="container">
+        <h1 id="NameHeader">Add Admin Status</h1>
+        <table id="accountTable">
+          <tr>
+            <th>Is an Admin</th>
+            <td><input type="text" id="adminAccount_status" /></td>
+          </tr>
+          <tr>
+            <th>First Name</th>
+            <td><input type="text" id="adminAccount_fname" /></td>
+          </tr>
 
-        <tr>
-          <th>Last Name</th>
-          <td><input type="text" id="adminAccount_lname" /></td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td><input type="text" id="adminAccount_email" /></td>
-        </tr>
-      </table>
-      <button onclick="makeAdmin()">Make Admin</button>
+          <tr>
+            <th>Last Name</th>
+            <td><input type="text" id="adminAccount_lname" /></td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td><input type="text" id="adminAccount_email" /></td>
+          </tr>
+          <tr>
+            <th>Keyword</th>
+            <td>
+              <input
+                type="text"
+                id="adminAccount_keyword"
+                placeholder="Enter Admin Keyword Provided"
+              />
+            </td>
+          </tr>
+        </table>
+        <button onclick="makeAdmin()">Make Admin</button>
+      </div>
     </div>
   </body>
 </html>
