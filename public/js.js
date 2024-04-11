@@ -668,15 +668,11 @@ function loadDirectory() {
       data.forEach((d) => {
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
         // let headshot = getimage(d.data().firstName, d.data().lastName);
-        imageType = d.data().imageType;
-        if (imageType === "default") {
-          headshot = "placeholder-headshot.jpg";
-        } else if (imageType === "custom") {
-          headshot = `${d.data().firstName}-${d.data().lastName}.jpg`;
-        } else if (typeof imageType === "undefined") {
+        imageType = d.data().imageUrl;
+        if (typeof imageType === "undefined") {
           headshot = "placeholder-headshot.jpg";
         } else {
-          headshot = "placeholder-headshot.jpg";
+          headshot = imageType;
         }
         console.log(headshot);
         html += `<div class="card"> 
