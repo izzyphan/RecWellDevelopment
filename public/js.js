@@ -666,12 +666,19 @@ function loadDirectory() {
       let data = res.docs;
       let html = ``;
       data.forEach((d) => {
-        // console.log(d.data().phoneNumber);
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
-
-        let headshot = testImage(d.data().firstName, d.data().lastName);
-        console.log(headshot, "2");
-        // craete an image default vs custom variable
+        // let headshot = getimage(d.data().firstName, d.data().lastName);
+        imageType = d.data().imageType;
+        if (imageType === "default") {
+          headshot = "placeholder-headshot.jpg";
+        } else if (imageType === "custom") {
+          headshot = `${first}-${last}.jpg`;
+        } else if (typeof imageType === "undefined") {
+          headshot = "placeholder-headshot.jpg";
+        } else {
+          headshot = "placeholder-headshot.jpg";
+        }
+        console.log(headshot);
         html += `<div class="card"> 
         <img src="${headshot}" alt="${d.data().firstName} ${
           d.data().lastName
@@ -679,7 +686,6 @@ function loadDirectory() {
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
-      console.log("4");
       document.querySelector("#employee_directory").innerHTML += html;
     });
 }
@@ -697,7 +703,27 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
-
+// function getimage(first, last) {
+//   db.collection("employees")
+//     .get()
+//     .then((res) => {
+//       let data = res.docs;
+//       let html = ``;
+//       data.forEach((d) => {
+//         imageType = d.data().imageType;
+//         if (imageType === "default") {
+//           return placeholder - headshot.jpg;
+//         } else if (imageType === "custom") {
+//           return `${first}-${last}.jpg`;
+//         } else if (typeof imageType === "undefined") {
+//           return "placeholder-headshot.jpg";
+//         } else {
+//           return "placeholder-headshot.jpg";
+//         }
+//       });
+//     });
+// }
+// getimage();
 // function testImage(first, last) {
 //   let imageFile = `${first}-${last}.jpg`;
 //   let img = new Image();
