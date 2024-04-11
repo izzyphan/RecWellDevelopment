@@ -853,9 +853,12 @@ function findStaff() {
     .then((res) => {
       let data = res.docs;
       data.forEach((d) => {
-        let firstName = d.data().firstName.toLowerCase();
-        if (firstName.includes(inputSearch)) {
-          trueNames.push(d.id);
+        let firstName = d.data().firstName;
+        if (firstName !== undefined) {
+          firstName = firstName.toLowerCase();
+          if (firstName.includes(inputSearch)) {
+            trueNames.push(d.id);
+          }
         }
       });
       db.collection("employees")
