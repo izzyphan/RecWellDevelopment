@@ -675,7 +675,7 @@ function loadDirectory() {
           headshot = imageType;
         }
         console.log(headshot);
-        html += `<div class="card" id="${d.data().firstName} ${
+        html += `<div class="EmployeeCard" id="${d.data().firstName} ${
           d.data().lastName
         }"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
@@ -703,7 +703,6 @@ function formatPhoneNumber(phoneNumber) {
 function findStaff() {
   let inputSearch = document.getElementById("searchStaff").value;
   let trueNames = [];
-
   db.collection("employees")
     .where("firstName", ">=", inputSearch)
     .where("firstName", "<", inputSearch + "\uf8ff")
@@ -714,7 +713,6 @@ function findStaff() {
         let fullName = `${d.data().firstName} ${d.data().lastName}`;
         trueNames.push(fullName);
       });
-
       db.collection("employees")
         .where("lastName", ">=", inputSearch)
         .where("lastName", "<", inputSearch + "\uf8ff")
@@ -725,10 +723,8 @@ function findStaff() {
             let fullName = `${d.data().firstName} ${d.data().lastName}`;
             trueNames.push(fullName);
           });
-
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
-
           console.log(trueNames);
         });
     });
