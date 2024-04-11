@@ -175,6 +175,10 @@ footer {
 
 h1 {
   text-align: center;
+  transition: color 0.3s ease;
+}
+h1:hover {
+  color: #dbcdc8; /* New color on hover */
 }
 
 /* log in page css */
@@ -550,7 +554,7 @@ p {
 /* Style for the dropdown menus */
 .select-container {
   padding: 10px;
-  width: 200px; /* Adjust the width as needed */
+  width: 655px;
 }
 
 /* Style for the dropdown options */

@@ -545,7 +545,7 @@ function handleFormSubmission(event) {
               position: position,
               department: department,
               phoneNumber: phoneNumber,
-              email: email,
+
               biography: biography,
               imageUrl: imageUrl, // Add imageUrl to the update data
             },
@@ -574,7 +574,7 @@ function handleFormSubmission(event) {
           position: position,
           department: department,
           phoneNumber: phoneNumber,
-          email: email,
+
           biography: biography,
         },
         { merge: true } // Merge the new data with existing data
