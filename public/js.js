@@ -850,14 +850,18 @@ function findStaff() {
   let inputSearch = document.getElementById("searchStaff").value;
   let trueNames = [];
   db.collection("employees")
-    .where("firstName", ">=", inputSearch)
-    .where("firstName", "<", inputSearch + "\uf8ff")
+    // .where("firstName", ">=", inputSearch)
+    // .where("firstName", "<", inputSearch + "\uf8ff")
     .get()
     .then((res) => {
       let data = res.docs;
       data.forEach((d) => {
-        let fullName = d.id;
-        trueNames.push(fullName);
+        // let fullName = d.id;
+        // trueNames.push(fullName);
+        let firstName = d.data().firstName.toLowerCase();
+        if (firstName.includes(inputSearch)) {
+          trueNames.push(d.id);
+        }
       });
       db.collection("employees")
         .where("lastName", ">=", inputSearch)
