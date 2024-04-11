@@ -847,7 +847,7 @@ function formatPhoneNumber(phoneNumber) {
 }
 
 function findStaff() {
-  let inputSearch = document.getElementById("searchStaff").value;
+  let inputSearch = document.getElementById("searchStaff").value.toLowerCase();
   let trueNames = [];
   db.collection("employees")
     // .where("firstName", ">=", inputSearch)
