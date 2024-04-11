@@ -864,14 +864,18 @@ function findStaff() {
         }
       });
       db.collection("employees")
-        .where("lastName", ">=", inputSearch)
-        .where("lastName", "<", inputSearch + "\uf8ff")
+        // .where("lastName", ">=", inputSearch)
+        // .where("lastName", "<", inputSearch + "\uf8ff")
         .get()
         .then((res) => {
           let data = res.docs;
           data.forEach((d) => {
-            let fullName = d.id;
-            trueNames.push(fullName);
+            // let fullName = d.id;
+            // trueNames.push(fullName);
+            let firstName = d.data().firstName.toLowerCase(); // Convert firstName to lowercase
+            if (firstName.includes(inputSearch) && !trueNames.includes(d.id)) {
+              trueNames.push(d.id);
+            }
           });
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
