@@ -870,11 +870,12 @@ function findStaff() {
         .then((res) => {
           let data = res.docs;
           data.forEach((d) => {
-            // let fullName = d.id;
-            // trueNames.push(fullName);
-            let firstName = d.data().firstName.toLowerCase(); // Convert firstName to lowercase
-            if (firstName.includes(inputSearch) && !trueNames.includes(d.id)) {
-              trueNames.push(d.id);
+            let lastName = d.data().lastName;
+            if (lastName !== undefined) {
+              lastName = lastName.toLowerCase();
+              if (lastName.includes(inputSearch)) {
+                trueNames.push(d.id);
+              }
             }
           });
           // Remove duplicates
