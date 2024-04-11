@@ -279,7 +279,7 @@ function loadLastVisitedUrl() {
           var blogForm = "blogContainer";
 
           checkAdminStatusAndHideElement(userEmail, blogForm);
-          checkAdminStatusAndHideElement(userEmail, "admin-status");
+          checkAdminStatusAndHideElement(userEmail);
         }
       });
       adminDropdown();
@@ -298,7 +298,7 @@ function loadLastVisitedUrl() {
         if (user) {
           var userEmail = user.email;
 
-          checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
         }
       });
     }
