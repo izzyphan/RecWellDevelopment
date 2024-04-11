@@ -507,17 +507,25 @@ function handleFormSubmission(event) {
   var email = document.getElementById("email").value;
   var biography = document.getElementById("biography").value;
 
-  // Get the image file from the file input
-  var imageFile = document.getElementById("imageUpload").files[0];
+  // Check if first name or last name is empty or email is being changed
+  if (firstName.trim() === "" || lastName.trim() === "") {
+    alert("First name and last name cannot be empty.");
+    return;
+  }
+  if (email.trim() === "") {
+    alert("Email address cannot be empty.");
+    return;
+  }
 
   // Get the user ID of the authenticated user
   var userId = firebase.auth().currentUser.uid;
 
-  // Check if the user ID is available
-  if (userId && imageFile) {
-    // Reference the user's document in Firestore
-    var userRef = db.collection("employees").doc(userId);
+  // Reference the user's document in Firestore
+  var userRef = db.collection("employees").doc(userId);
 
+  // Check if an image file is selected
+  var imageFile = document.getElementById("imageUpload").files[0];
+  if (imageFile) {
     // Create a storage reference for the image file
     var storageRef = firebase
       .storage()
@@ -557,8 +565,31 @@ function handleFormSubmission(event) {
       });
     });
   } else {
-    console.error("User ID not available or no image selected.");
-    // Optionally, handle the case where the user ID is not available or no image is selected
+    // Update the user data in Firestore without imageUrl
+    userRef
+      .set(
+        {
+          firstName: firstName,
+          lastName: lastName,
+          position: position,
+          department: department,
+          phoneNumber: phoneNumber,
+          email: email,
+          biography: biography,
+        },
+        { merge: true } // Merge the new data with existing data
+      )
+      .then(() => {
+        configure_message_bar("Account Has Been Saved!");
+        // Scroll to the message bar
+        document
+          .getElementById("message_bar")
+          .scrollIntoView({ behavior: "smooth" });
+      })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+        // Optionally, display an error message to the user
+      });
   }
 }
 
