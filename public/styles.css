@@ -495,3 +495,12 @@ p {
   margin-top: -10px;
   text-align: center;
 }
+
+#filtering {
+  text-align: center;
+  margin-top: -50px;
+}
+
+#staffSearch {
+  margin: 0 10px;
+}
