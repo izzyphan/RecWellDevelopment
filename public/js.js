@@ -302,6 +302,14 @@ function loadLastVisitedUrl() {
         }
       });
     }
+    if (stateData.url.endsWith("myaccount.html")) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userId = user.uid;
+          loadUserData(userId); // Load user data into the form
+        }
+      });
+    }
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
@@ -542,23 +550,6 @@ function handleFormSubmission(event) {
     // Optionally, handle the case where the user ID is not available or no image is selected
   }
 }
-
-// Function to check the authentication state and load user data
-function checkAuthStateAndLoadUserData() {
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      // User is signed in
-      var userId = user.uid;
-
-      // Load user data based on the user ID
-      loadUserData(userId);
-      // Get the current user's email
-      var currentUserEmail = user.email;
-    }
-  });
-}
-// Call checkAuthStateAndLoadUserData on page load
-window.addEventListener("load", checkAuthStateAndLoadUserData);
 
 // Event listener for clicks on "My Account" link
 document
