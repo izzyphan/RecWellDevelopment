@@ -176,7 +176,10 @@ footer {
 h1 {
   text-align: center;
   transition: color 0.3s ease;
+  font-family: "Radikal-Regular", "Helvetica Neue", "Helvetica", "Arial",
+    "sans-serif";
 }
+
 h1:hover {
   color: #dbcdc8; /* New color on hover */
 }
