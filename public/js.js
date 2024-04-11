@@ -675,7 +675,9 @@ function loadDirectory() {
           headshot = imageType;
         }
         console.log(headshot);
-        html += `<div class="card"> 
+        html += `<div class="card" id="${d.data().firstName} ${
+          d.data().lastName
+        }"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
@@ -700,28 +702,34 @@ function formatPhoneNumber(phoneNumber) {
 
 function findStaff() {
   let inputSearch = document.getElementById("searchStaff").value;
-  console.log(inputSearch);
+  let trueNames = [];
+
   db.collection("employees")
-    .where("firstName", ">=", `${inputSearch}`)
-    .where("firstName", "<", `${inputSearch}\uf8ff`)
-    .get()
-    .then((res) => {
-      console.log("HELP");
-      let data = res.docs;
-      data.forEach((d) => {
-        console.log(d.data().firstName);
-      });
-    });
-  db.collection("employees")
-    .where("lastName", ">=", `${inputSearch}`)
-    .where("lastName", "<", `${inputSearch}\uf8ff`)
+    .where("firstName", ">=", inputSearch)
+    .where("firstName", "<", inputSearch + "\uf8ff")
     .get()
     .then((res) => {
       let data = res.docs;
       data.forEach((d) => {
-        console.log(d.data().lastName);
+        let fullName = `${d.data().firstName} ${d.data().lastName}`;
+        trueNames.push(fullName);
       });
+
+      db.collection("employees")
+        .where("lastName", ">=", inputSearch)
+        .where("lastName", "<", inputSearch + "\uf8ff")
+        .get()
+        .then((res) => {
+          let data = res.docs;
+          data.forEach((d) => {
+            let fullName = `${d.data().firstName} ${d.data().lastName}`;
+            trueNames.push(fullName);
+          });
+
+          // Remove duplicates
+          trueNames = Array.from(new Set(trueNames));
+
+          console.log(trueNames);
+        });
     });
 }
-
-//searching the db first and last name
