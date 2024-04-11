@@ -331,16 +331,16 @@ function loadUserData(userId) {
     .then(function (doc) {
       if (doc.exists) {
         var userData = doc.data();
-        var firstName = userData.firstName;
-        var lastName = userData.lastName;
+        var firstName = userData.firstName || ""; 
+        var lastName = userData.lastName || ""; 
         var capitalizedFirstName =
           firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
-        var position = userData.position;
-        var department = userData.department;
-        var phoneNumber = userData.phoneNumber;
-        var email = userData.email;
-        var biography = userData.biography;
+        var position = userData.position || ""; 
+        var department = userData.department || ""; 
+        var phoneNumber = userData.phoneNumber || ""; 
+        var email = userData.email || ""; 
+        var biography = userData.biography || ""; 
 
         // Check if the elements exist before accessing them
         var nameHeader = document.getElementById("NameHeader");
@@ -377,6 +377,7 @@ function loadUserData(userId) {
       console.log("Error getting document:", error);
     });
 }
+
 
 // Function to handle form submission and update data in Firestore
 function handleFormSubmission(event) {

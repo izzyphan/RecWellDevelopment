@@ -90,17 +90,21 @@
       <button onclick="makeAdmin()">Make Admin</button>
     </div>
     <script>
-      document.getElementById("position").value = "";
-      document.getElementById("department").value = "";
-      document.getElementById("phoneNumber").value = "";
-      document.getElementById("biography").value = "";
+      document.addEventListener("DOMContentLoaded", function() {
+        // Set initial values for fields to empty strings
+        document.getElementById("position").value = "";
+        document.getElementById("department").value = "";
+        document.getElementById("phoneNumber").value = "";
+        document.getElementById("biography").value = "";
     
-      document.getElementById("adminAccount_fname").value = "";
-      document.getElementById("adminAccount_lname").value = "";
-      document.getElementById("adminAccount_email").value = "";
+        document.getElementById("adminAccount_fname").value = "";
+        document.getElementById("adminAccount_lname").value = "";
+        document.getElementById("adminAccount_email").value = "";
     
-      function makeAdmin() {
-      }
+        function makeAdmin() {
+          // Your makeAdmin function logic here
+        }
+      });
     </script>
   </body>
 </html>
