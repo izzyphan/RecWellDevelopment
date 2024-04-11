@@ -64,6 +64,18 @@
             <th>Biography</th>
             <td><textarea id="biography" rows="4"></textarea></td>
           </tr>
+          <tr>
+            <th>Image</th>
+            <td>
+              <input type="file" id="imageUpload" accept="image/*" />
+              <!-- Image preview -->
+              <img
+                id="imagePreview"
+                alt=""
+                style="max-width: 200px; max-height: 200px"
+              />
+            </td>
+          </tr>
         </table>
         <button id="SaveAccount">Save</button>
         <div id="account_save_message"></div>

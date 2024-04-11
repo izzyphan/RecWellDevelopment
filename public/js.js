@@ -444,12 +444,29 @@ function loadUserData(userId) {
           adminAccount_lname.value = lastName;
           adminAccount_email.value = email;
           adminAccount_status.value = status;
+          // Update image preview if imageUrl exists in userData
+          if (userData.imageUrl) {
+            imagePreview.src = userData.imageUrl;
+          }
         }
         // Add event listener for "SaveAccount" button click
         document.addEventListener("click", (e) => {
           // Check if the clicked element is the "SaveAccount" button
           if (e.target.id === "SaveAccount") {
             handleFormSubmission(e); // Call handleFormSubmission function
+          }
+        }); // Add event listener for image upload change
+        const imageUpload = document.getElementById("imageUpload");
+        imageUpload.addEventListener("change", function () {
+          const file = this.files[0]; // Get the selected file
+          if (file) {
+            const reader = new FileReader(); // Create a FileReader object
+            reader.onload = function (e) {
+              imagePreview.src = e.target.result; // Set the preview image source
+            };
+            reader.readAsDataURL(file); // Read the selected file as a data URL
+          } else {
+            imagePreview.src = ""; // Clear the preview if no file is selected
           }
         });
       }
@@ -459,7 +476,6 @@ function loadUserData(userId) {
     });
 }
 
-// Function to handle form submission and update data in Firestore
 function handleFormSubmission(event) {
   event.preventDefault(); // Prevent the default form submission behavior
 
@@ -472,43 +488,58 @@ function handleFormSubmission(event) {
   var email = document.getElementById("email").value;
   var biography = document.getElementById("biography").value;
 
+  // Get the image file from the file input
+  var imageFile = document.getElementById("imageUpload").files[0];
+
   // Get the user ID of the authenticated user
   var userId = firebase.auth().currentUser.uid;
 
   // Check if the user ID is available
-  if (userId) {
+  if (userId && imageFile) {
     // Reference the user's document in Firestore
     var userRef = db.collection("employees").doc(userId);
 
-    // Update the user data in Firestore
-    userRef
-      .set(
-        {
-          firstName: firstName,
-          lastName: lastName,
-          position: position,
-          department: department,
-          phoneNumber: phoneNumber,
-          email: email,
-          biography: biography,
-          // Add more fields as needed
-        },
-        { merge: true } // Merge the new data with existing data
-      )
-      .then(() => {
-        configure_message_bar("Account Has Been Saved!");
-        // Scroll to the message bar
-        document
-          .getElementById("message_bar")
-          .scrollIntoView({ behavior: "smooth" });
-      })
-      .catch((error) => {
-        console.error("Error updating user data:", error);
-        // Optionally, display an error message to the user
+    // Create a storage reference for the image file
+    var storageRef = firebase
+      .storage()
+      .ref()
+      .child("user_images/" + userId + "/" + imageFile.name);
+
+    // Upload the image file to Firebase Storage
+    storageRef.put(imageFile).then(function (snapshot) {
+      // Get the download URL of the uploaded image
+      storageRef.getDownloadURL().then(function (imageUrl) {
+        // Update the user data in Firestore, including imageUrl
+        userRef
+          .set(
+            {
+              firstName: firstName,
+              lastName: lastName,
+              position: position,
+              department: department,
+              phoneNumber: phoneNumber,
+              email: email,
+              biography: biography,
+              imageUrl: imageUrl, // Add imageUrl to the update data
+            },
+            { merge: true } // Merge the new data with existing data
+          )
+          .then(() => {
+            configure_message_bar("Account Has Been Saved!");
+            // Scroll to the message bar
+            document
+              .getElementById("message_bar")
+              .scrollIntoView({ behavior: "smooth" });
+          })
+          .catch((error) => {
+            console.error("Error updating user data:", error);
+            // Optionally, display an error message to the user
+          });
       });
+    });
   } else {
-    console.error("User ID not available.");
-    // Optionally, handle the case where the user ID is not available
+    console.error("User ID not available or no image selected.");
+    // Optionally, handle the case where the user ID is not available or no image is selected
   }
 }
 
