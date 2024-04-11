@@ -120,7 +120,7 @@ document.addEventListener("click", function (event) {
             console.log("User is not authenticated.");
           }
         });
-        return; // Exit the function without loading a URL
+        break;
       case "points":
         url = "points.html";
         // Call checkAdminStatusAndHideElement when loading points.html and talent.html
@@ -154,7 +154,6 @@ document.addEventListener("click", function (event) {
 });
 // Call loadLastVisitedUrl when the page loads or is refreshed
 window.addEventListener("load", loadLastVisitedUrl);
-window.addEventListener("load", loadDirectory());
 
 // Function to handle login form submission
 function handleLoginFormSubmission(event) {
@@ -281,7 +280,7 @@ function loadLastVisitedUrl() {
           var blogForm = "blogContainer";
 
           checkAdminStatusAndHideElement(userEmail, blogForm);
-          checkAdminStatusAndHideElement(userEmail);
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
         }
       });
       adminDropdown();
@@ -296,6 +295,7 @@ function loadLastVisitedUrl() {
       });
     }
     if (stateData.url.endsWith("directory.html")) {
+      loadDirectory();
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
@@ -813,7 +813,6 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
       }
     });
 }
-populateEmployeeDropdown();
 
 //dynamic directory loading
 function loadDirectory() {
@@ -840,7 +839,7 @@ function loadDirectory() {
       document.querySelector("#employee_directory").innerHTML += html;
     });
 }
-loadDirectory();
+
 function formatPhoneNumber(phoneNumber) {
   phoneNumber = String(phoneNumber);
   if (phoneNumber === undefined || phoneNumber.trim() === "") {
