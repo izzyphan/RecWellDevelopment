@@ -697,3 +697,31 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
+
+function findStaff() {
+  let inputSearch = document.getElementById("searchStaff").value;
+  console.log(inputSearch);
+  db.collection("employees")
+    .where("firstName", ">=", `${inputSearch}`)
+    .where("firstName", "<", `${inputSearch}\uf8ff`)
+    .get()
+    .then((res) => {
+      console.log("HELP");
+      let data = res.docs;
+      data.forEach((d) => {
+        console.log(d.data().firstName);
+      });
+    });
+  db.collection("employees")
+    .where("lastName", ">=", `${inputSearch}`)
+    .where("lastName", "<", `${inputSearch}\uf8ff`)
+    .get()
+    .then((res) => {
+      let data = res.docs;
+      data.forEach((d) => {
+        console.log(d.data().lastName);
+      });
+    });
+}
+
+//searching the db first and last name

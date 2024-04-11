@@ -37,10 +37,17 @@
       </header>
       <div>
         <div id="filtering">
-          <p>
-            Find Staff:
-            <input id="staffSearch" type="text" placeholder="" />
-          </p>
+          <form>
+            <p>
+              Find Staff:
+              <input
+                id="searchStaff"
+                type="text"
+                oninput="findStaff()"
+                placeholder="Search"
+              />
+            </p>
+          </form>
         </div>
       </div>
       <div class="employee_directory" id="employee_directory"></div>
