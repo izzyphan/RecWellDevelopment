@@ -675,9 +675,7 @@ function loadDirectory() {
           headshot = imageType;
         }
         console.log(headshot);
-        html += `<div class="EmployeeCard" id="${d.data().firstName} ${
-          d.data().lastName
-        }"> 
+        html += `<div class="EmployeeCard" id="${d.data().email}"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
@@ -710,7 +708,7 @@ function findStaff() {
     .then((res) => {
       let data = res.docs;
       data.forEach((d) => {
-        let fullName = `${d.data().firstName} ${d.data().lastName}`;
+        let fullName = d.data().email;
         trueNames.push(fullName);
       });
       db.collection("employees")
@@ -720,7 +718,7 @@ function findStaff() {
         .then((res) => {
           let data = res.docs;
           data.forEach((d) => {
-            let fullName = `${d.data().firstName} ${d.data().lastName}`;
+            let fullName = d.data().email;
             trueNames.push(fullName);
           });
           // Remove duplicates
