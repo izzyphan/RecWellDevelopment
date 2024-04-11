@@ -115,7 +115,7 @@ document.addEventListener("click", function (event) {
             // Save the current URL to localStorage
             saveStateToStorage({ url });
             // Load the content corresponding to the clicked link
-            loadContent(url);
+            // loadContent(url);
           } else {
             console.log("User is not authenticated.");
           }
@@ -510,10 +510,6 @@ function handleFormSubmission(event) {
   // Check if first name or last name is empty or email is being changed
   if (firstName.trim() === "" || lastName.trim() === "") {
     alert("First name and last name cannot be empty.");
-    return;
-  }
-  if (email.trim() === "") {
-    alert("Email address cannot be empty.");
     return;
   }
 
