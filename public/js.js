@@ -822,7 +822,6 @@ function loadDirectory() {
         } else {
           headshot = imageType;
         }
-        console.log(headshot);
         html += `<div class="EmployeeCard" id="${d.id}"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
@@ -850,22 +849,16 @@ function findStaff() {
   let inputSearch = document.getElementById("searchStaff").value.toLowerCase();
   let trueNames = [];
   db.collection("employees")
-    // .where("firstName", ">=", inputSearch)
-    // .where("firstName", "<", inputSearch + "\uf8ff")
     .get()
     .then((res) => {
       let data = res.docs;
       data.forEach((d) => {
-        // let fullName = d.id;
-        // trueNames.push(fullName);
         let firstName = d.data().firstName.toLowerCase();
         if (firstName.includes(inputSearch)) {
           trueNames.push(d.id);
         }
       });
       db.collection("employees")
-        // .where("lastName", ">=", inputSearch)
-        // .where("lastName", "<", inputSearch + "\uf8ff")
         .get()
         .then((res) => {
           let data = res.docs;
@@ -880,10 +873,7 @@ function findStaff() {
           });
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
-          //duplicate names arent hidden the 2nd time
-          console.log(trueNames);
           let allStaffArray = document.getElementsByClassName("EmployeeCard");
-          console.log(allStaffArray);
           let idList = [];
           for (let i = 0; i < allStaffArray.length; i++) {
             idList.push(allStaffArray[i].id);
