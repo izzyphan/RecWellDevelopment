@@ -241,17 +241,22 @@ function handleSignupFormSubmission(event) {
       loadContent("home.html", {
         message: s_username + " " + "is now logged in.",
       });
+      // Hide the modal
+      hideModal();
     })
     .catch((error) => {
       // Handle authentication errors
       console.error("Error creating user:", error);
-      // Display error message
-      document.querySelector(".error_message2").innerHTML =
-        "Error creating user";
-    })
-    .finally(() => {
-      // Hide the modal
-      hideModal();
+      // Check if the error is due to email already existing
+      if (error.code === "auth/email-already-in-use") {
+        // Display error message
+        document.querySelector(".error_message2").innerHTML =
+          "Email already in use. Please use a different email.";
+      } else {
+        // Display generic error message
+        document.querySelector(".error_message2").innerHTML =
+          "Error creating user";
+      }
     });
 }
 
@@ -415,84 +420,77 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to load user data into the table
 function loadUserData(userId) {
   var userRef = db.collection("employees").doc(userId);
-  userRef
-    .get()
-    .then(function (doc) {
-      if (doc.exists) {
-        var userData = doc.data();
-        var firstName = userData.firstName;
-        var lastName = userData.lastName;
-        var capitalizedFirstName =
-          firstName.charAt(0).toUpperCase() + firstName.slice(1);
+  userRef.get().then(function (doc) {
+    if (doc.exists) {
+      var userData = doc.data();
+      var firstName = userData.firstName;
+      var lastName = userData.lastName;
+      var capitalizedFirstName =
+        firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
-        var position = userData.position;
-        var department = userData.department;
-        var phoneNumber = userData.phoneNumber;
-        var email = userData.email;
-        var biography = userData.biography;
-        var status = userData.isAdmin;
+      var position = userData.position;
+      var department = userData.department;
+      var phoneNumber = userData.phoneNumber;
+      var email = userData.email;
+      var biography = userData.biography;
+      var status = userData.isAdmin;
 
-        // Check if the elements exist before accessing them
-        var nameHeader = document.getElementById("NameHeader");
-        var account_fname = document.getElementById("account_fname");
-        var account_lname = document.getElementById("account_lname");
-        var account_position = document.getElementById("position");
-        var account_department = document.getElementById("department");
-        var account_phoneNumber = document.getElementById("phoneNumber");
-        var account_email = document.getElementById("email");
-        var account_biography = document.getElementById("biography");
-        var adminAccount_fname = document.getElementById("adminAccount_fname");
-        var adminAccount_lname = document.getElementById("adminAccount_lname");
-        var adminAccount_email = document.getElementById("adminAccount_email");
-        var adminAccount_status = document.getElementById(
-          "adminAccount_status"
-        );
+      // Check if the elements exist before accessing them
+      var nameHeader = document.getElementById("NameHeader");
+      var account_fname = document.getElementById("account_fname");
+      var account_lname = document.getElementById("account_lname");
+      var account_position = document.getElementById("position");
+      var account_department = document.getElementById("department");
+      var account_phoneNumber = document.getElementById("phoneNumber");
+      var account_email = document.getElementById("email");
+      var account_biography = document.getElementById("biography");
+      var adminAccount_fname = document.getElementById("adminAccount_fname");
+      var adminAccount_lname = document.getElementById("adminAccount_lname");
+      var adminAccount_email = document.getElementById("adminAccount_email");
+      var adminAccount_status = document.getElementById("adminAccount_status");
 
-        if (nameHeader && account_fname && account_lname) {
-          // Change value of elements
-          // Update the inner HTML of nameHeader with the modified firstName
-          nameHeader.innerHTML = capitalizedFirstName + "'s Account";
-          account_fname.value = firstName;
-          account_lname.value = lastName;
-          account_position.value = position;
-          account_department.value = department;
-          account_phoneNumber.value = phoneNumber;
-          account_email.innerHTML = email; // Update the inner HTML of account_email with the email
-          account_biography.value = biography;
-          adminAccount_fname.value = firstName;
-          adminAccount_lname.value = lastName;
-          adminAccount_email.value = email;
-          adminAccount_status.value = status;
-          // Update image preview if imageUrl exists in userData
-          if (userData.imageUrl) {
-            imagePreview.src = userData.imageUrl;
-          }
+      if (nameHeader && account_fname && account_lname) {
+        // Change value of elements
+        // Update the inner HTML of nameHeader with the modified firstName
+        nameHeader.innerHTML = capitalizedFirstName + "'s Account";
+        account_fname.value = firstName;
+        account_lname.value = lastName;
+        account_position.value = position;
+        account_department.value = department;
+        account_phoneNumber.value = phoneNumber;
+        account_email.innerHTML = email; // Update the inner HTML of account_email with the email
+        account_biography.value = biography;
+        adminAccount_fname.value = firstName;
+        adminAccount_lname.value = lastName;
+        adminAccount_email.value = email;
+        adminAccount_status.value = status;
+        // Update image preview if imageUrl exists in userData
+        if (userData.imageUrl) {
+          imagePreview.src = userData.imageUrl;
         }
-        // Add event listener for "SaveAccount" button click
-        document.addEventListener("click", (e) => {
-          // Check if the clicked element is the "SaveAccount" button
-          if (e.target.id === "SaveAccount") {
-            handleFormSubmission(e); // Call handleFormSubmission function
-          }
-        }); // Add event listener for image upload change
-        const imageUpload = document.getElementById("imageUpload");
-        imageUpload.addEventListener("change", function () {
-          const file = this.files[0]; // Get the selected file
-          if (file) {
-            const reader = new FileReader(); // Create a FileReader object
-            reader.onload = function (e) {
-              imagePreview.src = e.target.result; // Set the preview image source
-            };
-            reader.readAsDataURL(file); // Read the selected file as a data URL
-          } else {
-            imagePreview.src = ""; // Clear the preview if no file is selected
-          }
-        });
       }
-    })
-    .catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+      // Add event listener for "SaveAccount" button click
+      document.addEventListener("click", (e) => {
+        // Check if the clicked element is the "SaveAccount" button
+        if (e.target.id === "SaveAccount") {
+          handleFormSubmission(e); // Call handleFormSubmission function
+        }
+      }); // Add event listener for image upload change
+      const imageUpload = document.getElementById("imageUpload");
+      imageUpload.addEventListener("change", function () {
+        const file = this.files[0]; // Get the selected file
+        if (file) {
+          const reader = new FileReader(); // Create a FileReader object
+          reader.onload = function (e) {
+            imagePreview.src = e.target.result; // Set the preview image source
+          };
+          reader.readAsDataURL(file); // Read the selected file as a data URL
+        } else {
+          imagePreview.src = ""; // Clear the preview if no file is selected
+        }
+      });
+    }
+  });
 }
 
 function handleFormSubmission(event) {
@@ -588,21 +586,6 @@ function handleFormSubmission(event) {
       });
   }
 }
-
-// Event listener for clicks on "My Account" link
-document
-  .getElementById("myaccount")
-  .addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent default link behavior
-
-    // Call loadUserData function to load user data into the form
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        var userId = user.uid;
-        loadUserData(userId);
-      }
-    });
-  });
 
 //Confirm Matching Passwords
 function checkPasswordMatch() {
