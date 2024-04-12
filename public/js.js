@@ -384,6 +384,7 @@ function handleLogout() {
   auth.signOut().then(() => {
     // Reload the page to trigger the onAuthStateChanged listener
     window.location.href = "home.html";
+    saveStateToStorage("home.html");
     window.location.reload();
   });
 }
@@ -840,7 +841,7 @@ function loadDirectory() {
         } else {
           headshot = imageType;
         }
-        console.log(headshot);
+
         html += `<div class="EmployeeCard" id="${d.data().email}"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
@@ -890,9 +891,9 @@ function findStaff() {
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
           //duplicate names arent hidden the 2nd time
-          console.log(trueNames);
+
           let allStaffArray = document.getElementsByClassName("EmployeeCard");
-          console.log(allStaffArray);
+
           let idList = [];
           for (let i = 0; i < allStaffArray.length; i++) {
             idList.push(allStaffArray[i].id);
