@@ -755,7 +755,7 @@ async function displayMostRecentBlog() {
       outputDiv.innerHTML = `
       <h2>${blogPost.title}</h2>
       <h3>Published By: ${blogPost.author}</h3>
-
+      
       <embed id="embedPdf" src="${blogPost.content}" type="application/pdf" width="100%" height="600px" />
       <!-- Add other fields as needed -->
       `;
@@ -847,13 +847,20 @@ function loadDirectory() {
           headshot = imageType;
         }
 
-        html += `<div class="EmployeeCard" id="${d.data().email}"> 
+        html += `<div class="card" id="${
+          d.data().email
+        }" onclick="expandCard('${d.data().email}')"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
     <div class="employee-phone">${phoneNumber}</div></div>`;
       });
       document.querySelector("#employee_directory").innerHTML += html;
     });
+}
+
+function expandCard(email) {
+  let card = document.getElementById(email);
+  card.classList.toggle("expanded");
 }
 
 function formatPhoneNumber(phoneNumber) {
