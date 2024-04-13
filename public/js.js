@@ -698,12 +698,15 @@ async function handlePostBlogClick(event) {
           // Get the download URL of the uploaded file
           const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
           const publishDate = new Date();
+          const author = document.getElementById("employeeSelect").value;
+          const title = document.getElementById("title").value;
 
           // Add the PDF details to Firestore
           await db.collection("Blog").add({
-            title: file.name,
             content: downloadURL, // Store the download URL
             publishDate: publishDate,
+            author: author,
+            title: title,
             // Add other attributes as needed (e.g., authorId, blogId)
           });
 
@@ -751,6 +754,8 @@ async function displayMostRecentBlog() {
       const outputDiv = document.getElementById("output");
       outputDiv.innerHTML = `
       <h2>${blogPost.title}</h2>
+      <h3>Published By: ${blogPost.author}</h3>
+
       <embed id="embedPdf" src="${blogPost.content}" type="application/pdf" width="100%" height="600px" />
       <!-- Add other fields as needed -->
       `;

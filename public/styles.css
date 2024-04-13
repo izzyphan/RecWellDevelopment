@@ -482,21 +482,23 @@ p {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .blogContainer h1 {
   text-align: center;
   color: #333;
+  font-weight: bold;
 }
 .blogContainer label {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
   display: block;
 }
 .blogContainer input[type="file"] {
   margin-bottom: 10px;
 }
-.blogContainer input[type="submit"] {
+.blogContainer #postBlog {
+  margin-top: 15px;
   background-color: red;
   color: #fff;
   border: none;
@@ -504,8 +506,13 @@ p {
   border-radius: 3px;
   cursor: pointer;
 }
-.blogContainer input[type="submit"]:hover {
-  background-color: grey;
+.blogContainer #postBlog:hover {
+  background-color: green;
+}
+
+.blogContainer #title {
+  width: 70%;
+  height: 30px;
 }
 
 .passwordMatch,
@@ -578,4 +585,10 @@ p {
 
 #email:hover {
   color: #dbcdc8; /* New color on hover */
+}
+
+#output,
+#output h2 {
+  text-align: center;
+  color: red;
 }
