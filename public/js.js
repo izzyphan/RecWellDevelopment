@@ -825,8 +825,6 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
         } else {
           element.style.display = "none"; // Hide the element
         }
-      } else {
-        console.log("User not found.");
       }
     });
 }
@@ -848,26 +846,42 @@ function loadDirectory() {
           headshot = imageType;
         }
 
-        html += `<div class="card" id="${
-          d.data().email
-        }" onclick="expandCard('${d.data().email}')"> 
-        <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
-        <div class="employee-name">${d.data().firstName} ${
+        html += `<div class="card" id="${d.data().email}"> 
+          <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
+          <div class="employee-name">${d.data().firstName} ${
           d.data().lastName
         }</div>
-        <div class="employee-phone card-hidden">Phone Number: ${
-          d.data().phoneNumber
-        }</div><div class="employee-department card-hidden">Department: ${
-          d.data().department
-        }</div><div class="employee-position card-hidden">Position: ${
-          d.data().position
-        }</div>
-        <div class="employee-bio card-hidden">Biography: ${
-          d.data().biography
-        }</div>
-      </div>`;
+          <div class="employee-phone card-hidden">Phone Number: ${
+            d.data().phoneNumber
+          }</div>
+          <div class="employee-department card-hidden">Department: ${
+            d.data().department
+          }</div>
+          <div class="employee-position card-hidden">Position: ${
+            d.data().position
+          }</div>
+          <div class="employee-bio card-hidden">Biography: ${
+            d.data().biography
+          }</div>
+          <button class="expand-button" onclick="expandCard('${
+            d.data().email
+          }')">Expand</button>
+          <button class="delete-button" id="delete_${
+            d.data().email
+          }" onclick="deleteEmployee('${d.data().email}')">X</button>
+        </div>`;
       });
       document.querySelector("#employee_directory").innerHTML += html;
+
+      // Call checkAdminStatusAndHideElement for each employee card to hide delete button if not admin
+      data.forEach((d) => {
+        const userEmail = "user@example.com"; // Replace with actual user's email or get from authentication
+        const isAdmin = d.data().isAdmin; // Assuming isAdmin is a field in employee data
+        if (!isAdmin) {
+          const deleteButtonId = `delete_${d.data().email}`;
+          checkAdminStatusAndHideElement(userEmail, deleteButtonId);
+        }
+      });
     });
 }
 
@@ -955,4 +969,74 @@ function findStaff() {
           }
         });
     });
+}
+
+async function deleteEmployee(email) {
+  if (
+    confirm(
+      `Are you sure you want to delete the employee with email: ${email}?`
+    )
+  ) {
+    try {
+      // Step 1: Delete employee data from Firestore
+      const querySnapshot = await db
+        .collection("employees")
+        .where("email", "==", email)
+        .get();
+
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async (doc) => {
+          await doc.ref.delete();
+          // Step 2: Delete associated data from Firebase Storage
+          const storageRef = firebase.storage().ref();
+          const employeeImagesRef = storageRef.child(`images/${email}`);
+
+          // Delete all files under the employee's images folder
+          employeeImagesRef.listAll().then((res) => {
+            res.items.forEach((itemRef) => {
+              itemRef
+                .delete()
+                .then(() => {
+                  console.log("Associated image deleted successfully.");
+                })
+                .catch((error) => {
+                  console.error("Error deleting associated image:", error);
+                });
+            });
+          });
+
+          // Step 3: Delete user from Firebase Authentication
+          const user = firebase.auth().currentUser;
+
+          if (user) {
+            user
+              .delete()
+              .then(() => {
+                console.log("User deleted from Firebase Authentication.");
+              })
+              .catch((error) => {
+                console.error(
+                  "Error deleting user from Firebase Authentication:",
+                  error
+                );
+              });
+          }
+
+          // Display success message and scroll to message bar
+          configure_message_bar(
+            `Employee with email ${email} deleted successfully.`
+          );
+          location.reload();
+          alert("Employee Deleted");
+          document
+            .getElementById("message_bar")
+            .scrollIntoView({ behavior: "smooth" });
+        });
+      } else {
+        console.error("No employee found with the email:", email);
+      }
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+    }
+  }
 }

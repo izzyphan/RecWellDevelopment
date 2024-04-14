@@ -375,18 +375,19 @@ p {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  height: 250px;
+  height: 270px;
   margin: 10px;
   width: 300px;
   background-color: #1c1c1c;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease;
+  text-align: center;
 }
 .card-hidden {
   display: none;
 }
 .card.expanded {
-  height: 330px;
+  height: 340px;
 }
 .card img {
   width: 100%;
