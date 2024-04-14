@@ -188,6 +188,7 @@ function handleLoginFormSubmission(event) {
               loadContent("home.html", {
                 message: username + " " + "is now logged in.",
               });
+              checkAdminStatusAndHideElement(username, "admin-status");
               if (window.location.pathname.endsWith("/points.html")) {
                 checkAdminStatusAndHideElement(username, "penalty_container");
               }
@@ -241,6 +242,7 @@ function handleSignupFormSubmission(event) {
       loadContent("home.html", {
         message: s_username + " " + "is now logged in.",
       });
+      checkAdminStatusAndHideElement(s_username, "admin-status");
       // Hide the modal
       hideModal();
     })
@@ -679,7 +681,7 @@ async function handlePostBlogClick(event) {
     }
 
     // Display an alert message when the button is clicked
-    alert("PDF upload in progress...");
+    configure_message_bar("PDF upload in progress...");
 
     try {
       // Upload the PDF file to Firebase Storage
@@ -709,8 +711,7 @@ async function handlePostBlogClick(event) {
             title: title,
             // Add other attributes as needed (e.g., authorId, blogId)
           });
-
-          console.log("PDF uploaded to Storage and added to Firestore.");
+          configure_message_bar("New Blog Post Successfully Added!");
 
           // Update the embed element with the new PDF URL
           const embedElement = document.getElementById("output");
@@ -851,8 +852,20 @@ function loadDirectory() {
           d.data().email
         }" onclick="expandCard('${d.data().email}')"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
-    <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
-    <div class="employee-phone">${phoneNumber}</div></div>`;
+        <div class="employee-name">${d.data().firstName} ${
+          d.data().lastName
+        }</div>
+        <div class="employee-phone card-hidden">Phone Number: ${
+          d.data().phoneNumber
+        }</div><div class="employee-department card-hidden">Department: ${
+          d.data().department
+        }</div><div class="employee-position card-hidden">Position: ${
+          d.data().position
+        }</div>
+        <div class="employee-bio card-hidden">Biography: ${
+          d.data().biography
+        }</div>
+      </div>`;
       });
       document.querySelector("#employee_directory").innerHTML += html;
     });
@@ -860,7 +873,28 @@ function loadDirectory() {
 
 function expandCard(email) {
   let card = document.getElementById(email);
+  let phoneNumber = card.querySelector(".employee-phone");
+  let bio = card.querySelector(".employee-bio");
+  let department = card.querySelector(".employee-department");
+  let position = card.querySelector(".employee-position");
+  let allCards = document.querySelectorAll(".card");
+
+  allCards.forEach((c) => {
+    if (c.id !== email && c.classList.contains("expanded")) {
+      c.classList.remove("expanded");
+      c.querySelector(".employee-phone").classList.add("card-hidden");
+      c.querySelector(".employee-bio").classList.add("card-hidden");
+
+      c.querySelector(".employee-department").classList.add("card-hidden");
+      c.querySelector(".employee-position").classList.add("card-hidden");
+    }
+  });
+
   card.classList.toggle("expanded");
+  phoneNumber.classList.toggle("card-hidden");
+  department.classList.toggle("card-hidden");
+  position.classList.toggle("card-hidden");
+  bio.classList.toggle("card-hidden");
 }
 
 function formatPhoneNumber(phoneNumber) {
@@ -904,7 +938,7 @@ function findStaff() {
           trueNames = Array.from(new Set(trueNames));
           //duplicate names arent hidden the 2nd time
 
-          let allStaffArray = document.getElementsByClassName("EmployeeCard");
+          let allStaffArray = document.getElementsByClassName("card");
 
           let idList = [];
           for (let i = 0; i < allStaffArray.length; i++) {

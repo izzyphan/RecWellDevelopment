@@ -375,14 +375,18 @@ p {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
+  height: 250px;
   margin: 10px;
   width: 300px;
   background-color: #1c1c1c;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease;
 }
+.card-hidden {
+  display: none;
+}
 .card.expanded {
-  height: 300px;
+  height: 330px;
 }
 .card img {
   width: 100%;
@@ -403,9 +407,14 @@ p {
   text-align: center;
 }
 
-.employee-phone {
-  color: #666;
+.employee-phone,
+.employee-bio,
+.employee-department,
+.employee-position {
+  color: white;
   font-size: 16px;
+  text-align: center;
+  margin-top: 3px;
 }
 
 #point_container,
