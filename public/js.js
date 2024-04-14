@@ -996,21 +996,21 @@ async function deleteEmployee(email) {
           });
 
           // Step 3: Delete user from Firebase Authentication
-          const user = firebase.auth().currentUser;
+          // const user = firebase.auth().currentUser;
 
-          if (user) {
-            user
-              .delete()
-              .then(() => {
-                console.log("User deleted from Firebase Authentication.");
-              })
-              .catch((error) => {
-                console.error(
-                  "Error deleting user from Firebase Authentication:",
-                  error
-                );
-              });
-          }
+          // if (user) {
+          //   user
+          //     .delete()
+          //     .then(() => {
+          //       console.log("User deleted from Firebase Authentication.");
+          //     })
+          //     .catch((error) => {
+          //       console.error(
+          //         "Error deleting user from Firebase Authentication:",
+          //         error
+          //       );
+          //     });
+          // }
 
           // Display success message and scroll to message bar
           configure_message_bar(
