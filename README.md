@@ -7,14 +7,27 @@ ________________________________________________________________________________
 **Sprint 2**
 <br>
 <br>
-**User Stories:** <br>
+**User Stories:** <br><br>
 
 **User Story 1:** <br> 
-As an admin, I want to utilize an employee directory for our student staff which holds their personal information such as phone numbers, email, and a biography so I can better understand who they are and how I can contact them if need.<br> 
-**User Story 2:** <br> As a professional staff employee, I need to have different privledges on this website that allow me to add points and add blog posts. These are privleges that student staff will not have.<br> 
-**User Story 3:** <br> As an admin, I want to be able to upload blog posts at least every month. These blog posts are created as a pdf. I want to be able to easily upload a pdf to this website. <br> 
+As an admin, I want to utilize an employee directory for our student staff which holds their personal information such as phone numbers, email, and a biography so I can better understand who they are and how I can contact them if need.<br> <br>
+**User Story 2:** <br> As a professional staff employee, I need to have different privledges on this website that allow me to add points and add blog posts. These are privleges that student staff will not have.<br> <br>
+**User Story 3:** <br> As an admin, I want to be able to upload blog posts at least every month. These blog posts are created as a pdf. I want to be able to easily upload a pdf to this website. <br> <br>
 
-**Breaking Down User Stories and Burndown Chart:** <br>
+**Breaking Down User Stories**
+| Task                                                                                                                         | Corresponding Story Number | Complexity (1-5) | Lead Person |
+|------------------------------------------------------------------------------------------------------------------------------|---------------------------|------------------|-------------|
+| Create card layout on directory webpage                                                                                      | 8                         | 3                | Henry       |
+| Add form for filters on directory webpage                                                                                    | 3                         | 1                | Cristian    |
+| Implement functionality to click on an employee for more information                                                         | 5                         | 3                | Emily       |
+| Add JavaScript functionality to the filters for the directory webpage                                                        | 5                         | 2                | Matt        |
+| Develop JavaScript function to load employees into the directory webpage                                                     | 6                         | 4                | Henry       |
+| Integrate admin privileges and determine how this feature will work                                                          | 8                         | 5                | Izzy        |
+| Create form on Talent Turnstile webpage for uploading new blog posts                                                         | 6                         | 4                | Emily       |
+| Make the upload form on Talent Turnstile webpage visible only for admins                                                     | 4                         | 3                | Izzy        |
+| Make the penalty points form on the Points webpage visible only for admins                                                   | 4                         | 2                | Izzy        |
+| Develop JavaScript functionality for the Talent Turnstile form to upload blog posts after submission of a file               | 6                         | 3                | Emily       
+
 
 **Burn Down Chart Day 4, Day 9, Day 12** <br>
 Day 4: ![ChartDay4](BurnDownChart4-S2.png) 
@@ -24,7 +37,7 @@ Day 9: ![ChartDay9](BurnDownChart9-S2.png)
 Day 12: ![ChartDay12](BurnDownChart12-S2.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
-![StandUpNotes](StandUpNotes-S2.png)
+![StandUpNotes](EvidenceofStandUps-S2.png)
 
 **Sprint Review:**
 
