@@ -872,16 +872,6 @@ function loadDirectory() {
         </div>`;
       });
       document.querySelector("#employee_directory").innerHTML += html;
-
-      // Call checkAdminStatusAndHideElement for each employee card to hide delete button if not admin
-      data.forEach((d) => {
-        const userEmail = "user@example.com"; // Replace with actual user's email or get from authentication
-        const isAdmin = d.data().isAdmin; // Assuming isAdmin is a field in employee data
-        if (!isAdmin) {
-          const deleteButtonId = `delete_${d.data().email}`;
-          checkAdminStatusAndHideElement(userEmail, deleteButtonId);
-        }
-      });
     });
 }
 
