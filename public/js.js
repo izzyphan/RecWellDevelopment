@@ -115,12 +115,12 @@ document.addEventListener("click", function (event) {
             // Save the current URL to localStorage
             saveStateToStorage({ url });
             // Load the content corresponding to the clicked link
-            loadContent(url);
+            // loadContent(url);
           } else {
             console.log("User is not authenticated.");
           }
         });
-        return; // Exit the function without loading a URL
+        break;
       case "points":
         url = "points.html";
         // Call checkAdminStatusAndHideElement when loading points.html and talent.html
@@ -154,7 +154,6 @@ document.addEventListener("click", function (event) {
 });
 // Call loadLastVisitedUrl when the page loads or is refreshed
 window.addEventListener("load", loadLastVisitedUrl);
-window.addEventListener("load", loadDirectory());
 
 // Function to handle login form submission
 function handleLoginFormSubmission(event) {
@@ -189,6 +188,7 @@ function handleLoginFormSubmission(event) {
               loadContent("home.html", {
                 message: username + " " + "is now logged in.",
               });
+              checkAdminStatusAndHideElement(username, "admin-status");
               if (window.location.pathname.endsWith("/points.html")) {
                 checkAdminStatusAndHideElement(username, "penalty_container");
               }
@@ -242,17 +242,23 @@ function handleSignupFormSubmission(event) {
       loadContent("home.html", {
         message: s_username + " " + "is now logged in.",
       });
+      checkAdminStatusAndHideElement(s_username, "admin-status");
+      // Hide the modal
+      hideModal();
     })
     .catch((error) => {
       // Handle authentication errors
       console.error("Error creating user:", error);
-      // Display error message
-      document.querySelector(".error_message2").innerHTML =
-        "Error creating user";
-    })
-    .finally(() => {
-      // Hide the modal
-      hideModal();
+      // Check if the error is due to email already existing
+      if (error.code === "auth/email-already-in-use") {
+        // Display error message
+        document.querySelector(".error_message2").innerHTML =
+          "Email already in use. Please use a different email.";
+      } else {
+        // Display generic error message
+        document.querySelector(".error_message2").innerHTML =
+          "Error creating user";
+      }
     });
 }
 
@@ -292,6 +298,16 @@ function loadLastVisitedUrl() {
           var userEmail = user.email;
           var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+        }
+      });
+    }
+    if (stateData.url.endsWith("directory.html")) {
+      loadDirectory();
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          var userEmail = user.email;
+
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
         }
       });
     }
@@ -370,6 +386,7 @@ function handleLogout() {
   auth.signOut().then(() => {
     // Reload the page to trigger the onAuthStateChanged listener
     window.location.href = "home.html";
+    saveStateToStorage("home.html");
     window.location.reload();
   });
 }
@@ -406,84 +423,77 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to load user data into the table
 function loadUserData(userId) {
   var userRef = db.collection("employees").doc(userId);
-  userRef
-    .get()
-    .then(function (doc) {
-      if (doc.exists) {
-        var userData = doc.data();
-        var firstName = userData.firstName;
-        var lastName = userData.lastName;
-        var capitalizedFirstName =
-          firstName.charAt(0).toUpperCase() + firstName.slice(1);
+  userRef.get().then(function (doc) {
+    if (doc.exists) {
+      var userData = doc.data();
+      var firstName = userData.firstName;
+      var lastName = userData.lastName;
+      var capitalizedFirstName =
+        firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
-        var position = userData.position;
-        var department = userData.department;
-        var phoneNumber = userData.phoneNumber;
-        var email = userData.email;
-        var biography = userData.biography;
-        var status = userData.isAdmin;
+      var position = userData.position;
+      var department = userData.department;
+      var phoneNumber = userData.phoneNumber;
+      var email = userData.email;
+      var biography = userData.biography;
+      var status = userData.isAdmin;
 
-        // Check if the elements exist before accessing them
-        var nameHeader = document.getElementById("NameHeader");
-        var account_fname = document.getElementById("account_fname");
-        var account_lname = document.getElementById("account_lname");
-        var account_position = document.getElementById("position");
-        var account_department = document.getElementById("department");
-        var account_phoneNumber = document.getElementById("phoneNumber");
-        var account_email = document.getElementById("email");
-        var account_biography = document.getElementById("biography");
-        var adminAccount_fname = document.getElementById("adminAccount_fname");
-        var adminAccount_lname = document.getElementById("adminAccount_lname");
-        var adminAccount_email = document.getElementById("adminAccount_email");
-        var adminAccount_status = document.getElementById(
-          "adminAccount_status"
-        );
+      // Check if the elements exist before accessing them
+      var nameHeader = document.getElementById("NameHeader");
+      var account_fname = document.getElementById("account_fname");
+      var account_lname = document.getElementById("account_lname");
+      var account_position = document.getElementById("position");
+      var account_department = document.getElementById("department");
+      var account_phoneNumber = document.getElementById("phoneNumber");
+      var account_email = document.getElementById("email");
+      var account_biography = document.getElementById("biography");
+      var adminAccount_fname = document.getElementById("adminAccount_fname");
+      var adminAccount_lname = document.getElementById("adminAccount_lname");
+      var adminAccount_email = document.getElementById("adminAccount_email");
+      var adminAccount_status = document.getElementById("adminAccount_status");
 
-        if (nameHeader && account_fname && account_lname) {
-          // Change value of elements
-          // Update the inner HTML of nameHeader with the modified firstName
-          nameHeader.innerHTML = capitalizedFirstName + "'s Account";
-          account_fname.value = firstName;
-          account_lname.value = lastName;
-          account_position.value = position;
-          account_department.value = department;
-          account_phoneNumber.value = phoneNumber;
-          account_email.value = email;
-          account_biography.value = biography;
-          adminAccount_fname.value = firstName;
-          adminAccount_lname.value = lastName;
-          adminAccount_email.value = email;
-          adminAccount_status.value = status;
-          // Update image preview if imageUrl exists in userData
-          if (userData.imageUrl) {
-            imagePreview.src = userData.imageUrl;
-          }
+      if (nameHeader && account_fname && account_lname) {
+        // Change value of elements
+        // Update the inner HTML of nameHeader with the modified firstName
+        nameHeader.innerHTML = capitalizedFirstName + "'s Account";
+        account_fname.value = firstName;
+        account_lname.value = lastName;
+        account_position.value = position;
+        account_department.value = department;
+        account_phoneNumber.value = phoneNumber;
+        account_email.innerHTML = email; // Update the inner HTML of account_email with the email
+        account_biography.value = biography;
+        adminAccount_fname.value = firstName;
+        adminAccount_lname.value = lastName;
+        adminAccount_email.value = email;
+        adminAccount_status.value = status;
+        // Update image preview if imageUrl exists in userData
+        if (userData.imageUrl) {
+          imagePreview.src = userData.imageUrl;
         }
-        // Add event listener for "SaveAccount" button click
-        document.addEventListener("click", (e) => {
-          // Check if the clicked element is the "SaveAccount" button
-          if (e.target.id === "SaveAccount") {
-            handleFormSubmission(e); // Call handleFormSubmission function
-          }
-        }); // Add event listener for image upload change
-        const imageUpload = document.getElementById("imageUpload");
-        imageUpload.addEventListener("change", function () {
-          const file = this.files[0]; // Get the selected file
-          if (file) {
-            const reader = new FileReader(); // Create a FileReader object
-            reader.onload = function (e) {
-              imagePreview.src = e.target.result; // Set the preview image source
-            };
-            reader.readAsDataURL(file); // Read the selected file as a data URL
-          } else {
-            imagePreview.src = ""; // Clear the preview if no file is selected
-          }
-        });
       }
-    })
-    .catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+      // Add event listener for "SaveAccount" button click
+      document.addEventListener("click", (e) => {
+        // Check if the clicked element is the "SaveAccount" button
+        if (e.target.id === "SaveAccount") {
+          handleFormSubmission(e); // Call handleFormSubmission function
+        }
+      }); // Add event listener for image upload change
+      const imageUpload = document.getElementById("imageUpload");
+      imageUpload.addEventListener("change", function () {
+        const file = this.files[0]; // Get the selected file
+        if (file) {
+          const reader = new FileReader(); // Create a FileReader object
+          reader.onload = function (e) {
+            imagePreview.src = e.target.result; // Set the preview image source
+          };
+          reader.readAsDataURL(file); // Read the selected file as a data URL
+        } else {
+          imagePreview.src = ""; // Clear the preview if no file is selected
+        }
+      });
+    }
+  });
 }
 
 function handleFormSubmission(event) {
@@ -498,17 +508,21 @@ function handleFormSubmission(event) {
   var email = document.getElementById("email").value;
   var biography = document.getElementById("biography").value;
 
-  // Get the image file from the file input
-  var imageFile = document.getElementById("imageUpload").files[0];
+  // Check if first name or last name is empty or email is being changed
+  if (firstName.trim() === "" || lastName.trim() === "") {
+    alert("First name and last name cannot be empty.");
+    return;
+  }
 
   // Get the user ID of the authenticated user
   var userId = firebase.auth().currentUser.uid;
 
-  // Check if the user ID is available
-  if (userId && imageFile) {
-    // Reference the user's document in Firestore
-    var userRef = db.collection("employees").doc(userId);
+  // Reference the user's document in Firestore
+  var userRef = db.collection("employees").doc(userId);
 
+  // Check if an image file is selected
+  var imageFile = document.getElementById("imageUpload").files[0];
+  if (imageFile) {
     // Create a storage reference for the image file
     var storageRef = firebase
       .storage()
@@ -528,7 +542,7 @@ function handleFormSubmission(event) {
               position: position,
               department: department,
               phoneNumber: phoneNumber,
-              email: email,
+
               biography: biography,
               imageUrl: imageUrl, // Add imageUrl to the update data
             },
@@ -548,25 +562,33 @@ function handleFormSubmission(event) {
       });
     });
   } else {
-    console.error("User ID not available or no image selected.");
-    // Optionally, handle the case where the user ID is not available or no image is selected
+    // Update the user data in Firestore without imageUrl
+    userRef
+      .set(
+        {
+          firstName: firstName,
+          lastName: lastName,
+          position: position,
+          department: department,
+          phoneNumber: phoneNumber,
+
+          biography: biography,
+        },
+        { merge: true } // Merge the new data with existing data
+      )
+      .then(() => {
+        configure_message_bar("Account Has Been Saved!");
+        // Scroll to the message bar
+        document
+          .getElementById("message_bar")
+          .scrollIntoView({ behavior: "smooth" });
+      })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+        // Optionally, display an error message to the user
+      });
   }
 }
-
-// Event listener for clicks on "My Account" link
-document
-  .getElementById("myaccount")
-  .addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent default link behavior
-
-    // Call loadUserData function to load user data into the form
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        var userId = user.uid;
-        loadUserData(userId);
-      }
-    });
-  });
 
 //Confirm Matching Passwords
 function checkPasswordMatch() {
@@ -659,7 +681,7 @@ async function handlePostBlogClick(event) {
     }
 
     // Display an alert message when the button is clicked
-    alert("PDF upload in progress...");
+    configure_message_bar("PDF upload in progress...");
 
     try {
       // Upload the PDF file to Firebase Storage
@@ -678,16 +700,18 @@ async function handlePostBlogClick(event) {
           // Get the download URL of the uploaded file
           const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
           const publishDate = new Date();
+          const author = document.getElementById("employeeSelect").value;
+          const title = document.getElementById("title").value;
 
           // Add the PDF details to Firestore
           await db.collection("Blog").add({
-            title: file.name,
             content: downloadURL, // Store the download URL
             publishDate: publishDate,
+            author: author,
+            title: title,
             // Add other attributes as needed (e.g., authorId, blogId)
           });
-
-          console.log("PDF uploaded to Storage and added to Firestore.");
+          configure_message_bar("New Blog Post Successfully Added!");
 
           // Update the embed element with the new PDF URL
           const embedElement = document.getElementById("output");
@@ -731,6 +755,8 @@ async function displayMostRecentBlog() {
       const outputDiv = document.getElementById("output");
       outputDiv.innerHTML = `
       <h2>${blogPost.title}</h2>
+      <h3>Published By: ${blogPost.author}</h3>
+      
       <embed id="embedPdf" src="${blogPost.content}" type="application/pdf" width="100%" height="600px" />
       <!-- Add other fields as needed -->
       `;
@@ -799,12 +825,9 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
         } else {
           element.style.display = "none"; // Hide the element
         }
-      } else {
-        console.log("User not found.");
       }
     });
 }
-populateEmployeeDropdown();
 
 //dynamic directory loading
 function loadDirectory() {
@@ -822,6 +845,31 @@ function loadDirectory() {
         } else {
           headshot = imageType;
         }
+
+        html += `<div class="EmployeeCard" id="${d.id}"> 
+          <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
+          <div class="employee-name">${d.data().firstName} ${
+          d.data().lastName
+        }</div>
+          <div class="employee-phone card-hidden">Phone Number: ${
+            d.data().phoneNumber
+          }</div>
+          <div class="employee-department card-hidden">Department: ${
+            d.data().department
+          }</div>
+          <div class="employee-position card-hidden">Position: ${
+            d.data().position
+          }</div>
+          <div class="employee-bio card-hidden">Biography: ${
+            d.data().biography
+          }</div>
+          <button class="expand-button" onclick="expandCard('${
+            d.data().email
+          }')">Expand</button>
+          <button class="delete-button" id="delete_${
+            d.data().email
+          }" onclick="deleteEmployee('${d.data().email}')">X</button>
+        </div>`;
         html += `<div class="EmployeeCard" id="${d.id}"> 
         <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
     <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
@@ -830,7 +878,33 @@ function loadDirectory() {
       document.querySelector("#employee_directory").innerHTML += html;
     });
 }
-loadDirectory();
+
+function expandCard(email) {
+  let card = document.getElementById(email);
+  let phoneNumber = card.querySelector(".employee-phone");
+  let bio = card.querySelector(".employee-bio");
+  let department = card.querySelector(".employee-department");
+  let position = card.querySelector(".employee-position");
+  let allCards = document.querySelectorAll(".card");
+
+  allCards.forEach((c) => {
+    if (c.id !== email && c.classList.contains("expanded")) {
+      c.classList.remove("expanded");
+      c.querySelector(".employee-phone").classList.add("card-hidden");
+      c.querySelector(".employee-bio").classList.add("card-hidden");
+
+      c.querySelector(".employee-department").classList.add("card-hidden");
+      c.querySelector(".employee-position").classList.add("card-hidden");
+    }
+  });
+
+  card.classList.toggle("expanded");
+  phoneNumber.classList.toggle("card-hidden");
+  department.classList.toggle("card-hidden");
+  position.classList.toggle("card-hidden");
+  bio.classList.toggle("card-hidden");
+}
+
 function formatPhoneNumber(phoneNumber) {
   phoneNumber = String(phoneNumber);
   if (phoneNumber === undefined || phoneNumber.trim() === "") {
@@ -876,7 +950,10 @@ function findStaff() {
           });
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
+          //duplicate names arent hidden the 2nd time
+
           let allStaffArray = document.getElementsByClassName("EmployeeCard");
+
           let idList = [];
           for (let i = 0; i < allStaffArray.length; i++) {
             idList.push(allStaffArray[i].id);
@@ -892,4 +969,74 @@ function findStaff() {
           }
         });
     });
+}
+
+async function deleteEmployee(email) {
+  if (
+    confirm(
+      `Are you sure you want to delete the employee with email: ${email}?`
+    )
+  ) {
+    try {
+      // Step 1: Delete employee data from Firestore
+      const querySnapshot = await db
+        .collection("employees")
+        .where("email", "==", email)
+        .get();
+
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async (doc) => {
+          await doc.ref.delete();
+          // Step 2: Delete associated data from Firebase Storage
+          const storageRef = firebase.storage().ref();
+          const employeeImagesRef = storageRef.child(`images/${email}`);
+
+          // Delete all files under the employee's images folder
+          employeeImagesRef.listAll().then((res) => {
+            res.items.forEach((itemRef) => {
+              itemRef
+                .delete()
+                .then(() => {
+                  console.log("Associated image deleted successfully.");
+                })
+                .catch((error) => {
+                  console.error("Error deleting associated image:", error);
+                });
+            });
+          });
+
+          // Step 3: Delete user from Firebase Authentication
+          // const user = firebase.auth().currentUser;
+
+          // if (user) {
+          //   user
+          //     .delete()
+          //     .then(() => {
+          //       console.log("User deleted from Firebase Authentication.");
+          //     })
+          //     .catch((error) => {
+          //       console.error(
+          //         "Error deleting user from Firebase Authentication:",
+          //         error
+          //       );
+          //     });
+          // }
+
+          // Display success message and scroll to message bar
+          configure_message_bar(
+            `Employee with email ${email} deleted successfully.`
+          );
+          location.reload();
+          alert("Employee Deleted");
+          document
+            .getElementById("message_bar")
+            .scrollIntoView({ behavior: "smooth" });
+        });
+      } else {
+        console.error("No employee found with the email:", email);
+      }
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+    }
+  }
 }

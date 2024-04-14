@@ -35,6 +35,7 @@
     <div class="new-content">
       <div id="account_container" class="container">
         <h1 id="NameHeader"></h1>
+        <span id="email"></span>
         <table id="accountTable">
           <tr>
             <th>First Name</th>
@@ -46,24 +47,38 @@
           </tr>
           <tr>
             <th>Position</th>
-            <td><input type="text" id="position" /></td>
+            <td>
+              <select class="select-container" id="position">
+                <option value="Manager">Manager</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Attendant">Attendant</option>
+                <option value="Personal Trainer">Trainer</option>
+                <option value="Referee">Referee</option>
+                <!-- Add more options as needed -->
+              </select>
+            </td>
           </tr>
           <tr>
             <th>Department</th>
-            <td><input type="text" id="department" /></td>
+            <td>
+              <select class="select-container" id="department">
+                <option value="Manager">Manager</option>
+                <option value="Member Services">Member Services</option>
+                <option value="Aquatics">Aquatics</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Sports">Sports</option>
+                <!-- Add more options as needed -->
+              </select>
+            </td>
           </tr>
           <tr>
             <th>Phone Number</th>
             <td><input type="tel" id="phoneNumber" /></td>
           </tr>
-          <tr>
-            <th>Email</th>
-            <td><input type="email" id="email" /></td>
-          </tr>
-          <tr>
-            <th>Biography</th>
-            <td><textarea id="biography" rows="4"></textarea></td>
-          </tr>
+
+          <th>Biography</th>
+          <td><textarea id="biography" rows="4"></textarea></td>
+
           <tr>
             <th>Image</th>
             <td>
