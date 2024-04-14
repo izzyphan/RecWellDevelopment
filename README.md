@@ -154,24 +154,24 @@ Afterwards we met as a team and sketched out a new design for the main page and 
 
 ![Final Prototype:Main](DecidedMainPage.png)
 
-Sprint Review 2:
+**Sprint Review 2:**
 
-a. What did you learn from doing our first sprint?
+**a. What did you learn from doing our first sprint?**
 We learned that our groups collaborate very well together. We were both very observant and able to provide constructive feedback both times. This led to our groups being very happy with our takeaways since we had a clearer picture of the areas we could improve on. 
 
-b. What did go well? Why?
+**b. What did go well? Why?**
 We still believe our communication went really well. Everyone was able to stay on the same page by consistently sending updates in our groupchat that we made. On top of that, we really capitalized on the time we had in class to work on the project when we were given it. Communication is an area that we feel we won't struggle with at all, given the methods we have set up and refined throughout the semester. 
 
-c. What didn’t go well? Why not?
+**c. What didn’t go well? Why not?**
 One area we think we could improve on again is time estimation. Although we knew this was an area we didn't do well during the first sprint, it was hard to improve on because we started adding increasingly more complex features to the website. Even by trying to break things down into smaller tasks, we found that when it came closer to the final version actually being complete, it was difficult. 
 
-d. How can you make things better next time?
+**d. How can you make things better next time?**
 We think that going forward, we can be better by using historical evidence on top of breaking things down into smaller pieces. Now that we have a good amount of complex features on our website and we know how the timing went with those, we can factor that in to our new time estimations. 
 
-e. Are you satisfied with what you already completed?
+**e. Are you satisfied with what you already completed?**
 For sprint two, we feel the same as we did back in sprint one overall. We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far.
 
-f. Which group was invited? What are your observations/notes? Everybody was present?
+**f. Which group was invited? What are your observations/notes? Everybody was present?**
 Group 2 was invited to our sprint review and everyone was present. Some feedback we received following the sprint review was that our timing estimations could be better. This is an area we struggled with during our first sprint as well, so we could really focus on it more going forward. They did mention that they believed our overall communication as a team was very good and it always seemed like everyone was on the same page. 
 
 
