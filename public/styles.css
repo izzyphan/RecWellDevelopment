@@ -387,7 +387,7 @@ p {
   display: none;
 }
 .card.expanded {
-  height: 340px;
+  height: 400px;
 }
 .card img {
   width: 100%;

@@ -846,7 +846,7 @@ function loadDirectory() {
           headshot = imageType;
         }
 
-        html += `<div class="EmployeeCard" id="${d.id}"> 
+        html += `<div class="EmployeeCard" id="${d.data().email}"> 
           <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
           <div class="employee-name">${d.data().firstName} ${
           d.data().lastName
