@@ -4,6 +4,43 @@
 
 **Project Description:** This project currently holds the main page of our Rec Well Staff Website which is based on professional development and adding a database to hold their employee's information. This README file holds work conducted for the first sprint of the project as we focused on adding GUI of the home page. Below we have user stories, burndown charts, daily scrum meeting notes, and a review of the sprint.
 ___________________________________________________________________________________________________________________________________________________________________
+**Sprint 3** <br><br>
+**User Stories:** <br><br>
+**User Story 1:** <br> 
+User Story 1: As an admin, I want to utilize an employee penalty point system that efficiently tracks each employees quanity of points. Also, these points will track what the point reason was, date, and can be viewed by the employee to offer consistent information in our program. <br> <br>
+**User Story 2:** <br> 
+User Story 2: As a student employee, I want a better way to show my appreciation for my coworkers. These shoutouts will be similar to a rewards system in which the recieving employee will see the data, reason, and who the reward was from. <br> <br> 
+**User Story 3:** <br> 
+User Story 3: As an admin, I want to understand how to best use this system. This will help me implement the system into our program.<br> <br> 
+
+**Breaking Down User Stories**
+| Task                                                                                  | Corresponding Story Number (1-10) | Complexity (1-5) | Lead Person |
+|---------------------------------------------------------------------------------------|-----------------------------------|------------------|-------------|
+| Create a dynamic drop down menu for employee name for both penalty and rewards points | 5                                 | 3                | Emily       |
+| Add more reason options for both penalty and rewards points                           | 1                                 | 1                | Cristian    |
+| Create a message bar pop up using the existing JS function                            | 2                                 | 1                | Matt        |
+| Use JS to create a new function for penalty point submission                          | 6                                 | 4                | Izzy        |
+| Use JS to create a new function for rewards point submission                          | 6                                 | 4                | Izzy        |
+| Use JS to pull rewards and points for logged-in non-admin employees                   | 8                                 | 5                | Henry       |
+| Use JS to pull rewards and points for all employees (if admin)                        | 8                                 | 5                | Henry       |
+| Use JS to display reward points on the home page for a specific time range            | 5                                 | 3                | Emily       |
+| Remove all console errors                                                             | 5                                 | 3                | Emily       |
+| Debug if needed                                                                       | 6                                 | 4                | Izzy        |
+
+
+<br><br><br>
+**Burn Down Chart Day 4, Day 9, Day 12** <br>
+Day 4: ![ChartDay4](BurnDownChart4-S3.png) 
+<br>
+Day 9: ![ChartDay9](BurnDownChart9-S3.png)
+<br>
+Day 12: ![ChartDay12](BurnDownChart12-S3.png) <br>
+
+**Evidence of 3 Daily Scrum Meetings:**
+![StandUpNotes](EvidenceofStandUpsS3.png)
+
+**Sprint Review 3:**
+___________________________________________________________________________________________________________________________________________________________________
 **Sprint 2**
 <br>
 <br>
@@ -39,26 +76,26 @@ Day 12: ![ChartDay12](BurnDownChart12-S2.png) <br>
 **Evidence of 3 Daily Scrum Meetings:**
 ![StandUpNotes](EvidenceofStandUpsS2.png)
 
-**Sprint Review:**
+**Sprint Review 2:**
 
-**a. What did you learn from doing our first sprint?** <br>
+**a. What did you learn from doing our first sprint?**
+We learned that our groups collaborate very well together. We were both very observant and able to provide constructive feedback both times. This led to our groups being very happy with our takeaways since we had a clearer picture of the areas we could improve on. 
 
-<br>
-**b. What did go well? Why?** <br>
+**b. What did go well? Why?**
+We still believe our communication went really well. Everyone was able to stay on the same page by consistently sending updates in our groupchat that we made. On top of that, we really capitalized on the time we had in class to work on the project when we were given it. Communication is an area that we feel we won't struggle with at all, given the methods we have set up and refined throughout the semester. 
 
-<br>
-**c. What didn’t go well? Why not?** <br>
+**c. What didn’t go well? Why not?**
+One area we think we could improve on again is time estimation. Although we knew this was an area we didn't do well during the first sprint, it was hard to improve on because we started adding increasingly more complex features to the website. Even by trying to break things down into smaller tasks, we found that when it came closer to the final version actually being complete, it was difficult. 
 
-<br>
-**d. How can you make things better next time?** <br>
+**d. How can you make things better next time?**
+We think that going forward, we can be better by using historical evidence on top of breaking things down into smaller pieces. Now that we have a good amount of complex features on our website and we know how the timing went with those, we can factor that in to our new time estimations. 
 
-<br>
-**e. Are you satisfied with what you already completed?** <br>
+**e. Are you satisfied with what you already completed?**
+For sprint two, we feel the same as we did back in sprint one overall. We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far.
 
-<br>
-**f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
+**f. Which group was invited? What are your observations/notes? Everybody was present?**
+Group 2 was invited to our sprint review and everyone was present. Some feedback we received following the sprint review was that our timing estimations could be better. This is an area we struggled with during our first sprint as well, so we could really focus on it more going forward. They did mention that they believed our overall communication as a team was very good and it always seemed like everyone was on the same page. 
 
-**Evidence Completed** <br>
 
 ___________________________________________________________________________________________________________________________________________________________________
 **MILESTONE 1**
@@ -154,24 +191,5 @@ Afterwards we met as a team and sketched out a new design for the main page and 
 
 ![Final Prototype:Main](DecidedMainPage.png)
 
-**Sprint Review 2:**
-
-**a. What did you learn from doing our first sprint?**
-We learned that our groups collaborate very well together. We were both very observant and able to provide constructive feedback both times. This led to our groups being very happy with our takeaways since we had a clearer picture of the areas we could improve on. 
-
-**b. What did go well? Why?**
-We still believe our communication went really well. Everyone was able to stay on the same page by consistently sending updates in our groupchat that we made. On top of that, we really capitalized on the time we had in class to work on the project when we were given it. Communication is an area that we feel we won't struggle with at all, given the methods we have set up and refined throughout the semester. 
-
-**c. What didn’t go well? Why not?**
-One area we think we could improve on again is time estimation. Although we knew this was an area we didn't do well during the first sprint, it was hard to improve on because we started adding increasingly more complex features to the website. Even by trying to break things down into smaller tasks, we found that when it came closer to the final version actually being complete, it was difficult. 
-
-**d. How can you make things better next time?**
-We think that going forward, we can be better by using historical evidence on top of breaking things down into smaller pieces. Now that we have a good amount of complex features on our website and we know how the timing went with those, we can factor that in to our new time estimations. 
-
-**e. Are you satisfied with what you already completed?**
-For sprint two, we feel the same as we did back in sprint one overall. We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far.
-
-**f. Which group was invited? What are your observations/notes? Everybody was present?**
-Group 2 was invited to our sprint review and everyone was present. Some feedback we received following the sprint review was that our timing estimations could be better. This is an area we struggled with during our first sprint as well, so we could really focus on it more going forward. They did mention that they believed our overall communication as a team was very good and it always seemed like everyone was on the same page. 
 
 
