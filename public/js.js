@@ -863,12 +863,13 @@ function loadDirectory() {
           <div class="employee-bio card-hidden">Biography: ${
             d.data().biography
           }</div>
+          <div id="expand-delete">
           <button class="expand-button" onclick="expandCard('${
             d.data().email
           }')">Expand</button>
           <button class="delete-button" id="delete_${
             d.data().email
-          }" onclick="deleteEmployee('${d.data().email}')">X</button>
+          }" onclick="deleteEmployee('${d.data().email}')">X</button></div>
         </div>`;
       });
       document.querySelector("#employee_directory").innerHTML += html;
