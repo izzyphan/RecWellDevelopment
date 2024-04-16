@@ -123,6 +123,7 @@ document.addEventListener("click", function (event) {
         break;
       case "points":
         url = "points.html";
+        employeeDropdown();
         // Call checkAdminStatusAndHideElement when loading points.html and talent.html
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
@@ -299,6 +300,7 @@ function loadLastVisitedUrl() {
           var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
+        employeeDropdown();
       });
     }
     if (stateData.url.endsWith("directory.html")) {
@@ -1036,4 +1038,39 @@ async function deleteEmployee(email) {
       console.error("Error deleting employee:", error);
     }
   }
+}
+
+function employeeDropdown() {
+  db.collection("employees")
+
+    .get()
+    .then((response) => {
+      let mydocs = response.docs;
+      let all_names = [];
+      mydocs.forEach((doc) => {
+        let firstName = doc.data().firstName;
+        let lastName = doc.data().lastName;
+        if (firstName !== "" && lastName !== "") {
+          // Concatenate first name and last name
+          let fullName = `${firstName} ${lastName}`;
+          all_names.push(fullName);
+        }
+      });
+      // Get the dropdown element
+      let employee_dropdown = document.getElementById("employee_names");
+
+      // Clear existing options
+      employee_dropdown.innerHTML = "";
+
+      // Loop through all names to add option values
+      all_names.forEach(function (item) {
+        let option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        employee_dropdown.appendChild(option);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
 }
