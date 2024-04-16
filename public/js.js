@@ -870,10 +870,6 @@ function loadDirectory() {
             d.data().email
           }" onclick="deleteEmployee('${d.data().email}')">X</button>
         </div>`;
-        html += `<div class="EmployeeCard" id="${d.id}"> 
-        <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
-    <div class="employee-name">${d.data().firstName} ${d.data().lastName}</div>
-    <div class="employee-phone">${phoneNumber}</div></div>`;
       });
       document.querySelector("#employee_directory").innerHTML += html;
     });

@@ -371,7 +371,7 @@ p {
   justify-content: center;
 }
 
-.card {
+.EmployeeCard {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
