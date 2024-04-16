@@ -1074,3 +1074,50 @@ function employeeDropdown() {
       console.log("Error getting documents: ", error);
     });
 }
+
+// Function to add penalty points to the database
+function addPenaltyPoints() {
+  // Get the values from the form
+  let employeeName = document.getElementById("employee_names").value;
+  let date = document.getElementById("date1").value;
+  let reason = document.getElementById("penalty_name").value;
+  let moreInfo = document.getElementById("moreinfo").value;
+
+  // Check if all required fields are filled
+  if (employeeName == "" || date == "" || reason == "") {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  // Add the penalty points to the Firestore collection "points"
+  db.collection("points")
+    .add({
+      employeeName: employeeName,
+      date: date,
+      reason: reason,
+      moreInfo: moreInfo,
+    })
+    .then(() => {
+      // Clear the form after submission
+      document.getElementById("employee_names").value = "";
+      document.getElementById("date1").value = "";
+      document.getElementById("penalty_name").value = "";
+      document.getElementById("moreinfo").value = "";
+      configure_message_bar("Penalty Point Has Been Added");
+    })
+    .catch((error) => {
+      console.error("Error adding penalty points: ", error);
+      alert("An error occurred. Please try again.");
+    });
+}
+
+// Attach the event listener using event delegation
+document.addEventListener("click", function (event) {
+  if (event.target.id == "penaltyButton") {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Call the addPenaltyPoints function
+    addPenaltyPoints();
+  }
+});

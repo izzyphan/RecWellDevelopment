@@ -30,6 +30,8 @@
         <li><a href="#" id="signout">Sign Out</a></li>
       </ul>
     </nav>
+    <!-- message bar -->
+    <div id="message_bar"></div>
     <div class="new-content">
       <div id="admin-status" class="admin-status-banner">
         <span id="admin-status-text">Admin View</span>
@@ -59,8 +61,8 @@
             <th>Reason</th>
             <td>
               <select name="Reason" id="penalty_name">
-                <option value="">Missed Shift</option>
-                <option value="">Dress Code</option>
+                <option value="Missed Shift">Missed Shift</option>
+                <option value="Dress Code">Dress Code</option>
                 <!-- add more values here -->
               </select>
             </td>
@@ -108,7 +110,7 @@
             <td><input type="text" id="rewardinfo" /></td>
           </tr>
         </table>
-        <button id="rewardButton">Submit</button>
+        <button type="submit" id="rewardButton">Submit</button>
       </div>
 
       <!-- Point Output -->
