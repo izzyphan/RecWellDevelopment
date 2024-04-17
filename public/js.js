@@ -1089,9 +1089,10 @@ function addPenaltyPoints() {
   let date = document.getElementById("date1").value;
   let reason = document.getElementById("penalty_name").value;
   let moreInfo = document.getElementById("moreinfo").value;
+  let weight = document.getElementById("penaltyWeight").value;
 
   // Check if all required fields are filled
-  if (employeeEmail == "" || date == "" || reason == "") {
+  if (employeeEmail == "" || date == "" || reason == "" || weight == "") {
     alert("Please fill in all required fields.");
     return;
   }
@@ -1113,6 +1114,7 @@ function addPenaltyPoints() {
           employeeName: employeeName,
           reason: reason,
           moreInfo: moreInfo,
+          penaltyWeight: weight,
         });
       } else {
         throw new Error("Employee not found.");
@@ -1124,6 +1126,7 @@ function addPenaltyPoints() {
       document.getElementById("date1").value = "";
       document.getElementById("penalty_name").value = "";
       document.getElementById("moreinfo").value = "";
+      document.getElementById("penaltyWeight").value = "";
       configure_message_bar("Penalty Point Has Been Added");
     })
     .catch((error) => {
@@ -1158,7 +1161,7 @@ function loadUserPoints(userEmail) {
           let pointsData = doc.data();
           let pointDate = pointsData.date;
           let pointReason = pointsData.reason;
-          let pointWeight = pointsData.weight;
+          let pointWeight = pointsData.penaltyWeight;
           let pointEmployee = pointsData.employeeName;
           pointHeader.innerHTML = `${pointEmployee}'s Penalty and Reward Points"`;
 
