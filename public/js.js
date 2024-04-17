@@ -129,7 +129,7 @@ document.addEventListener("click", function (event) {
           if (user) {
             var userEmail = user.email;
             var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
-
+            loadUserPoints(userEmail);
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
             checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
@@ -299,6 +299,8 @@ function loadLastVisitedUrl() {
           var userEmail = user.email;
           var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+
+          loadUserPoints(userEmail);
         }
         employeeDropdown();
       });
@@ -1042,18 +1044,18 @@ async function deleteEmployee(email) {
 
 function employeeDropdown() {
   db.collection("employees")
-
     .get()
     .then((response) => {
       let mydocs = response.docs;
       let all_names = [];
       mydocs.forEach((doc) => {
+        let email = doc.data().email;
         let firstName = doc.data().firstName;
         let lastName = doc.data().lastName;
         if (firstName !== "" && lastName !== "") {
           // Concatenate first name and last name
           let fullName = `${firstName} ${lastName}`;
-          all_names.push(fullName);
+          all_names.push({ name: fullName, email: email }); // Store both name and email
         }
       });
       // Get the dropdown element
@@ -1065,8 +1067,8 @@ function employeeDropdown() {
       // Loop through all names to add option values
       all_names.forEach(function (item) {
         let option = document.createElement("option");
-        option.text = item;
-        option.value = item;
+        option.text = item.name;
+        option.value = item.email; // Set the value to the email
         employee_dropdown.appendChild(option);
       });
     })
@@ -1078,24 +1080,43 @@ function employeeDropdown() {
 // Function to add penalty points to the database
 function addPenaltyPoints() {
   // Get the values from the form
-  let employeeName = document.getElementById("employee_names").value;
+  let employeeEmail = document.getElementById("employee_names").value;
+  let employeeName =
+    document.getElementById("employee_names").options[
+      document.getElementById("employee_names").selectedIndex
+    ].text;
+
   let date = document.getElementById("date1").value;
   let reason = document.getElementById("penalty_name").value;
   let moreInfo = document.getElementById("moreinfo").value;
 
   // Check if all required fields are filled
-  if (employeeName == "" || date == "" || reason == "") {
+  if (employeeEmail == "" || date == "" || reason == "") {
     alert("Please fill in all required fields.");
     return;
   }
 
-  // Add the penalty points to the Firestore collection "points"
-  db.collection("points")
-    .add({
-      employeeName: employeeName,
-      date: date,
-      reason: reason,
-      moreInfo: moreInfo,
+  // Get the user's email based on the selected employee name
+  db.collection("employees")
+    .where("email", "==", employeeEmail)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        // Assuming there's only one document matching the query
+        let userDoc = querySnapshot.docs[0];
+        let userEmail = userDoc.data().email;
+
+        // Add the penalty points to the Firestore collection "points"
+        return db.collection("points").add({
+          employeeEmail: employeeEmail, // Use the user's email instead of name
+          date: date,
+          employeeName: employeeName,
+          reason: reason,
+          moreInfo: moreInfo,
+        });
+      } else {
+        throw new Error("Employee not found.");
+      }
     })
     .then(() => {
       // Clear the form after submission
@@ -1107,7 +1128,6 @@ function addPenaltyPoints() {
     })
     .catch((error) => {
       console.error("Error adding penalty points: ", error);
-      alert("An error occurred. Please try again.");
     });
 }
 
@@ -1121,3 +1141,45 @@ document.addEventListener("click", function (event) {
     addPenaltyPoints();
   }
 });
+
+function loadUserPoints(userEmail) {
+  // Get the points data for the logged-in user
+  db.collection("points")
+    .where("employeeEmail", "==", userEmail)
+    .get()
+    .then((querySnapshot) => {
+      let pointHeader = document.getElementById("point_header");
+
+      let pointsDisplay = document.getElementById("pointsDisplay");
+      pointsDisplay.innerHTML = ""; // Clear previous content
+
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach((doc) => {
+          let pointsData = doc.data();
+          let pointDate = pointsData.date;
+          let pointReason = pointsData.reason;
+          let pointWeight = pointsData.weight;
+          let pointEmployee = pointsData.employeeName;
+          pointHeader.innerHTML = `${pointEmployee}'s Penalty and Reward Points"`;
+
+          // Create a card-like display for each point
+          let pointCard = document.createElement("div");
+          pointCard.classList.add("point-card");
+          pointCard.innerHTML = `
+            <div class="point-info">
+              <div>Date: ${pointDate}</div>
+              <div>Reason: ${pointReason}</div>
+              <div>Weight: ${pointWeight}</div>
+            </div>
+          `;
+          pointsDisplay.appendChild(pointCard);
+        });
+      } else {
+        // No points data found for the user
+        pointsDisplay.innerHTML = "No points found.";
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading user points: ", error);
+    });
+}

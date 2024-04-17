@@ -613,3 +613,36 @@ p {
 .searchStaff {
   color: black;
 }
+
+/* Card container style */
+.point-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Point information style */
+.point-info {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Date style */
+.point-info .point-date {
+  font-weight: bold;
+}
+
+/* Reason style */
+.point-info .point-reason {
+  margin-top: 5px;
+  color: #333;
+}
+
+/* Weight style */
+.point-info .point-weight {
+  margin-top: 5px;
+  color: #555;
+}
