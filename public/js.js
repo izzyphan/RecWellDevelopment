@@ -1058,18 +1058,27 @@ function employeeDropdown() {
           all_names.push({ name: fullName, email: email }); // Store both name and email
         }
       });
-      // Get the dropdown element
-      let employee_dropdown = document.getElementById("employee_names");
+
+      // Get the dropdown elements
+      let employeeDropdown1 = document.getElementById("employee_names");
+      let employeeDropdown2 = document.getElementById("employee_name2");
 
       // Clear existing options
-      employee_dropdown.innerHTML = "";
+      employeeDropdown1.innerHTML = "";
+      employeeDropdown2.innerHTML = "";
 
-      // Loop through all names to add option values
+      // Loop through all names to add option values for both dropdowns
       all_names.forEach(function (item) {
-        let option = document.createElement("option");
-        option.text = item.name;
-        option.value = item.email; // Set the value to the email
-        employee_dropdown.appendChild(option);
+        let option1 = document.createElement("option");
+        let option2 = document.createElement("option");
+
+        option1.text = item.name;
+        option1.value = item.email; // Set the value to the email
+        employeeDropdown1.appendChild(option1);
+
+        option2.text = item.name;
+        option2.value = item.email; // Set the value to the email
+        employeeDropdown2.appendChild(option2);
       });
     })
     .catch((error) => {
