@@ -1152,19 +1152,29 @@ function loadUserPoints(userEmail) {
     .get()
     .then((querySnapshot) => {
       let pointHeader = document.getElementById("point_header");
-
       let pointsDisplay = document.getElementById("pointsDisplay");
+      let totalWeightDisplay = document.getElementById("pointTotal"); // Add this line
+
       pointsDisplay.innerHTML = ""; // Clear previous content
+      totalWeightDisplay.innerHTML = ""; // Clear previous total weight
+
+      let totalWeight = 0; // Initialize total weight variable
 
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           let pointsData = doc.data();
           let pointDate = pointsData.date;
           let pointReason = pointsData.reason;
-          let pointWeight = pointsData.penaltyWeight;
-          let pointEmployee = pointsData.employeeName;
-          pointHeader.innerHTML = `${pointEmployee}'s Penalty and Reward Points"`;
+          let pointWeight = parseFloat(pointsData.penaltyWeight); // Convert string to number
 
+          let pointEmployee = pointsData.employeeName;
+          pointHeader.innerHTML = `${pointEmployee}'s Penalty and Reward Points`;
+
+          // Add the point weight to the total weight if it's not undefined
+          // Add the point weight to the total weight if it's a valid number
+          if (!isNaN(pointWeight)) {
+            totalWeight += pointWeight;
+          }
           // Create a card-like display for each point
           let pointCard = document.createElement("div");
           pointCard.classList.add("point-card");
@@ -1177,6 +1187,11 @@ function loadUserPoints(userEmail) {
           `;
           pointsDisplay.appendChild(pointCard);
         });
+
+        // Display the total weight if it's not undefined
+        if (totalWeight !== undefined) {
+          totalWeightDisplay.innerHTML = `Total Weight: ${totalWeight}`;
+        }
       } else {
         // No points data found for the user
         pointsDisplay.innerHTML = "No points found.";
