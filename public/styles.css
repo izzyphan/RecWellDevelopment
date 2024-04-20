@@ -615,7 +615,8 @@ p {
 }
 
 /* Card container style */
-.point-card {
+.point-card,
+.reward-card {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
