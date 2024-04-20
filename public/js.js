@@ -130,6 +130,7 @@ document.addEventListener("click", function (event) {
             var userEmail = user.email;
             var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
             loadUserPoints(userEmail);
+            loadUserRewards(userEmail);
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
             checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
@@ -301,6 +302,7 @@ function loadLastVisitedUrl() {
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
 
           loadUserPoints(userEmail);
+          loadUserRewards(userEmail);
         }
         employeeDropdown();
       });
@@ -1198,6 +1200,7 @@ function loadUserPoints(userEmail) {
           pointCard.classList.add("point-card");
           pointCard.innerHTML = `
             <div class="point-info">
+            <div>Employee: ${pointEmployee}</div>
               <div>Date: ${pointDate}</div>
               <div>Reason: ${pointReason}</div>
               <div>Weight: ${pointWeight}</div>
@@ -1220,7 +1223,7 @@ function loadUserPoints(userEmail) {
     });
 }
 
-function addRewardPoints() {
+function addRewardPoints(currentUserEmail) {
   // Get the values from the form
   let employeeEmail = document.getElementById("employee_name2").value;
   let employeeName =
@@ -1263,6 +1266,7 @@ function addRewardPoints() {
           employeeName: employeeName,
           reason: reason,
           moreInfo: moreInfo,
+          loggedInUserEmail: currentUserEmail, // Add the logged-in user's email
         });
       } else {
         throw new Error("Employee not found.");
@@ -1281,14 +1285,17 @@ function addRewardPoints() {
     });
 }
 
-// Attach the event listener using event delegation
 document.addEventListener("click", function (event) {
   if (event.target.id == "rewardButton") {
     // Prevent the default form submission behavior
     event.preventDefault();
 
-    // Call the addRewardPoints function
-    addRewardPoints();
+    // Assuming you have a way to get the current user's email, such as from Firebase Authentication
+    // Replace 'getCurrentUserEmail()' with the actual function or method to get the current user's email
+    const currentUserEmail = getCurrentUserEmail();
+
+    // Call the addRewardPoints function with the current user's email
+    addRewardPoints(currentUserEmail);
   }
 });
 
@@ -1308,12 +1315,14 @@ function loadUserRewards(userEmail) {
           let rewardDate = rewardsData.date;
           let rewardReason = rewardsData.reason;
           let rewardEmployee = rewardsData.employeeName;
-
+          let fromEmployee = rewardsData.loggedInUserEmail;
           // Create a card-like display for each reward
           let rewardCard = document.createElement("div");
           rewardCard.classList.add("reward-card");
           rewardCard.innerHTML = `
             <div class="reward-info">
+            <div>To: ${rewardEmployee}</div>
+            <div>From: ${fromEmployee}</div>
               <div>Date: ${rewardDate}</div>
               <div>Reason: ${rewardReason}</div>
             </div>
@@ -1328,4 +1337,16 @@ function loadUserRewards(userEmail) {
     .catch((error) => {
       console.error("Error loading user rewards: ", error);
     });
+}
+function getCurrentUserEmail() {
+  // Check if there is a currently signed-in user
+  const user = auth.currentUser;
+  if (user) {
+    // Return the user's email
+    return user.email;
+  } else {
+    // Handle the case when there is no signed-in user
+    console.log("No user signed in.");
+    return null; // Or return a default value or handle the case as needed
+  }
 }
