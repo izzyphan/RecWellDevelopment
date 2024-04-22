@@ -1224,78 +1224,96 @@ function loadUserPoints(userEmail) {
 }
 
 function addRewardPoints(currentUserEmail) {
-  // Get the values from the form
-  let employeeEmail = document.getElementById("employee_name2").value;
-  let employeeName =
-    document.getElementById("employee_name2").options[
-      document.getElementById("employee_name2").selectedIndex
-    ].text;
+  return new Promise((resolve, reject) => {
+    // Get the values from the form
+    let employeeEmail = document.getElementById("employee_name2").value;
+    let employeeName =
+      document.getElementById("employee_name2").options[
+        document.getElementById("employee_name2").selectedIndex
+      ].text;
 
-  let date = document.getElementById("date2").value;
-  let reason = document.getElementById("reward_name").value;
-  let moreInfo = document.getElementById("rewardinfo").value;
-  console.log(employeeEmail, reason, date);
-  // Check if all required fields are filled
-  if (employeeEmail == "" || date == "" || reason == "") {
-    alert("Please fill in all required fields.");
-    return;
-  }
+    let date = document.getElementById("date2").value;
+    let reason = document.getElementById("reward_name").value;
+    let moreInfo = document.getElementById("rewardinfo").value;
+    console.log(employeeEmail, reason, date);
+    // Check if all required fields are filled
+    if (employeeEmail == "" || date == "" || reason == "") {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
-  // Check if the selected date is in the future
-  let selectedDate = new Date(date);
-  let currentDate = new Date();
-  if (selectedDate > currentDate) {
-    alert("Please select a date that has already occurred.");
-    return;
-  }
+    // Check if the selected date is in the future
+    let selectedDate = new Date(date);
+    let currentDate = new Date();
+    if (selectedDate > currentDate) {
+      alert("Please select a date that has already occurred.");
+      return;
+    }
 
-  // Get the user's email based on the selected employee name
-  db.collection("employees")
-    .where("email", "==", employeeEmail)
-    .get()
-    .then((querySnapshot) => {
-      if (!querySnapshot.empty) {
-        // Assuming there's only one document matching the query
-        let userDoc = querySnapshot.docs[0];
-        let userEmail = userDoc.data().email;
+    // Get the user's email based on the selected employee name
+    db.collection("employees")
+      .where("email", "==", employeeEmail)
+      .get()
+      .then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          // Assuming there's only one document matching the query
+          let userDoc = querySnapshot.docs[0];
+          let userEmail = userDoc.data().email;
 
-        // Add the reward points to the Firestore collection "points"
-        return db.collection("rewards").add({
-          employeeEmail: employeeEmail, // Use the user's email instead of name
-          date: date,
-          employeeName: employeeName,
-          reason: reason,
-          moreInfo: moreInfo,
-          loggedInUserEmail: currentUserEmail, // Add the logged-in user's email
-        });
-      } else {
-        throw new Error("Employee not found.");
-      }
-    })
-    .then(() => {
-      // Clear the form after submission
-      document.getElementById("employee_name2").value = "";
-      document.getElementById("date2").value = "";
-      document.getElementById("reward_name").value = "";
-      document.getElementById("rewardinfo").value = "";
-      configure_message_bar("Reward Point Has Been Added");
-    })
-    .catch((error) => {
-      console.error("Error adding reward points: ", error);
-    });
+          // Add the reward points to the Firestore collection "points"
+          return db.collection("rewards").add({
+            employeeEmail: employeeEmail, // Use the user's email instead of name
+            date: date,
+            employeeName: employeeName,
+            reason: reason,
+            moreInfo: moreInfo,
+            loggedInUserEmail: currentUserEmail, // Add the logged-in user's email
+          });
+        } else {
+          throw new Error("Employee not found.");
+        }
+      })
+      .then(() => {
+        // Clear the form after submission
+        document.getElementById("employee_name2").value = "";
+        document.getElementById("date2").value = "";
+        document.getElementById("reward_name").value = "";
+        document.getElementById("rewardinfo").value = "";
+        configure_message_bar("Reward Point Has Been Added");
+        resolve(); // Resolve the promise
+      })
+      .catch((error) => {
+        console.error("Error adding reward points: ", error);
+      });
+  });
 }
 
+// submission event listener for rewards
 document.addEventListener("click", function (event) {
   if (event.target.id == "rewardButton") {
     // Prevent the default form submission behavior
     event.preventDefault();
 
-    // Assuming you have a way to get the current user's email, such as from Firebase Authentication
-    // Replace 'getCurrentUserEmail()' with the actual function or method to get the current user's email
+    // Get the current user's email using getCurrentUserEmail()
     const currentUserEmail = getCurrentUserEmail();
+    console.log(currentUserEmail);
 
-    // Call the addRewardPoints function with the current user's email
-    addRewardPoints(currentUserEmail);
+    // Check if currentUserEmail is not null or undefined before proceeding
+    if (currentUserEmail) {
+      // Call the addRewardPoints function with the current user's email
+      addRewardPoints(currentUserEmail)
+        .then(() => {
+          // After adding reward points successfully, load and display the updated rewards
+          loadUserRewards(currentUserEmail);
+        })
+        .catch((error) => {
+          console.error("Error adding reward points: ", error);
+        });
+    } else {
+      console.log("No user signed in.");
+      // Handle the case when there is no signed-in user
+      // You can show an alert or redirect to a login page, for example
+    }
   }
 });
 
@@ -1316,6 +1334,7 @@ function loadUserRewards(userEmail) {
           let rewardReason = rewardsData.reason;
           let rewardEmployee = rewardsData.employeeName;
           let fromEmployee = rewardsData.loggedInUserEmail;
+          let moreInfo = rewardsData.moreInfo;
           // Create a card-like display for each reward
           let rewardCard = document.createElement("div");
           rewardCard.classList.add("reward-card");
@@ -1325,6 +1344,7 @@ function loadUserRewards(userEmail) {
             <div>From: ${fromEmployee}</div>
               <div>Date: ${rewardDate}</div>
               <div>Reason: ${rewardReason}</div>
+              <div>Description: ${moreInfo}</div>
             </div>
           `;
           rewardsDisplay.appendChild(rewardCard);

@@ -647,3 +647,24 @@ p {
   margin-top: 5px;
   color: #555;
 }
+
+#allPointDisplay {
+  display: flex;
+  /* flex-direction: column; */
+}
+
+#pointsDisplayAll,
+#shoutoutsAll {
+  margin: 10px;
+  flex: 1;
+}
+
+#pointTotal {
+  position: sticky;
+  bottom: 0;
+}
+
+#pointsDisplayAll h3,
+#shoutoutsAll h3 {
+  text-align: center;
+}
