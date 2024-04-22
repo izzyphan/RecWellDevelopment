@@ -1370,3 +1370,50 @@ function getCurrentUserEmail() {
     return null; // Or return a default value or handle the case as needed
   }
 }
+
+// function to show top 15 most recent employee rewards on home page
+function loadEmployeeShoutouts() {
+  // Get the rewards data for all employees within the specified date range
+  db.collection("rewards")
+    .orderBy("date", "desc") // Order by date in descending order (most recent first)
+    .limit(10) // Limit to the top 15 most recent shoutouts
+    .get()
+    .then((querySnapshot) => {
+      let shoutoutsContainer = document.getElementById("shoutouts");
+
+      // Clear previous content
+      shoutoutsContainer.innerHTML = "";
+
+      if (!querySnapshot.empty) {
+        // Iterate through the query results
+        querySnapshot.forEach((doc) => {
+          let rewardsData = doc.data();
+          let rewardDate = rewardsData.date;
+          let rewardReason = rewardsData.reason;
+          let rewardEmployee = rewardsData.employeeName;
+          let fromEmployee = rewardsData.loggedInUserEmail;
+          let moreInfo = rewardsData.moreInfo;
+
+          // Create a card-like display for each shoutout
+          let shoutoutCard = document.createElement("div");
+          shoutoutCard.classList.add("shoutout-card");
+          shoutoutCard.innerHTML = `
+            <h3>Date: ${rewardDate}</h3>
+            <p>${rewardEmployee}: ${rewardReason}</p>
+            
+            ${moreInfo ? `<p>Description: ${moreInfo}</p>` : ""}
+            <hr>
+          `;
+          shoutoutsContainer.appendChild(shoutoutCard);
+        });
+      } else {
+        // No shoutouts found within the specified date range
+        shoutoutsContainer.innerHTML = "No shoutouts found.";
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading employee shoutouts: ", error);
+    });
+}
+
+loadEmployeeShoutouts();
