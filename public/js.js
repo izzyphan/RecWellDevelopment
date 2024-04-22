@@ -1302,6 +1302,10 @@ document.addEventListener("click", function (event) {
 
     // Check if currentUserEmail is not null or undefined before proceeding
     if (currentUserEmail) {
+      // Destroy the old chart before adding new reward points
+      if (window.rewardDonutChart) {
+        window.rewardDonutChart.destroy();
+      }
       // Call the addRewardPoints function with the current user's email
       addRewardPoints(currentUserEmail)
         .then(() => {
@@ -1326,6 +1330,8 @@ function loadUserRewards(userEmail) {
     .get()
     .then((querySnapshot) => {
       let rewardsDisplay = document.getElementById("shoutoutDisplay");
+      let rewardsCount = querySnapshot.size; // Get the count of rewards
+      console.log(rewardsCount);
 
       rewardsDisplay.innerHTML = ""; // Clear previous content
 
@@ -1355,6 +1361,9 @@ function loadUserRewards(userEmail) {
         // No rewards data found for the user
         rewardsDisplay.innerHTML = "No rewards found.";
       }
+      // Update the donut chart with the rewards count
+
+      updateDonutChart(rewardsCount);
     })
     .catch((error) => {
       console.error("Error loading user rewards: ", error);
@@ -1415,4 +1424,63 @@ function loadEmployeeShoutouts() {
     .catch((error) => {
       console.error("Error loading employee shoutouts: ", error);
     });
+}
+
+// Placeholder data for the chart
+const defaultChartData = {
+  labels: ["Submitted", "Remaining"],
+  datasets: [
+    {
+      data: [0, 10], // Initial values (0 submitted, 10 remaining as per your limit)
+      backgroundColor: ["#36a2eb", "#ff6384"],
+    },
+  ],
+};
+
+// Function to update the donut chart
+function updateDonutChart(rewardsCount) {
+  const donutChartCanvas = document
+    .getElementById("rewardChart")
+    .getContext("2d");
+
+  destroyChart();
+
+  // Set the actual pixel dimensions of the canvas
+  donutChartCanvas.width = 300;
+  donutChartCanvas.height = 300;
+
+  const donutChart = new Chart(donutChartCanvas, {
+    type: "doughnut",
+    data: {
+      labels: ["Submitted", "Remaining"],
+      datasets: [
+        {
+          data: [rewardsCount, 10 - rewardsCount], // Assuming the limit is 10
+          backgroundColor: ["#36a2eb", "#ff6384"],
+        },
+      ],
+    },
+    options: {
+      // responsive: true,
+      // maintainAspectRatio: false,
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        display: true,
+        text: "Reward Submissions",
+      },
+    },
+  });
+  // Store the chart instance in the myDonutChart variable
+  myDonutChart = donutChart;
+}
+
+let myDonutChart; // Variable to store the chart instance
+
+// Function to destroy the existing chart
+function destroyChart() {
+  if (myDonutChart) {
+    myDonutChart.destroy(); // Destroy the chart if it exists
+  }
 }
