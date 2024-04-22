@@ -1323,6 +1323,21 @@ document.addEventListener("click", function (event) {
   }
 });
 
+function rewardLimit(userEmail) {
+  db.collection("rewards")
+    .where("loggedInUserEmail", "==", userEmail)
+    .get()
+    .then((querySnapshot) => {
+      let rewardsCount = querySnapshot.size; // Get the count of rewards
+      console.log(rewardsCount);
+      updateDonutChart(rewardsCount);
+
+      r_e(
+        "NumSubmission"
+      ).innerHTML = `You have submitted ${rewardsCount} rewards.`;
+    });
+}
+
 function loadUserRewards(userEmail) {
   // Get the rewards data for the logged-in user
   db.collection("rewards")
@@ -1330,8 +1345,6 @@ function loadUserRewards(userEmail) {
     .get()
     .then((querySnapshot) => {
       let rewardsDisplay = document.getElementById("shoutoutDisplay");
-      let rewardsCount = querySnapshot.size; // Get the count of rewards
-      console.log(rewardsCount);
 
       rewardsDisplay.innerHTML = ""; // Clear previous content
 
@@ -1362,8 +1375,7 @@ function loadUserRewards(userEmail) {
         rewardsDisplay.innerHTML = "No rewards found.";
       }
       // Update the donut chart with the rewards count
-
-      updateDonutChart(rewardsCount);
+      rewardLimit(userEmail);
     })
     .catch((error) => {
       console.error("Error loading user rewards: ", error);
@@ -1449,13 +1461,16 @@ function updateDonutChart(rewardsCount) {
   donutChartCanvas.width = 300;
   donutChartCanvas.height = 300;
 
+  // Calculate the displayed rewards count (limited to 10)
+  const displayedRewardsCount = Math.min(rewardsCount, 10);
+
   const donutChart = new Chart(donutChartCanvas, {
     type: "doughnut",
     data: {
       labels: ["Submitted", "Remaining"],
       datasets: [
         {
-          data: [rewardsCount, 10 - rewardsCount], // Assuming the limit is 10
+          data: [displayedRewardsCount, 10 - displayedRewardsCount], // Assuming the limit is 10
           backgroundColor: ["#36a2eb", "#ff6384"],
         },
       ],
