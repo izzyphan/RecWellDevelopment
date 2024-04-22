@@ -146,6 +146,7 @@ document.addEventListener("click", function (event) {
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
           }
         });
+        loadEmployeeShoutouts();
         break;
     }
     // Save the current URL to localStorage
@@ -325,6 +326,7 @@ function loadLastVisitedUrl() {
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
       });
+      loadEmployeeShoutouts();
     }
     if (stateData.url.endsWith("myaccount.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
@@ -1398,9 +1400,8 @@ function loadEmployeeShoutouts() {
           let shoutoutCard = document.createElement("div");
           shoutoutCard.classList.add("shoutout-card");
           shoutoutCard.innerHTML = `
-            <h3>Date: ${rewardDate}</h3>
-            <p>${rewardEmployee}: ${rewardReason}</p>
             
+            <p>${rewardDate}, ${rewardEmployee}: ${rewardReason}</p>
             ${moreInfo ? `<p>Description: ${moreInfo}</p>` : ""}
             <hr>
           `;
@@ -1415,5 +1416,3 @@ function loadEmployeeShoutouts() {
       console.error("Error loading employee shoutouts: ", error);
     });
 }
-
-loadEmployeeShoutouts();

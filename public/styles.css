@@ -63,7 +63,8 @@ html {
 
 .column1 h2,
 .column2 h2,
-.column3 h2 {
+.column3 h2,
+.column1 h3 {
   text-align: center;
 }
 
