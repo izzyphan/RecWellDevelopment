@@ -1458,8 +1458,6 @@ function updateDonutChart(rewardsCount) {
   destroyChart();
 
   // Set the actual pixel dimensions of the canvas
-  donutChartCanvas.width = 300;
-  donutChartCanvas.height = 300;
 
   // Calculate the displayed rewards count (limited to 10)
   const displayedRewardsCount = Math.min(rewardsCount, 10);
