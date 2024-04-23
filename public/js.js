@@ -949,7 +949,7 @@ function findStaff() {
         if (firstName !== undefined) {
           firstName = firstName.toLowerCase();
           if (firstName.includes(inputSearch)) {
-            trueNames.push(d.id);
+            trueNames.push(d.data().email);
           }
         }
       });
@@ -962,23 +962,23 @@ function findStaff() {
             if (lastName !== undefined) {
               lastName = lastName.toLowerCase();
               if (lastName.includes(inputSearch)) {
-                trueNames.push(d.id);
+                trueNames.push(d.data().email);
               }
             }
           });
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
           //duplicate names arent hidden the 2nd time
-
           let allStaffArray = document.getElementsByClassName("EmployeeCard");
-
           let idList = [];
           for (let i = 0; i < allStaffArray.length; i++) {
             idList.push(allStaffArray[i].id);
+            console.log(idList);
           }
           idList = Array.from(new Set(idList));
           for (let i = 0; i < idList.length; i++) {
             let testName = idList[i];
+            console.log(testName);
             document.getElementById(testName).style.display = "none";
           }
           for (let i = 0; i < trueNames.length; i++) {
