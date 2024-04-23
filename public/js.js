@@ -1237,7 +1237,7 @@ function addRewardPoints(currentUserEmail) {
     let date = document.getElementById("date2").value;
     let reason = document.getElementById("reward_name").value;
     let moreInfo = document.getElementById("rewardinfo").value;
-    console.log(employeeEmail, reason, date);
+
     // Check if all required fields are filled
     if (employeeEmail == "" || date == "" || reason == "") {
       alert("Please fill in all required fields.");
@@ -1269,6 +1269,7 @@ function addRewardPoints(currentUserEmail) {
             employeeName: employeeName,
             reason: reason,
             moreInfo: moreInfo,
+            submissionDate: currentDate,
             loggedInUserEmail: currentUserEmail, // Add the logged-in user's email
           });
         } else {
@@ -1298,7 +1299,6 @@ document.addEventListener("click", function (event) {
 
     // Get the current user's email using getCurrentUserEmail()
     const currentUserEmail = getCurrentUserEmail();
-    console.log(currentUserEmail);
 
     // Check if currentUserEmail is not null or undefined before proceeding
     if (currentUserEmail) {
@@ -1324,17 +1324,37 @@ document.addEventListener("click", function (event) {
 });
 
 function rewardLimit(userEmail) {
+  const today = new Date(); // Get the current date
+  const currentMonth = today.getMonth(); // Get the current month (0-indexed)
+  const currentYear = today.getFullYear(); // Get the current year
+
+  // Create a timestamp for the start of the current month
+  const startOfMonth = new Date(currentYear, currentMonth, 1);
+
+  // Create a timestamp for the start of next month
+  const startOfNextMonth = new Date(currentYear, currentMonth + 1, 1);
+
   db.collection("rewards")
     .where("loggedInUserEmail", "==", userEmail)
+    .where("submissionDate", ">=", startOfMonth)
+    .where("submissionDate", "<", startOfNextMonth)
     .get()
     .then((querySnapshot) => {
-      let rewardsCount = querySnapshot.size; // Get the count of rewards
-      console.log(rewardsCount);
-      updateDonutChart(rewardsCount);
+      // Check if the number of rewards submitted this month is less than 10
+      if (querySnapshot.size < 10) {
+        let rewardsCount = querySnapshot.size; // Get the count of rewards
+        console.log(rewardsCount);
+        updateDonutChart(rewardsCount);
 
-      r_e(
-        "NumSubmission"
-      ).innerHTML = `You have submitted ${rewardsCount} rewards.`;
+        document.getElementById(
+          "NumSubmission"
+        ).innerHTML = `You have submitted ${rewardsCount} rewards this month.`;
+      } else {
+        // Display a message indicating the limit has been reached
+        document.getElementById(
+          "NumSubmission"
+        ).innerHTML = `You have reached the limit of 10 rewards submissions for this month.`;
+      }
     });
 }
 
@@ -1456,8 +1476,6 @@ function updateDonutChart(rewardsCount) {
     .getContext("2d");
 
   destroyChart();
-
-  // Set the actual pixel dimensions of the canvas
 
   // Calculate the displayed rewards count (limited to 10)
   const displayedRewardsCount = Math.min(rewardsCount, 10);
