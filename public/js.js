@@ -313,6 +313,7 @@ function loadLastVisitedUrl() {
           var userEmail = user.email;
           var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
 
           loadUserPoints(userEmail);
           loadUserRewards(userEmail);
