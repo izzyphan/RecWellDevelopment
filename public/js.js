@@ -980,20 +980,6 @@ function findStaff() {
           document.getElementById(testName).style.display = "block";
         }
       });
-      db.collection("employees")
-        .get()
-        .then((res) => {
-          let data = res.docs;
-          data.forEach((d) => {
-            // let lastName = d.data().lastName;
-            // if (lastName !== undefined) {
-            //   lastName = lastName.toLowerCase();
-            //   if (lastName.includes(inputSearch)) {
-            //     trueNames.push(d.data().email);
-            //   }
-            // }
-          });
-        });
     });
 }
 
