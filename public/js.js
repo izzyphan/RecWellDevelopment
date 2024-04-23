@@ -11,18 +11,30 @@ function toggleNavbar() {
   }
 }
 
-// message bar popup
+// Function to scroll the message bar into view
+function scrollMessageBarIntoView() {
+  const messageBar = document.getElementById("message_bar"); // Replace "message_bar" with the actual ID of your message bar element
+  if (messageBar) {
+    messageBar.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+// Function to configure and display the message bar with a given message
 function configure_message_bar(message) {
-  var messageBar = r_e("message_bar");
+  var messageBar = document.getElementById("message_bar"); // Replace "message_bar" with the actual ID of your message bar element
+  if (messageBar) {
+    // Display the message and set its content
+    messageBar.style.display = "block";
+    messageBar.innerHTML = message;
 
-  // Display the message and set its content
-  messageBar.style.display = "block";
-  messageBar.innerHTML = message;
+    scrollMessageBarIntoView(); // Scroll the message bar into view
 
-  // Hide the message bar after 5 seconds
-  setTimeout(() => {
-    messageBar.innerHTML = ""; // Clear the message content
-  }, 5000);
+    // Hide the message bar after 5 seconds
+    setTimeout(() => {
+      messageBar.style.display = "none"; // Hide the message bar
+      messageBar.innerHTML = ""; // Clear the message content
+    }, 5000);
+  }
 }
 
 // Function to fetch and load HTML content dynamically
@@ -301,6 +313,7 @@ function loadLastVisitedUrl() {
           var userEmail = user.email;
           var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
+          checkAdminStatusAndHideElement(userEmail, "admin-status");
 
           loadUserPoints(userEmail);
           loadUserRewards(userEmail);
@@ -1237,7 +1250,7 @@ function addRewardPoints(currentUserEmail) {
     let date = document.getElementById("date2").value;
     let reason = document.getElementById("reward_name").value;
     let moreInfo = document.getElementById("rewardinfo").value;
-    console.log(employeeEmail, reason, date);
+
     // Check if all required fields are filled
     if (employeeEmail == "" || date == "" || reason == "") {
       alert("Please fill in all required fields.");
@@ -1269,6 +1282,7 @@ function addRewardPoints(currentUserEmail) {
             employeeName: employeeName,
             reason: reason,
             moreInfo: moreInfo,
+            submissionDate: currentDate,
             loggedInUserEmail: currentUserEmail, // Add the logged-in user's email
           });
         } else {
@@ -1298,10 +1312,13 @@ document.addEventListener("click", function (event) {
 
     // Get the current user's email using getCurrentUserEmail()
     const currentUserEmail = getCurrentUserEmail();
-    console.log(currentUserEmail);
 
     // Check if currentUserEmail is not null or undefined before proceeding
     if (currentUserEmail) {
+      // Destroy the old chart before adding new reward points
+      if (window.rewardDonutChart) {
+        window.rewardDonutChart.destroy();
+      }
       // Call the addRewardPoints function with the current user's email
       addRewardPoints(currentUserEmail)
         .then(() => {
@@ -1318,6 +1335,41 @@ document.addEventListener("click", function (event) {
     }
   }
 });
+
+function rewardLimit(userEmail) {
+  const today = new Date(); // Get the current date
+  const currentMonth = today.getMonth(); // Get the current month (0-indexed)
+  const currentYear = today.getFullYear(); // Get the current year
+
+  // Create a timestamp for the start of the current month
+  const startOfMonth = new Date(currentYear, currentMonth, 1);
+
+  // Create a timestamp for the start of next month
+  const startOfNextMonth = new Date(currentYear, currentMonth + 1, 1);
+
+  db.collection("rewards")
+    .where("loggedInUserEmail", "==", userEmail)
+    .where("submissionDate", ">=", startOfMonth)
+    .where("submissionDate", "<", startOfNextMonth)
+    .get()
+    .then((querySnapshot) => {
+      // Check if the number of rewards submitted this month is less than 10
+      if (querySnapshot.size < 10) {
+        let rewardsCount = querySnapshot.size; // Get the count of rewards
+
+        updateDonutChart(rewardsCount);
+
+        document.getElementById(
+          "NumSubmission"
+        ).innerHTML = `You have submitted ${rewardsCount} rewards this month.`;
+      } else {
+        // Display a message indicating the limit has been reached
+        document.getElementById(
+          "NumSubmission"
+        ).innerHTML = `You have reached the limit of 10 rewards submissions for this month.`;
+      }
+    });
+}
 
 function loadUserRewards(userEmail) {
   // Get the rewards data for the logged-in user
@@ -1355,6 +1407,8 @@ function loadUserRewards(userEmail) {
         // No rewards data found for the user
         rewardsDisplay.innerHTML = "No rewards found.";
       }
+      // Update the donut chart with the rewards count
+      rewardLimit(userEmail);
     })
     .catch((error) => {
       console.error("Error loading user rewards: ", error);
@@ -1400,9 +1454,8 @@ function loadEmployeeShoutouts() {
           let shoutoutCard = document.createElement("div");
           shoutoutCard.classList.add("shoutout-card");
           shoutoutCard.innerHTML = `
-            <h3>Date: ${rewardDate}</h3>
-            <p>${rewardEmployee}: ${rewardReason}</p>
             
+            <p>${rewardDate}, ${rewardEmployee}: ${rewardReason}</p>
             ${moreInfo ? `<p>Description: ${moreInfo}</p>` : ""}
             <hr>
           `;
@@ -1416,4 +1469,62 @@ function loadEmployeeShoutouts() {
     .catch((error) => {
       console.error("Error loading employee shoutouts: ", error);
     });
+}
+
+// Placeholder data for the chart
+const defaultChartData = {
+  labels: ["Submitted", "Remaining"],
+  datasets: [
+    {
+      data: [0, 10], // Initial values (0 submitted, 10 remaining as per your limit)
+      backgroundColor: ["#36a2eb", "#ff6384"],
+    },
+  ],
+};
+
+// Function to update the donut chart
+function updateDonutChart(rewardsCount) {
+  const donutChartCanvas = document
+    .getElementById("rewardChart")
+    .getContext("2d");
+
+  destroyChart();
+
+  // Calculate the displayed rewards count (limited to 10)
+  const displayedRewardsCount = Math.min(rewardsCount, 10);
+
+  const donutChart = new Chart(donutChartCanvas, {
+    type: "doughnut",
+    data: {
+      labels: ["Submitted", "Remaining"],
+      datasets: [
+        {
+          data: [displayedRewardsCount, 10 - displayedRewardsCount], // Assuming the limit is 10
+          backgroundColor: ["#36a2eb", "#ff6384"],
+        },
+      ],
+    },
+    options: {
+      // responsive: true,
+      // maintainAspectRatio: false,
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        display: true,
+        text: "Reward Submissions",
+      },
+    },
+  });
+  // Store the chart instance in the myDonutChart variable
+  myDonutChart = donutChart;
+}
+
+let myDonutChart; // Variable to store the chart instance
+
+// Function to destroy the existing chart
+function destroyChart() {
+  if (myDonutChart) {
+    myDonutChart.destroy(); // Destroy the chart if it exists
+  }
 }
