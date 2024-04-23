@@ -946,16 +946,14 @@ function findStaff() {
       let data = res.docs;
       data.forEach((d) => {
         let firstName = d.data().firstName;
-        if (firstName !== undefined) {
-          firstName = firstName.toLowerCase();
-          if (firstName.includes(inputSearch)) {
-            trueNames.push(d.data().email);
-          }
-        }
         let lastName = d.data().lastName;
-        if (lastName !== undefined) {
+        if (firstName !== undefined && lastName !== undefined) {
+          firstName = firstName.toLowerCase();
           lastName = lastName.toLowerCase();
-          if (lastName.includes(inputSearch)) {
+          if (
+            firstName.includes(inputSearch) ||
+            lastName.includes(inputSearch)
+          ) {
             trueNames.push(d.data().email);
           }
         }
