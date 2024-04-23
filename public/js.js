@@ -11,18 +11,30 @@ function toggleNavbar() {
   }
 }
 
-// message bar popup
+// Function to scroll the message bar into view
+function scrollMessageBarIntoView() {
+  const messageBar = document.getElementById("message_bar"); // Replace "message_bar" with the actual ID of your message bar element
+  if (messageBar) {
+    messageBar.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+// Function to configure and display the message bar with a given message
 function configure_message_bar(message) {
-  var messageBar = r_e("message_bar");
+  var messageBar = document.getElementById("message_bar"); // Replace "message_bar" with the actual ID of your message bar element
+  if (messageBar) {
+    // Display the message and set its content
+    messageBar.style.display = "block";
+    messageBar.innerHTML = message;
 
-  // Display the message and set its content
-  messageBar.style.display = "block";
-  messageBar.innerHTML = message;
+    scrollMessageBarIntoView(); // Scroll the message bar into view
 
-  // Hide the message bar after 5 seconds
-  setTimeout(() => {
-    messageBar.innerHTML = ""; // Clear the message content
-  }, 5000);
+    // Hide the message bar after 5 seconds
+    setTimeout(() => {
+      messageBar.style.display = "none"; // Hide the message bar
+      messageBar.innerHTML = ""; // Clear the message content
+    }, 5000);
+  }
 }
 
 // Function to fetch and load HTML content dynamically
@@ -1343,7 +1355,7 @@ function rewardLimit(userEmail) {
       // Check if the number of rewards submitted this month is less than 10
       if (querySnapshot.size < 10) {
         let rewardsCount = querySnapshot.size; // Get the count of rewards
-        console.log(rewardsCount);
+
         updateDonutChart(rewardsCount);
 
         document.getElementById(
