@@ -952,19 +952,26 @@ function findStaff() {
             trueNames.push(d.data().email);
           }
         }
+        let lastName = d.data().lastName;
+        if (lastName !== undefined) {
+          lastName = lastName.toLowerCase();
+          if (lastName.includes(inputSearch)) {
+            trueNames.push(d.data().email);
+          }
+        }
       });
       db.collection("employees")
         .get()
         .then((res) => {
           let data = res.docs;
           data.forEach((d) => {
-            let lastName = d.data().lastName;
-            if (lastName !== undefined) {
-              lastName = lastName.toLowerCase();
-              if (lastName.includes(inputSearch)) {
-                trueNames.push(d.data().email);
-              }
-            }
+            // let lastName = d.data().lastName;
+            // if (lastName !== undefined) {
+            //   lastName = lastName.toLowerCase();
+            //   if (lastName.includes(inputSearch)) {
+            //     trueNames.push(d.data().email);
+            //   }
+            // }
           });
           // Remove duplicates
           trueNames = Array.from(new Set(trueNames));
