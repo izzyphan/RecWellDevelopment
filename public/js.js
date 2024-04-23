@@ -487,7 +487,7 @@ function loadUserData(userId) {
         adminAccount_fname.value = firstName;
         adminAccount_lname.value = lastName;
         adminAccount_email.value = email;
-        adminAccount_status.value = status;
+        adminAccount_status.textContent = status;
         // Update image preview if imageUrl exists in userData
         if (userData.imageUrl) {
           imagePreview.src = userData.imageUrl;
