@@ -959,6 +959,26 @@ function findStaff() {
             trueNames.push(d.data().email);
           }
         }
+        // Remove duplicates
+        trueNames = Array.from(new Set(trueNames));
+        //duplicate names arent hidden the 2nd time
+        let allStaffArray = document.getElementsByClassName("EmployeeCard");
+        let idList = [];
+        for (let i = 0; i < allStaffArray.length; i++) {
+          //Returns the id of the divs, which is the user email
+          idList.push(allStaffArray[i].id);
+        }
+        idList = Array.from(new Set(idList));
+        for (let i = 0; i < idList.length; i++) {
+          //this list contains every persons name that matches the serach string. Hides Everything
+          let testName = idList[i];
+          document.getElementById(testName).style.display = "none";
+        }
+        for (let i = 0; i < trueNames.length; i++) {
+          // Shows everything where the email is in the truenames list
+          let testName = trueNames[i];
+          document.getElementById(testName).style.display = "block";
+        }
       });
       db.collection("employees")
         .get()
@@ -973,26 +993,6 @@ function findStaff() {
             //   }
             // }
           });
-          // Remove duplicates
-          trueNames = Array.from(new Set(trueNames));
-          //duplicate names arent hidden the 2nd time
-          let allStaffArray = document.getElementsByClassName("EmployeeCard");
-          let idList = [];
-          for (let i = 0; i < allStaffArray.length; i++) {
-            //Returns the id of the divs, which is the user email
-            idList.push(allStaffArray[i].id);
-          }
-          idList = Array.from(new Set(idList));
-          for (let i = 0; i < idList.length; i++) {
-            //this list contains every persons name that matches the serach string. Hides Everything
-            let testName = idList[i];
-            document.getElementById(testName).style.display = "none";
-          }
-          for (let i = 0; i < trueNames.length; i++) {
-            // Shows everything where the email is in the truenames list
-            let testName = trueNames[i];
-            document.getElementById(testName).style.display = "block";
-          }
         });
     });
 }
