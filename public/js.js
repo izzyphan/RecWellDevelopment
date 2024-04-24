@@ -245,6 +245,10 @@ function handleSignupFormSubmission(event) {
         firstName: firstName,
         email: s_username,
         lastName: lastName,
+        biography: "",
+        department: "",
+        phoneNumber: "",
+        position: "",
         // Add more employee details as needed
       });
     })
