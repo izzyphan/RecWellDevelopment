@@ -261,10 +261,10 @@ function handleSignupFormSubmission(event) {
         firstName: firstName,
         email: s_username,
         lastName: lastName,
-        biography: "",
-        department: "",
-        phoneNumber: "",
-        position: "",
+        biography: "None",
+        department: "None",
+        phoneNumber: "None",
+        position: "None",
         isAdmin: false,
         // Add more employee details as needed
       });
