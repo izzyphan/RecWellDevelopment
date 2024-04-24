@@ -65,8 +65,12 @@
                 <!-- Add more options as needed -->
               </select>
 
-              <select class="searchDepartments" id="searchDepartment">
-                <option value="Management">Manager</option>
+              <select
+                class="searchDepartments"
+                id="searchDepartment"
+                oninput="findStaff()"
+              >
+                <option value="Manager">Manager</option>
                 <option value="Member Services">Member Services</option>
                 <option value="Aquatics">Aquatics</option>
                 <option value="Fitness">Fitness</option>

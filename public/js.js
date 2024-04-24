@@ -946,8 +946,7 @@ function findStaff() {
     });
   let inputSearch = document.getElementById("searchStaff").value.toLowerCase();
   let positionSearch = document.getElementById("directoryPosition").value;
-  console.log(positionSearch);
-
+  let departmentSearch = document.getElementById("deparmentSearch").value;
   let trueNames = [];
   db.collection("employees")
     .get()
