@@ -41,15 +41,18 @@
       </header>
       <div>
         <div id="filtering">
-          <form>
-            <p>
-              Find Staff:
+          <h2 id="searchHeader">Search Features</h2>
+          <div id="filterOptions">
+            <div class="filterChoices">
+              Name:
               <input
                 id="searchStaff"
                 type="text"
                 oninput="findStaff()"
                 placeholder="Search"
               />
+            </div>
+            <div class="filterChoices">
               Position:
               <select
                 class="directoryPositions"
@@ -64,12 +67,15 @@
                 <option value="Referee">Referee</option>
                 <!-- Add more options as needed -->
               </select>
-
+            </div>
+            <div class="filterChoices">
+              Department:
               <select
-                class="searchDepartments"
-                id="searchDepartment"
+                class="directoryDepartments"
+                id="directoryDepartment"
                 oninput="findStaff()"
               >
+                <option value="Any">Any</option>
                 <option value="Manager">Manager</option>
                 <option value="Member Services">Member Services</option>
                 <option value="Aquatics">Aquatics</option>
@@ -77,8 +83,8 @@
                 <option value="Sports">Sports</option>
                 <!-- Add more options as needed -->
               </select>
-            </p>
-          </form>
+            </div>
+          </div>
         </div>
       </div>
       <div class="employee_directory" id="employee_directory"></div>

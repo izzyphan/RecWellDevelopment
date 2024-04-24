@@ -946,7 +946,7 @@ function findStaff() {
     });
   let inputSearch = document.getElementById("searchStaff").value.toLowerCase();
   let positionSearch = document.getElementById("directoryPosition").value;
-  let departmentSearch = document.getElementById("deparmentSearch").value;
+  let departmentSearch = document.getElementById("directoryDepartment").value;
   let trueNames = [];
   db.collection("employees")
     .get()
@@ -955,10 +955,9 @@ function findStaff() {
       data.forEach((d) => {
         let firstName = d.data().firstName;
         let lastName = d.data().lastName;
-        let position = d.data().position;
-        if (position === undefined) {
-          position = "Any";
-        }
+        let position = d.data().position + " Any";
+        let department = d.data().department + " Any";
+        console.log(position);
         if (
           firstName !== undefined &&
           lastName !== undefined &&
@@ -967,14 +966,12 @@ function findStaff() {
           firstName = firstName.toLowerCase();
           lastName = lastName.toLowerCase();
           if (
-            firstName.includes(inputSearch) ||
-            lastName.includes(inputSearch)
+            (firstName.includes(inputSearch) ||
+              lastName.includes(inputSearch)) &&
+            position.includes(positionSearch) &&
+            department.includes(departmentSearch)
           ) {
-            if (positionSearch === "Any") {
-              trueNames.push(d.data().email);
-            } else if (position.includes(positionSearch)) {
-              trueNames.push(d.data().email);
-            }
+            trueNames.push(d.data().email);
           }
         }
         // Remove duplicates
