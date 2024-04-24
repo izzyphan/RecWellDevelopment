@@ -13,15 +13,31 @@ function toggleNavbar() {
 
 // Function to scroll the message bar into view
 function scrollMessageBarIntoView() {
-  const messageBar = document.getElementById("message_bar"); // Replace "message_bar" with the actual ID of your message bar element
+  const messageBar = document.getElementById("message_bar");
   if (messageBar) {
     messageBar.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
+// Function to configure and display the home message bar with a given message
+function home_message_bar(message) {
+  var messageBar = document.getElementById("message_bar");
+  if (messageBar) {
+    // Display the message and set its content
+    messageBar.style.display = "block";
+    messageBar.innerHTML = message;
+
+    // Hide the message bar after 5 seconds
+    setTimeout(() => {
+      messageBar.style.display = "none"; // Hide the message bar
+      messageBar.innerHTML = ""; // Clear the message content
+    }, 7000);
+  }
+}
+
 // Function to configure and display the message bar with a given message
 function configure_message_bar(message) {
-  var messageBar = document.getElementById("message_bar"); // Replace "message_bar" with the actual ID of your message bar element
+  var messageBar = document.getElementById("message_bar");
   if (messageBar) {
     // Display the message and set its content
     messageBar.style.display = "block";
@@ -65,7 +81,7 @@ function loadContent(url, options = {}) {
         // Check if a message is provided in the options
         if (options.message) {
           // Configure and display the message bar with the provided message
-          configure_message_bar(options.message);
+          home_message_bar(options.message);
         }
       }
     })
@@ -126,8 +142,6 @@ document.addEventListener("click", function (event) {
             url = "myaccount.html";
             // Save the current URL to localStorage
             saveStateToStorage({ url });
-            // Load the content corresponding to the clicked link
-            // loadContent(url);
           } else {
             console.log("User is not authenticated.");
           }
@@ -136,13 +150,15 @@ document.addEventListener("click", function (event) {
       case "points":
         url = "points.html";
         employeeDropdown();
+
         // Call checkAdminStatusAndHideElement when loading points.html and talent.html
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             var userEmail = user.email;
-            var elementIdToHide = "penalty_container"; // Replace with ID of the element to hide
+            var elementIdToHide = "penalty_container";
             loadUserPoints(userEmail);
             loadUserRewards(userEmail);
+            updatePointHeaderByEmail(userEmail);
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
             checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
@@ -153,7 +169,7 @@ document.addEventListener("click", function (event) {
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             var userEmail = user.email;
-            var elementIdToHide = "admin-status"; // Replace with ID of the element to hide
+            var elementIdToHide = "admin-status";
 
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
           }
@@ -311,10 +327,10 @@ function loadLastVisitedUrl() {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
-          var elementIDToHide = "penalty_container"; // Replace with ID of the element to hide on points.html
+          var elementIDToHide = "penalty_container";
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
           checkAdminStatusAndHideElement(userEmail, "admin-status");
-
+          updatePointHeaderByEmail(userEmail);
           loadUserPoints(userEmail);
           loadUserRewards(userEmail);
         }
@@ -335,7 +351,7 @@ function loadLastVisitedUrl() {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
-          var elementIDToHide = "admin-status"; // Replace with ID of the element to hide/show on the home page
+          var elementIDToHide = "admin-status";
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
       });
@@ -482,7 +498,7 @@ function loadUserData(userId) {
         account_position.value = position;
         account_department.value = department;
         account_phoneNumber.value = phoneNumber;
-        account_email.innerHTML = email; // Update the inner HTML of account_email with the email
+        account_email.innerHTML = email;
         account_biography.value = biography;
         adminAccount_fname.value = firstName;
         adminAccount_lname.value = lastName;
@@ -497,7 +513,7 @@ function loadUserData(userId) {
       document.addEventListener("click", (e) => {
         // Check if the clicked element is the "SaveAccount" button
         if (e.target.id === "SaveAccount") {
-          handleFormSubmission(e); // Call handleFormSubmission function
+          handleFormSubmission(e);
         }
       }); // Add event listener for image upload change
       const imageUpload = document.getElementById("imageUpload");
@@ -578,7 +594,6 @@ function handleFormSubmission(event) {
           })
           .catch((error) => {
             console.error("Error updating user data:", error);
-            // Optionally, display an error message to the user
           });
       });
     });
@@ -606,7 +621,6 @@ function handleFormSubmission(event) {
       })
       .catch((error) => {
         console.error("Error updating user data:", error);
-        // Optionally, display an error message to the user
       });
   }
 }
@@ -706,7 +720,7 @@ async function handlePostBlogClick(event) {
 
     try {
       // Upload the PDF file to Firebase Storage
-      const storageRef = firebase.storage().ref("pdfs/" + file.name); // Specify the path in Storage
+      const storageRef = firebase.storage().ref("pdfs/" + file.name);
       const uploadTask = storageRef.put(file);
 
       uploadTask.on(
@@ -826,10 +840,6 @@ function adminDropdown() {
       console.log("Error getting documents: ", error);
     });
 }
-
-// dynamic directory loading
-
-// function formatPhoneNumber() {}
 
 // Function to check admin status and hide/show element based on isAdmin field
 function checkAdminStatusAndHideElement(userEmail, elementId) {
@@ -973,12 +983,11 @@ function findStaff() {
           let idList = [];
           for (let i = 0; i < allStaffArray.length; i++) {
             idList.push(allStaffArray[i].id);
-            console.log(idList);
           }
           idList = Array.from(new Set(idList));
           for (let i = 0; i < idList.length; i++) {
             let testName = idList[i];
-            console.log(testName);
+
             document.getElementById(testName).style.display = "none";
           }
           for (let i = 0; i < trueNames.length; i++) {
@@ -1072,11 +1081,13 @@ function employeeDropdown() {
         if (firstName !== "" && lastName !== "") {
           // Concatenate first name and last name
           let fullName = `${firstName} ${lastName}`;
+
           all_names.push({ name: fullName, email: email }); // Store both name and email
         }
       });
 
       // Get the dropdown elements
+
       let employeeDropdown1 = document.getElementById("employee_names");
       let employeeDropdown2 = document.getElementById("employee_name2");
 
@@ -1101,6 +1112,28 @@ function employeeDropdown() {
     .catch((error) => {
       console.log("Error getting documents: ", error);
     });
+}
+
+function updatePointHeaderByEmail(email) {
+  // Fetch the employee document corresponding to the provided email
+  db.collection("employees")
+    .where("email", "==", email)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        // Get the first document (assuming email is unique)
+        const employeeDoc = querySnapshot.docs[0];
+        // Get the name from the employee document
+        const employeeName =
+          employeeDoc.data().firstName + " " + employeeDoc.data().lastName;
+        // Update the pointHeader element with the employee's name
+        let pointHeader = document.getElementById("point_header");
+        pointHeader.innerHTML = `${employeeName}'s Points and Rewards`;
+      } else {
+        console.log("Employee not found.");
+      }
+    })
+    .catch((error) => console.error("Error fetching employee data:", error));
 }
 
 // Function to add penalty points to the database
@@ -1144,7 +1177,7 @@ function addPenaltyPoints() {
 
         // Add the penalty points to the Firestore collection "points"
         return db.collection("points").add({
-          employeeEmail: employeeEmail, // Use the user's email instead of name
+          employeeEmail: employeeEmail,
           date: date,
           employeeName: employeeName,
           reason: reason,
@@ -1186,10 +1219,8 @@ function loadUserPoints(userEmail) {
     .where("employeeEmail", "==", userEmail)
     .get()
     .then((querySnapshot) => {
-      let pointHeader = document.getElementById("point_header");
       let pointsDisplay = document.getElementById("pointsDisplay");
-      let totalWeightDisplay = document.getElementById("pointTotal"); // Add this line
-
+      let totalWeightDisplay = document.getElementById("pointTotal");
       pointsDisplay.innerHTML = ""; // Clear previous content
       totalWeightDisplay.innerHTML = ""; // Clear previous total weight
 
@@ -1200,12 +1231,10 @@ function loadUserPoints(userEmail) {
           let pointsData = doc.data();
           let pointDate = pointsData.date;
           let pointReason = pointsData.reason;
-          let pointWeight = parseFloat(pointsData.penaltyWeight); // Convert string to number
+          let pointWeight = parseFloat(pointsData.penaltyWeight);
 
           let pointEmployee = pointsData.employeeName;
-          pointHeader.innerHTML = `${pointEmployee}'s Penalty and Reward Points`;
 
-          // Add the point weight to the total weight if it's not undefined
           // Add the point weight to the total weight if it's a valid number
           if (!isNaN(pointWeight)) {
             totalWeight += pointWeight;
@@ -1296,7 +1325,7 @@ function addRewardPoints(currentUserEmail) {
         document.getElementById("reward_name").value = "";
         document.getElementById("rewardinfo").value = "";
         configure_message_bar("Reward Point Has Been Added");
-        resolve(); // Resolve the promise
+        resolve();
       })
       .catch((error) => {
         console.error("Error adding reward points: ", error);
@@ -1330,8 +1359,6 @@ document.addEventListener("click", function (event) {
         });
     } else {
       console.log("No user signed in.");
-      // Handle the case when there is no signed-in user
-      // You can show an alert or redirect to a login page, for example
     }
   }
 });
@@ -1423,7 +1450,7 @@ function getCurrentUserEmail() {
   } else {
     // Handle the case when there is no signed-in user
     console.log("No user signed in.");
-    return null; // Or return a default value or handle the case as needed
+    return null;
   }
 }
 
@@ -1505,7 +1532,7 @@ function updateDonutChart(rewardsCount) {
       ],
     },
     options: {
-      // responsive: true,
+      // responsive: false,
       // maintainAspectRatio: false,
       legend: {
         position: "bottom",
