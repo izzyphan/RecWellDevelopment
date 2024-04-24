@@ -674,3 +674,19 @@ p {
 #shoutoutsAll h3 {
   text-align: center;
 }
+
+#filtering {
+  border: 8px solid rgb(74, 3, 3);
+  margin: 0 auto;
+  max-width: 50%;
+}
+
+#filterOptions {
+  display: flex; /* Use flexbox for easy alignment */
+  justify-content: space-between; /* Distribute items equally */
+}
+.filterChoices {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 2%;
+}

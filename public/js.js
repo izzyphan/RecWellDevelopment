@@ -245,6 +245,10 @@ function handleSignupFormSubmission(event) {
         firstName: firstName,
         email: s_username,
         lastName: lastName,
+        biography: "",
+        department: "",
+        phoneNumber: "",
+        position: "",
         // Add more employee details as needed
       });
     })
@@ -936,9 +940,17 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
-
 function findStaff() {
+  document
+    .getElementById("searchStaff")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
+    });
   let inputSearch = document.getElementById("searchStaff").value.toLowerCase();
+  let positionSearch = document.getElementById("directoryPosition").value;
+  let departmentSearch = document.getElementById("directoryDepartment").value;
   let trueNames = [];
   db.collection("employees")
     .get()
@@ -946,46 +958,47 @@ function findStaff() {
       let data = res.docs;
       data.forEach((d) => {
         let firstName = d.data().firstName;
-        if (firstName !== undefined) {
+        let lastName = d.data().lastName;
+        let position = d.data().position + " Any";
+        let department = d.data().department + " Any";
+        console.log(position);
+        if (
+          firstName !== undefined &&
+          lastName !== undefined &&
+          position !== undefined
+        ) {
           firstName = firstName.toLowerCase();
-          if (firstName.includes(inputSearch)) {
+          lastName = lastName.toLowerCase();
+          if (
+            (firstName.includes(inputSearch) ||
+              lastName.includes(inputSearch)) &&
+            position.includes(positionSearch) &&
+            department.includes(departmentSearch)
+          ) {
             trueNames.push(d.data().email);
           }
         }
+        // Remove duplicates
+        trueNames = Array.from(new Set(trueNames));
+        //duplicate names arent hidden the 2nd time
+        let allStaffArray = document.getElementsByClassName("EmployeeCard");
+        let idList = [];
+        for (let i = 0; i < allStaffArray.length; i++) {
+          //Returns the id of the divs, which is the user email
+          idList.push(allStaffArray[i].id);
+        }
+        idList = Array.from(new Set(idList));
+        for (let i = 0; i < idList.length; i++) {
+          //this list contains every persons name that matches the serach string. Hides Everything
+          let testName = idList[i];
+          document.getElementById(testName).style.display = "none";
+        }
+        for (let i = 0; i < trueNames.length; i++) {
+          // Shows everything where the email is in the truenames list
+          let testName = trueNames[i];
+          document.getElementById(testName).style.display = "block";
+        }
       });
-      db.collection("employees")
-        .get()
-        .then((res) => {
-          let data = res.docs;
-          data.forEach((d) => {
-            let lastName = d.data().lastName;
-            if (lastName !== undefined) {
-              lastName = lastName.toLowerCase();
-              if (lastName.includes(inputSearch)) {
-                trueNames.push(d.data().email);
-              }
-            }
-          });
-          // Remove duplicates
-          trueNames = Array.from(new Set(trueNames));
-          //duplicate names arent hidden the 2nd time
-          let allStaffArray = document.getElementsByClassName("EmployeeCard");
-          let idList = [];
-          for (let i = 0; i < allStaffArray.length; i++) {
-            idList.push(allStaffArray[i].id);
-            console.log(idList);
-          }
-          idList = Array.from(new Set(idList));
-          for (let i = 0; i < idList.length; i++) {
-            let testName = idList[i];
-            console.log(testName);
-            document.getElementById(testName).style.display = "none";
-          }
-          for (let i = 0; i < trueNames.length; i++) {
-            let testName = trueNames[i];
-            document.getElementById(testName).style.display = "block";
-          }
-        });
     });
 }
 
