@@ -936,9 +936,18 @@ function formatPhoneNumber(phoneNumber) {
     return "";
   }
 }
-
 function findStaff() {
+  document
+    .getElementById("searchStaff")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
+    });
   let inputSearch = document.getElementById("searchStaff").value.toLowerCase();
+  let positionSearch = document.getElementById("directoryPosition").value;
+  console.log(positionSearch);
+
   let trueNames = [];
   db.collection("employees")
     .get()
@@ -947,14 +956,28 @@ function findStaff() {
       data.forEach((d) => {
         let firstName = d.data().firstName;
         let lastName = d.data().lastName;
-        if (firstName !== undefined && lastName !== undefined) {
+        let position = d.data().position;
+        if (position === undefined) {
+          position = "Any";
+        }
+        if (
+          firstName !== undefined &&
+          lastName !== undefined &&
+          position !== undefined
+        ) {
           firstName = firstName.toLowerCase();
           lastName = lastName.toLowerCase();
           if (
             firstName.includes(inputSearch) ||
             lastName.includes(inputSearch)
+            //   &&
+            // position.includes(positionSearch)
           ) {
-            trueNames.push(d.data().email);
+            if (positionSearch === "Any") {
+              trueNames.push(d.data().email);
+            } else if (position.includes(positionSearch)) {
+              trueNames.push(d.data().email);
+            }
           }
         }
         // Remove duplicates

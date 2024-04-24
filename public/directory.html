@@ -50,6 +50,29 @@
                 oninput="findStaff()"
                 placeholder="Search"
               />
+              Position:
+              <select
+                class="directoryPositions"
+                id="directoryPosition"
+                oninput="findStaff()"
+              >
+                <option value="Any">Any</option>
+                <option value="Manager">Manager</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Attendant">Attendant</option>
+                <option value="Personal Trainer">Trainer</option>
+                <option value="Referee">Referee</option>
+                <!-- Add more options as needed -->
+              </select>
+
+              <select class="searchDepartments" id="searchDepartment">
+                <option value="Management">Manager</option>
+                <option value="Member Services">Member Services</option>
+                <option value="Aquatics">Aquatics</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Sports">Sports</option>
+                <!-- Add more options as needed -->
+              </select>
             </p>
           </form>
         </div>
