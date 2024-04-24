@@ -1002,62 +1002,47 @@ function findStaff() {
 async function deleteEmployee(email) {
   if (
     confirm(
-      `Are you sure you want to delete the employee with email: ${email}?`
+      `Are you sure you want to delete the employee with email: ${email}? Doing so will prevent them from logging in or making an account with this email.`
     )
   ) {
     try {
-      // Step 1: Fetch user email from Firestore based on employee email
-      const userQuerySnapshot = await db
+      // Step 1: Delete employee data from Firestore
+      const querySnapshot = await db
         .collection("employees")
         .where("email", "==", email)
         .get();
 
-      if (!userQuerySnapshot.empty) {
-        // Get the first document (assuming email is unique)
-        const userDoc = userQuerySnapshot.docs[0];
-        const userEmail = userDoc.data().email;
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async (doc) => {
+          await doc.ref.delete();
+          // Step 2: Delete associated data from Firebase Storage
+          const storageRef = firebase.storage().ref();
+          const employeeImagesRef = storageRef.child(`images/${email}`);
 
-        // Step 2: Delete employee data from Firestore
-        await userDoc.ref.delete();
-
-        // Step 3: Delete associated data from Firebase Storage
-        const storageRef = firebase.storage().ref();
-        const employeeImagesRef = storageRef.child(`images/${email}`);
-
-        // Delete all files under the employee's images folder
-        employeeImagesRef.listAll().then((res) => {
-          res.items.forEach((itemRef) => {
-            itemRef
-              .delete()
-              .then(() => {
-                console.log("Associated image deleted successfully.");
-              })
-              .catch((error) => {
-                console.error("Error deleting associated image:", error);
-              });
+          // Delete all files under the employee's images folder
+          employeeImagesRef.listAll().then((res) => {
+            res.items.forEach((itemRef) => {
+              itemRef
+                .delete()
+                .then(() => {
+                  console.log("Associated image deleted successfully.");
+                })
+                .catch((error) => {
+                  console.error("Error deleting associated image:", error);
+                });
+            });
           });
+
+          // Display success message and scroll to message bar
+          configure_message_bar(
+            `Employee with email ${email} deleted successfully.`
+          );
+          location.reload();
+          alert("Employee Deleted");
+          document
+            .getElementById("message_bar")
+            .scrollIntoView({ behavior: "smooth" });
         });
-
-        // Step 4: Delete user from Firebase Authentication
-        const auth = firebase.auth();
-        const user = await auth.getUserByEmail(userEmail);
-
-        if (user) {
-          await auth.deleteUser(user.uid);
-          console.log("User deleted from Firebase Authentication.");
-        } else {
-          console.error("User not found in Firebase Authentication.");
-        }
-
-        // Display success message and scroll to message bar
-        configure_message_bar(
-          `Employee with email ${email} deleted successfully.`
-        );
-        location.reload();
-        alert("Employee Deleted");
-        document
-          .getElementById("message_bar")
-          .scrollIntoView({ behavior: "smooth" });
       } else {
         console.error("No employee found with the email:", email);
       }
