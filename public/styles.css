@@ -598,7 +598,7 @@ p {
   border: 1px solid #ccc;
 }
 
-#email {
+#myemail {
   color: red; /* Text color */
   font-size: 16px; /* Font size */
   text-align: center;
@@ -606,7 +606,7 @@ p {
   transition: color 0.3s ease; /* Smooth transition for color change */
 }
 
-#email:hover {
+#myemail:hover {
   color: #dbcdc8; /* New color on hover */
 }
 
