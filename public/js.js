@@ -261,10 +261,10 @@ function handleSignupFormSubmission(event) {
         firstName: firstName,
         email: s_username,
         lastName: lastName,
-        biography: "None",
-        department: "None",
-        phoneNumber: "None",
-        position: "None",
+        biography: "",
+        department: "",
+        phoneNumber: "",
+        position: "",
         isAdmin: false,
         // Add more employee details as needed
       });
@@ -487,7 +487,7 @@ function loadUserData(userId) {
       var account_position = document.getElementById("position");
       var account_department = document.getElementById("department");
       var account_phoneNumber = document.getElementById("phoneNumber");
-      var account_email = document.getElementById("email");
+      var account_email = document.getElementById("myemail");
       var account_biography = document.getElementById("biography");
       var adminAccount_fname = document.getElementById("adminAccount_fname");
       var adminAccount_lname = document.getElementById("adminAccount_lname");
@@ -547,7 +547,7 @@ function handleFormSubmission(event) {
   var position = document.getElementById("position").value;
   var department = document.getElementById("department").value;
   var phoneNumber = document.getElementById("phoneNumber").value;
-  var email = document.getElementById("email").value;
+  var email = document.getElementById("myemail").value;
   var biography = document.getElementById("biography").value;
 
   // Check if first name or last name is empty or email is being changed
