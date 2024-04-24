@@ -970,8 +970,6 @@ function findStaff() {
           if (
             firstName.includes(inputSearch) ||
             lastName.includes(inputSearch)
-            //   &&
-            // position.includes(positionSearch)
           ) {
             if (positionSearch === "Any") {
               trueNames.push(d.data().email);
