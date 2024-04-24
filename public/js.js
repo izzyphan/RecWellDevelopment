@@ -261,6 +261,7 @@ function handleSignupFormSubmission(event) {
         firstName: firstName,
         email: s_username,
         lastName: lastName,
+        isAdmin: false,
         // Add more employee details as needed
       });
     })
@@ -1005,60 +1006,58 @@ async function deleteEmployee(email) {
     )
   ) {
     try {
-      // Step 1: Delete employee data from Firestore
-      const querySnapshot = await db
+      // Step 1: Fetch user email from Firestore based on employee email
+      const userQuerySnapshot = await db
         .collection("employees")
         .where("email", "==", email)
         .get();
 
-      if (!querySnapshot.empty) {
-        querySnapshot.forEach(async (doc) => {
-          await doc.ref.delete();
-          // Step 2: Delete associated data from Firebase Storage
-          const storageRef = firebase.storage().ref();
-          const employeeImagesRef = storageRef.child(`images/${email}`);
+      if (!userQuerySnapshot.empty) {
+        // Get the first document (assuming email is unique)
+        const userDoc = userQuerySnapshot.docs[0];
+        const userEmail = userDoc.data().email;
 
-          // Delete all files under the employee's images folder
-          employeeImagesRef.listAll().then((res) => {
-            res.items.forEach((itemRef) => {
-              itemRef
-                .delete()
-                .then(() => {
-                  console.log("Associated image deleted successfully.");
-                })
-                .catch((error) => {
-                  console.error("Error deleting associated image:", error);
-                });
-            });
+        // Step 2: Delete employee data from Firestore
+        await userDoc.ref.delete();
+
+        // Step 3: Delete associated data from Firebase Storage
+        const storageRef = firebase.storage().ref();
+        const employeeImagesRef = storageRef.child(`images/${email}`);
+
+        // Delete all files under the employee's images folder
+        employeeImagesRef.listAll().then((res) => {
+          res.items.forEach((itemRef) => {
+            itemRef
+              .delete()
+              .then(() => {
+                console.log("Associated image deleted successfully.");
+              })
+              .catch((error) => {
+                console.error("Error deleting associated image:", error);
+              });
           });
-
-          // Step 3: Delete user from Firebase Authentication
-          // const user = firebase.auth().currentUser;
-
-          // if (user) {
-          //   user
-          //     .delete()
-          //     .then(() => {
-          //       console.log("User deleted from Firebase Authentication.");
-          //     })
-          //     .catch((error) => {
-          //       console.error(
-          //         "Error deleting user from Firebase Authentication:",
-          //         error
-          //       );
-          //     });
-          // }
-
-          // Display success message and scroll to message bar
-          configure_message_bar(
-            `Employee with email ${email} deleted successfully.`
-          );
-          location.reload();
-          alert("Employee Deleted");
-          document
-            .getElementById("message_bar")
-            .scrollIntoView({ behavior: "smooth" });
         });
+
+        // Step 4: Delete user from Firebase Authentication
+        const auth = firebase.auth();
+        const user = await auth.getUserByEmail(userEmail);
+
+        if (user) {
+          await auth.deleteUser(user.uid);
+          console.log("User deleted from Firebase Authentication.");
+        } else {
+          console.error("User not found in Firebase Authentication.");
+        }
+
+        // Display success message and scroll to message bar
+        configure_message_bar(
+          `Employee with email ${email} deleted successfully.`
+        );
+        location.reload();
+        alert("Employee Deleted");
+        document
+          .getElementById("message_bar")
+          .scrollIntoView({ behavior: "smooth" });
       } else {
         console.error("No employee found with the email:", email);
       }
