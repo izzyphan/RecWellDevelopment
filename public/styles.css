@@ -376,7 +376,7 @@ p {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  height: 270px;
+  height: 300px;
   margin: 10px;
   width: 300px;
   background-color: #1c1c1c;
@@ -408,7 +408,19 @@ p {
   margin-bottom: 10px;
   text-align: center;
 }
+.delete-button {
+  background-color: #ff0000; /* Red background color */
+  color: #ffffff; /* White text color */
+  border: none;
 
+  border-radius: 50%; /* Makes the button round */
+  padding: 8px; /* Adjust padding as needed */
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+.delete-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
 #expand-delete {
   margin: 10px;
 }

@@ -109,12 +109,12 @@ document.addEventListener("click", function (event) {
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             var userEmail = user.email;
+            loadDirectory(userEmail);
 
             checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
         });
 
-        loadDirectory();
         break;
       case "talent":
         url = "talent.html";
@@ -343,11 +343,10 @@ function loadLastVisitedUrl() {
       });
     }
     if (stateData.url.endsWith("directory.html")) {
-      loadDirectory();
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
-
+          loadDirectory(userEmail);
           checkAdminStatusAndHideElement(userEmail, "admin-status");
         }
       });
@@ -865,8 +864,28 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
     });
 }
 
-//dynamic directory loading
-function loadDirectory() {
+// Function to check admin status and toggle element visibility based on isAdmin field
+function checkAdminStatusAndToggleVisibility(userEmail, elementId) {
+  const employeesRef = db.collection("employees");
+  employeesRef
+    .where("email", "==", userEmail)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const isAdmin = querySnapshot.docs[0].data().isAdmin;
+        const element = document.getElementById(elementId);
+        if (isAdmin && element) {
+          element.style.visibility = "visible"; // Show the element
+        } else {
+          element.style.visibility = "hidden"; // Hide the element (reserve space)
+        }
+      }
+    });
+}
+
+// Dynamic directory loading with admin check
+function loadDirectory(currentUserEmail) {
+  // Added currentUserEmail parameter
   db.collection("employees")
     .get()
     .then((res) => {
@@ -874,13 +893,7 @@ function loadDirectory() {
       let html = ``;
       data.forEach((d) => {
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
-        // let headshot = getimage(d.data().firstName, d.data().lastName);
-        imageType = d.data().imageUrl;
-        if (typeof imageType === "undefined") {
-          headshot = "placeholder-headshot.jpg";
-        } else {
-          headshot = imageType;
-        }
+        let headshot = d.data().imageUrl || "placeholder-headshot.jpg";
 
         html += `<div class="EmployeeCard" id="${d.data().email}"> 
           <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
@@ -900,13 +913,20 @@ function loadDirectory() {
             d.data().biography
           }</div>
           <div id="expand-delete">
+          <p>
           <button class="expand-button" onclick="expandCard('${
             d.data().email
           }')">Expand</button>
           <button class="delete-button" id="delete_${
             d.data().email
-          }" onclick="deleteEmployee('${d.data().email}')">X</button></div>
+          }" onclick="deleteEmployee('${d.data().email}')">X</button></p></div>
+          
         </div>`;
+        // Call the function to check admin status and hide/show delete button
+        checkAdminStatusAndToggleVisibility(
+          currentUserEmail,
+          `delete_${d.data().email}`
+        );
       });
       document.querySelector("#employee_directory").innerHTML += html;
     });
