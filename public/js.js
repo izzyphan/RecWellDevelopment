@@ -505,9 +505,9 @@ function loadUserData(userId) {
         account_phoneNumber.value = phoneNumber;
         account_email.innerHTML = email;
         account_biography.value = biography;
-        adminAccount_fname.value = firstName;
-        adminAccount_lname.value = lastName;
-        adminAccount_email.value = email;
+        adminAccount_fname.textContent = firstName;
+        adminAccount_lname.textContent = lastName;
+        adminAccount_email.textContent = email;
         adminAccount_status.textContent = status;
         // Update image preview if imageUrl exists in userData
         if (userData.imageUrl) {
