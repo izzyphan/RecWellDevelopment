@@ -752,3 +752,8 @@ select {
   padding-right: 5%;
   padding-bottom: 2%;
 }
+
+#directorybanner {
+  width: 100%;
+  height: 330px;
+}
