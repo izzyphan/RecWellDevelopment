@@ -934,6 +934,7 @@ function loadDirectory(currentUserEmail) {
 
 function expandCard(email) {
   let card = document.getElementById(email);
+  let expandButton = card.querySelector(".expand-button");
   let phoneNumber = card.querySelector(".employee-phone");
   let bio = card.querySelector(".employee-bio");
   let department = card.querySelector(".employee-department");
@@ -945,7 +946,6 @@ function expandCard(email) {
       c.classList.remove("expanded");
       c.querySelector(".employee-phone").classList.add("card-hidden");
       c.querySelector(".employee-bio").classList.add("card-hidden");
-
       c.querySelector(".employee-department").classList.add("card-hidden");
       c.querySelector(".employee-position").classList.add("card-hidden");
     }
@@ -956,6 +956,11 @@ function expandCard(email) {
   department.classList.toggle("card-hidden");
   position.classList.toggle("card-hidden");
   bio.classList.toggle("card-hidden");
+
+  // Toggle button text between "Expand" and "Minimize"
+  expandButton.innerText = card.classList.contains("expanded")
+    ? "Minimize"
+    : "Expand";
 }
 
 function formatPhoneNumber(phoneNumber) {
