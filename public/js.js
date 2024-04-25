@@ -1422,48 +1422,136 @@ function rewardLimit(userEmail) {
 }
 
 function loadUserRewards(userEmail) {
-  // Get the rewards data for the logged-in user
+  let rewardsDisplay = document.getElementById("shoutoutDisplay");
+  let loadMoreButton = document.getElementById("loadMoreButton");
+  let rewardsLimit = 3; // Number of rewards to display initially
+  let rewardsCount = 0; // Counter for displayed rewards
+
+  // Get the rewards data for the logged-in user and sort by date
   db.collection("rewards")
     .where("employeeEmail", "==", userEmail)
+    .orderBy("date", "desc") // Assuming "date" is the field containing the reward date
     .get()
     .then((querySnapshot) => {
-      let rewardsDisplay = document.getElementById("shoutoutDisplay");
-
       rewardsDisplay.innerHTML = ""; // Clear previous content
 
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          let rewardsData = doc.data();
-          let rewardDate = rewardsData.date;
-          let rewardReason = rewardsData.reason;
-          let rewardEmployee = rewardsData.employeeName;
-          let fromEmployee = rewardsData.loggedInUserEmail;
-          let moreInfo = rewardsData.moreInfo;
-          // Create a card-like display for each reward
-          let rewardCard = document.createElement("div");
-          rewardCard.classList.add("reward-card");
-          rewardCard.innerHTML = `
-            <div class="reward-info">
-            <div>To: ${rewardEmployee}</div>
-            <div>From: ${fromEmployee}</div>
-              <div>Date: ${rewardDate}</div>
-              <div>Reason: ${rewardReason}</div>
-              <div>Description: ${moreInfo}</div>
-            </div>
-          `;
-          rewardsDisplay.appendChild(rewardCard);
+          if (rewardsCount < rewardsLimit) {
+            let rewardsData = doc.data();
+            let rewardDate = rewardsData.date;
+            let rewardReason = rewardsData.reason;
+            let rewardEmployee = rewardsData.employeeName;
+            let fromEmployee = rewardsData.loggedInUserEmail;
+            let moreInfo = rewardsData.moreInfo;
+            // Create a card-like display for each reward
+            let rewardCard = document.createElement("div");
+            rewardCard.classList.add("reward-card");
+            rewardCard.innerHTML = `
+              <div class="reward-info">
+                <div>To: ${rewardEmployee}</div>
+                <div>From: ${fromEmployee}</div>
+                <div>Date: ${rewardDate}</div>
+                <div>Reason: ${rewardReason}</div>
+                <div>Description: ${moreInfo}</div>
+              </div>
+            `;
+            rewardsDisplay.appendChild(rewardCard);
+            rewardsCount++;
+          }
         });
+
+        // Check if there are more rewards to load
+        if (rewardsCount < querySnapshot.size) {
+          loadMoreButton.style.display = "block"; // Show the load more button
+        } else {
+          loadMoreButton.style.display = "none"; // Hide the load more button if all rewards are displayed
+        }
+
+        // Update the donut chart with the rewards count
+        rewardLimit(userEmail, rewardsCount); // Assuming rewardLimit function takes userEmail and rewardsCount parameters
       } else {
         // No rewards data found for the user
         rewardsDisplay.innerHTML = "No rewards found.";
       }
-      // Update the donut chart with the rewards count
-      rewardLimit(userEmail);
     })
     .catch((error) => {
       console.error("Error loading user rewards: ", error);
     });
 }
+
+function loadMoreRewards(userEmail, currentRewardsCount) {
+  return new Promise((resolve, reject) => {
+    let rewardsDisplay = document.getElementById("shoutoutDisplay");
+    let rewardsLimit = 10; // Number of rewards to load each time the button is clicked
+
+    // Get the next batch of rewards starting from the current count
+    db.collection("rewards")
+      .where("employeeEmail", "==", userEmail)
+      .orderBy("date", "desc")
+      .limit(rewardsLimit)
+
+      .get()
+      .then((querySnapshot) => {
+        rewardsDisplay.innerHTML = "";
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((doc) => {
+            let rewardsData = doc.data();
+            let rewardDate = rewardsData.date;
+            let rewardReason = rewardsData.reason;
+            let rewardEmployee = rewardsData.employeeName;
+            let fromEmployee = rewardsData.loggedInUserEmail;
+            let moreInfo = rewardsData.moreInfo;
+
+            // Create a card-like display for each reward
+            let rewardCard = document.createElement("div");
+            rewardCard.classList.add("reward-card");
+            rewardCard.innerHTML = `
+              <div class="reward-info">
+                <div>To: ${rewardEmployee}</div>
+                <div>From: ${fromEmployee}</div>
+                <div>Date: ${rewardDate}</div>
+                <div>Reason: ${rewardReason}</div>
+                <div>Description: ${moreInfo}</div>
+              </div>
+            `;
+            rewardsDisplay.appendChild(rewardCard);
+          });
+          resolve(); // Resolve the Promise after loading rewards
+        } else {
+          // No more rewards to load
+          alert("No more rewards to load.");
+          // You can disable the load more button or display a message indicating no more rewards
+          reject("No more rewards to load.");
+        }
+      })
+      .catch((error) => {
+        alert("Error loading more rewards: ", error);
+        reject(error); // Reject the Promise if there's an error loading rewards
+      });
+  });
+}
+
+document.addEventListener("click", function (event) {
+  if (event.target.id == "loadMoreButton") {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get the current user's email using getCurrentUserEmail()
+    const currentUserEmail = getCurrentUserEmail();
+
+    // Check if currentUserEmail is not null or undefined before proceeding
+    if (currentUserEmail) {
+      console.log(currentUserEmail);
+      loadMoreRewards(currentUserEmail)
+        .then(() => {})
+        .catch((error) => {
+          alert("Error loading more rewards: ", error);
+        });
+    }
+  }
+});
+
 function getCurrentUserEmail() {
   // Check if there is a currently signed-in user
   const user = auth.currentUser;
