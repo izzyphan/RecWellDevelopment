@@ -916,7 +916,7 @@ function loadDirectory(currentUserEmail) {
           <p>
           <button class="expand-button" onclick="expandCard('${
             d.data().email
-          }')">Expand</button>
+          }')">Expand</button><br>
           <button class="delete-button" id="delete_${
             d.data().email
           }" onclick="deleteEmployee('${d.data().email}')">X</button></p></div>

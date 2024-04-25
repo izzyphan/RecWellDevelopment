@@ -376,7 +376,7 @@ p {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  height: 300px;
+  height: 310px;
   margin: 10px;
   width: 300px;
   background-color: #1c1c1c;
@@ -388,7 +388,7 @@ p {
   display: none;
 }
 .EmployeeCard.expanded {
-  height: 370px;
+  height: 400px;
 }
 .EmployeeCard img {
   width: 100%;
@@ -412,10 +412,10 @@ p {
   background-color: #ff0000; /* Red background color */
   color: #ffffff; /* White text color */
   border: none;
-
-  border-radius: 50%; /* Makes the button round */
+  margin: 10px;
+  border-radius: 70%; /* Makes the button round */
   padding: 8px; /* Adjust padding as needed */
-  font-size: 16px; /* Adjust font size as needed */
+  font-size: 10px; /* Adjust font size as needed */
 }
 
 .delete-button:hover {
@@ -568,11 +568,47 @@ p {
   text-align: center;
 }
 
-#filtering {
+#filteringdiv {
+  background-color: #f0f0f0; /* Light gray background */
+  padding: 20px; /* Adjust padding as needed */
+  border-radius: 8px; /* Rounded corners */
   text-align: center;
-  margin-top: -50px;
+  margin: auto;
+  width: 60%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
+#searchHeader {
+  color: #333333; /* Dark text color */
+  font-size: 24px; /* Larger font size */
+  margin-bottom: 15px; /* Space below the header */
+}
+
+.filterChoices {
+  margin-bottom: 10px; /* Space between filter choices */
+}
+input[type="text"],
+select {
+  padding: 8px; /* Padding for input and select elements */
+  border-radius: 4px; /* Rounded corners for input and select */
+  border: 1px solid #cccccc; /* Light gray border */
+  width: 150px; /* Adjust width as needed */
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none; /* Remove outline on focus */
+  border-color: #007bff; /* Border color on focus */
+}
+
+/* Style the select arrow */
+select {
+  appearance: none; /* Remove default appearance */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow icon */
+  background-repeat: no-repeat; /* Prevent icon repetition */
+  background-position: right 8px center; /* Position icon */
+  background-size: 16px; /* Size of the icon */
+}
 #staffSearch {
   margin: 0 10px;
 }
