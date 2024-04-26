@@ -604,6 +604,7 @@ p {
   text-align: center;
   font-weight: bold; /* Font weight */
   transition: color 0.3s ease; /* Smooth transition for color change */
+  /* background-color: white; */
 }
 
 #myemail:hover {
