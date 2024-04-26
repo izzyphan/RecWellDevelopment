@@ -1439,7 +1439,7 @@ function loadUserRewards(userEmail) {
     .orderBy("date", "desc") // Assuming "date" is the field containing the reward date
     .get()
     .then((querySnapshot) => {
-      rewardsDisplay.innerHTML = ""; // Clear previous content
+      // rewardsDisplay.innerHTML = ""; // Clear previous content
 
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
