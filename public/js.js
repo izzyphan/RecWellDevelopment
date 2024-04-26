@@ -150,6 +150,7 @@ document.addEventListener("click", function (event) {
       case "points":
         url = "points.html";
         employeeDropdown();
+        createPenaltyTable();
 
         // Call checkAdminStatusAndHideElement when loading points.html and talent.html
         firebase.auth().onAuthStateChanged(function (user) {
@@ -161,6 +162,7 @@ document.addEventListener("click", function (event) {
             updatePointHeaderByEmail(userEmail);
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
             checkAdminStatusAndHideElement(userEmail, "admin-status");
+            checkAdminStatusAndHideElement(userEmail, "allPoints");
           }
         });
         break;
@@ -335,11 +337,13 @@ function loadLastVisitedUrl() {
           var elementIDToHide = "penalty_container";
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
           checkAdminStatusAndHideElement(userEmail, "admin-status");
+          checkAdminStatusAndHideElement(userEmail, "allPoints");
           updatePointHeaderByEmail(userEmail);
           loadUserPoints(userEmail);
           loadUserRewards(userEmail);
         }
         employeeDropdown();
+        createPenaltyTable();
       });
     }
     if (stateData.url.endsWith("directory.html")) {
@@ -1240,6 +1244,8 @@ function loadUserPoints(userEmail) {
   // Get the points data for the logged-in user
   db.collection("points")
     .where("employeeEmail", "==", userEmail)
+    .orderBy("date", "desc")
+    .limit(3)
     .get()
     .then((querySnapshot) => {
       let pointsDisplay = document.getElementById("pointsDisplay");
@@ -1665,4 +1671,52 @@ function destroyChart() {
   if (myDonutChart) {
     myDonutChart.destroy(); // Destroy the chart if it exists
   }
+}
+
+function createPenaltyTable() {
+  let penaltyTable = document.createElement("table");
+  penaltyTable.classList.add("penalty-table");
+
+  // Add table header row
+  let headerRow = penaltyTable.insertRow();
+  let nameHeader = headerRow.insertCell();
+  nameHeader.textContent = "Employee Name";
+  let totalPointsHeader = headerRow.insertCell();
+  totalPointsHeader.textContent = "Total Points (Weight)";
+
+  // Get the penalty data from Firestore
+  db.collection("points")
+    .get()
+    .then((querySnapshot) => {
+      let penaltyWeights = {}; // Object to store total weights for each employee
+
+      querySnapshot.forEach((doc) => {
+        let penaltyData = doc.data();
+        let employeeName = penaltyData.employeeName;
+        let penaltyWeight = parseFloat(penaltyData.penaltyWeight) || 0; // Convert penaltyWeight to a float number, default to 0 if not defined or invalid
+
+        // Add penaltyWeight to the total for this employee
+        if (!isNaN(penaltyWeight)) {
+          penaltyWeights[employeeName] =
+            (penaltyWeights[employeeName] || 0) + penaltyWeight;
+        }
+      });
+
+      // Create rows in the table based on the aggregated penaltyWeights
+      Object.keys(penaltyWeights).forEach((employeeName) => {
+        let row = penaltyTable.insertRow();
+        let nameCell = row.insertCell();
+        nameCell.textContent = employeeName;
+        let totalPointsCell = row.insertCell();
+        totalPointsCell.textContent = penaltyWeights[employeeName];
+      });
+
+      // Append the table to a container element in the HTML
+      let tableContainer = document.getElementById("penaltyTableContainer");
+      tableContainer.innerHTML = ""; // Clear previous content
+      tableContainer.appendChild(penaltyTable);
+    })
+    .catch((error) => {
+      console.error("Error retrieving penalty data: ", error);
+    });
 }
