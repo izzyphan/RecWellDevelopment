@@ -162,6 +162,7 @@ document.addEventListener("click", function (event) {
             updatePointHeaderByEmail(userEmail);
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
             checkAdminStatusAndHideElement(userEmail, "admin-status");
+            checkAdminStatusAndHideElement(userEmail, "admin_buttons");
             checkAdminStatusAndHideElement(userEmail, "allPoints");
           }
         });
@@ -338,6 +339,7 @@ function loadLastVisitedUrl() {
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
           checkAdminStatusAndHideElement(userEmail, "admin-status");
           checkAdminStatusAndHideElement(userEmail, "allPoints");
+          checkAdminStatusAndHideElement(userEmail, "admin_buttons");
           updatePointHeaderByEmail(userEmail);
           loadUserPoints(userEmail);
           loadUserRewards(userEmail);
