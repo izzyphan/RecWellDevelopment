@@ -226,6 +226,7 @@ function handleLoginFormSubmission(event) {
               if (window.location.pathname.endsWith("/points.html")) {
                 checkAdminStatusAndHideElement(username, "penalty_container");
               }
+              loadEmployeeShoutouts();
             })
             .catch((error) => {
               let errorMessage = error.message;
@@ -284,6 +285,7 @@ function handleSignupFormSubmission(event) {
       checkAdminStatusAndHideElement(s_username, "admin-status");
       // Hide the modal
       hideModal();
+      loadEmployeeShoutouts();
     })
     .catch((error) => {
       // Handle authentication errors
@@ -378,6 +380,7 @@ function loadLastVisitedUrl() {
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
+    loadEmployeeShoutouts();
   }
 }
 
