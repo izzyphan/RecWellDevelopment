@@ -1006,7 +1006,7 @@ function findStaff() {
         let lastName = d.data().lastName;
         let position = d.data().position + " Any";
         let department = d.data().department + " Any";
-        console.log(position);
+
         if (
           firstName !== undefined &&
           lastName !== undefined &&
