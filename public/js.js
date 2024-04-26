@@ -109,12 +109,12 @@ document.addEventListener("click", function (event) {
         firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             var userEmail = user.email;
+            loadDirectory(userEmail);
 
             checkAdminStatusAndHideElement(userEmail, "admin-status");
           }
         });
 
-        loadDirectory();
         break;
       case "talent":
         url = "talent.html";
@@ -150,6 +150,7 @@ document.addEventListener("click", function (event) {
       case "points":
         url = "points.html";
         employeeDropdown();
+        createPenaltyTable();
 
         // Call checkAdminStatusAndHideElement when loading points.html and talent.html
         firebase.auth().onAuthStateChanged(function (user) {
@@ -161,6 +162,8 @@ document.addEventListener("click", function (event) {
             updatePointHeaderByEmail(userEmail);
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
             checkAdminStatusAndHideElement(userEmail, "admin-status");
+            checkAdminStatusAndHideElement(userEmail, "admin_buttons");
+            checkAdminStatusAndHideElement(userEmail, "allPoints");
           }
         });
         break;
@@ -223,6 +226,7 @@ function handleLoginFormSubmission(event) {
               if (window.location.pathname.endsWith("/points.html")) {
                 checkAdminStatusAndHideElement(username, "penalty_container");
               }
+              loadEmployeeShoutouts();
             })
             .catch((error) => {
               let errorMessage = error.message;
@@ -281,6 +285,7 @@ function handleSignupFormSubmission(event) {
       checkAdminStatusAndHideElement(s_username, "admin-status");
       // Hide the modal
       hideModal();
+      loadEmployeeShoutouts();
     })
     .catch((error) => {
       // Handle authentication errors
@@ -335,19 +340,21 @@ function loadLastVisitedUrl() {
           var elementIDToHide = "penalty_container";
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
           checkAdminStatusAndHideElement(userEmail, "admin-status");
+          checkAdminStatusAndHideElement(userEmail, "allPoints");
+          checkAdminStatusAndHideElement(userEmail, "admin_buttons");
           updatePointHeaderByEmail(userEmail);
           loadUserPoints(userEmail);
           loadUserRewards(userEmail);
         }
         employeeDropdown();
+        createPenaltyTable();
       });
     }
     if (stateData.url.endsWith("directory.html")) {
-      loadDirectory();
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           var userEmail = user.email;
-
+          loadDirectory(userEmail);
           checkAdminStatusAndHideElement(userEmail, "admin-status");
         }
       });
@@ -373,6 +380,7 @@ function loadLastVisitedUrl() {
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
+    loadEmployeeShoutouts();
   }
 }
 
@@ -865,8 +873,28 @@ function checkAdminStatusAndHideElement(userEmail, elementId) {
     });
 }
 
-//dynamic directory loading
-function loadDirectory() {
+// Function to check admin status and toggle element visibility based on isAdmin field
+function checkAdminStatusAndToggleVisibility(userEmail, elementId) {
+  const employeesRef = db.collection("employees");
+  employeesRef
+    .where("email", "==", userEmail)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const isAdmin = querySnapshot.docs[0].data().isAdmin;
+        const element = document.getElementById(elementId);
+        if (isAdmin && element) {
+          element.style.visibility = "visible"; // Show the element
+        } else {
+          element.style.visibility = "hidden"; // Hide the element (reserve space)
+        }
+      }
+    });
+}
+
+// Dynamic directory loading with admin check
+function loadDirectory(currentUserEmail) {
+  // Added currentUserEmail parameter
   db.collection("employees")
     .get()
     .then((res) => {
@@ -874,13 +902,7 @@ function loadDirectory() {
       let html = ``;
       data.forEach((d) => {
         let phoneNumber = formatPhoneNumber(d.data().phoneNumber);
-        // let headshot = getimage(d.data().firstName, d.data().lastName);
-        imageType = d.data().imageUrl;
-        if (typeof imageType === "undefined") {
-          headshot = "placeholder-headshot.jpg";
-        } else {
-          headshot = imageType;
-        }
+        let headshot = d.data().imageUrl || "placeholder-headshot.jpg";
 
         html += `<div class="EmployeeCard" id="${d.data().email}"> 
           <img src="${headshot}" alt="${headshot}" class="employee-image"/> 
@@ -900,13 +922,20 @@ function loadDirectory() {
             d.data().biography
           }</div>
           <div id="expand-delete">
+          <p>
           <button class="expand-button" onclick="expandCard('${
             d.data().email
-          }')">Expand</button>
+          }')">Expand</button><br>
           <button class="delete-button" id="delete_${
             d.data().email
-          }" onclick="deleteEmployee('${d.data().email}')">X</button></div>
+          }" onclick="deleteEmployee('${d.data().email}')">X</button></p></div>
+          
         </div>`;
+        // Call the function to check admin status and hide/show delete button
+        checkAdminStatusAndToggleVisibility(
+          currentUserEmail,
+          `delete_${d.data().email}`
+        );
       });
       document.querySelector("#employee_directory").innerHTML += html;
     });
@@ -914,6 +943,7 @@ function loadDirectory() {
 
 function expandCard(email) {
   let card = document.getElementById(email);
+  let expandButton = card.querySelector(".expand-button");
   let phoneNumber = card.querySelector(".employee-phone");
   let bio = card.querySelector(".employee-bio");
   let department = card.querySelector(".employee-department");
@@ -925,7 +955,6 @@ function expandCard(email) {
       c.classList.remove("expanded");
       c.querySelector(".employee-phone").classList.add("card-hidden");
       c.querySelector(".employee-bio").classList.add("card-hidden");
-
       c.querySelector(".employee-department").classList.add("card-hidden");
       c.querySelector(".employee-position").classList.add("card-hidden");
     }
@@ -936,6 +965,11 @@ function expandCard(email) {
   department.classList.toggle("card-hidden");
   position.classList.toggle("card-hidden");
   bio.classList.toggle("card-hidden");
+
+  // Toggle button text between "Expand" and "Minimize"
+  expandButton.innerText = card.classList.contains("expanded")
+    ? "Minimize"
+    : "Expand";
 }
 
 function formatPhoneNumber(phoneNumber) {
@@ -972,7 +1006,7 @@ function findStaff() {
         let lastName = d.data().lastName;
         let position = d.data().position + " Any";
         let department = d.data().department + " Any";
-        console.log(position);
+
         if (
           firstName !== undefined &&
           lastName !== undefined &&
@@ -987,10 +1021,18 @@ function findStaff() {
             department.includes(departmentSearch)
           ) {
             trueNames.push(d.data().email);
+            // Update directory message
           }
         }
         // Remove duplicates
         trueNames = Array.from(new Set(trueNames));
+        const messageElement = document.getElementById("directory-message");
+        if (trueNames.length == 0) {
+          messageElement.textContent =
+            "No staff found. Please try a different filter.";
+        } else {
+          messageElement.textContent = "";
+        }
         //duplicate names arent hidden the 2nd time
         let allStaffArray = document.getElementsByClassName("EmployeeCard");
         let idList = [];
@@ -1215,6 +1257,8 @@ function loadUserPoints(userEmail) {
   // Get the points data for the logged-in user
   db.collection("points")
     .where("employeeEmail", "==", userEmail)
+    .orderBy("date", "desc")
+    .limit(3)
     .get()
     .then((querySnapshot) => {
       let pointsDisplay = document.getElementById("pointsDisplay");
@@ -1292,6 +1336,12 @@ function addRewardPoints(currentUserEmail) {
       return;
     }
 
+    // Check if the currentUserEmail matches the selected employee's email
+    if (currentUserEmail === employeeEmail) {
+      alert("You cannot add reward points for yourself.");
+      return;
+    }
+
     // Get the user's email based on the selected employee name
     db.collection("employees")
       .where("email", "==", employeeEmail)
@@ -1327,6 +1377,7 @@ function addRewardPoints(currentUserEmail) {
       })
       .catch((error) => {
         console.error("Error adding reward points: ", error);
+        reject(error);
       });
   });
 }
@@ -1361,7 +1412,7 @@ document.addEventListener("click", function (event) {
   }
 });
 
-function rewardLimit(userEmail) {
+function rewardLimit(userEmail, rewardsCount) {
   const today = new Date(); // Get the current date
   const currentMonth = today.getMonth(); // Get the current month (0-indexed)
   const currentYear = today.getFullYear(); // Get the current year
@@ -1378,10 +1429,10 @@ function rewardLimit(userEmail) {
     .where("submissionDate", "<", startOfNextMonth)
     .get()
     .then((querySnapshot) => {
-      // Check if the number of rewards submitted this month is less than 10
-      if (querySnapshot.size < 10) {
-        let rewardsCount = querySnapshot.size; // Get the count of rewards
+      // Set rewardsCount to the size of querySnapshot or 0 if it's empty
+      rewardsCount = querySnapshot.size || 0;
 
+      if (rewardsCount < 10) {
         updateDonutChart(rewardsCount);
 
         document.getElementById(
@@ -1393,52 +1444,141 @@ function rewardLimit(userEmail) {
           "NumSubmission"
         ).innerHTML = `You have reached the limit of 10 rewards submissions for this month.`;
       }
+
+      // Hide or show the chart based on rewardsCount
+      const chartElement = document.getElementById("rewardChart"); // Replace "yourChartId" with the actual ID of your chart
+
+      chartElement.style.display = "block";
+    })
+    .catch((error) => {
+      console.error("Error fetching rewards data: ", error);
     });
 }
 
 function loadUserRewards(userEmail) {
-  // Get the rewards data for the logged-in user
+  // Get the points data for the logged-in user
   db.collection("rewards")
     .where("employeeEmail", "==", userEmail)
+    .orderBy("date", "desc")
+    .limit(3)
     .get()
     .then((querySnapshot) => {
-      let rewardsDisplay = document.getElementById("shoutoutDisplay");
+      let rewardDisplay = document.getElementById("shoutoutDisplay");
+      let rewardsCount = 0; // Counter for displayed rewards
 
-      rewardsDisplay.innerHTML = ""; // Clear previous content
+      rewardDisplay.innerHTML = ""; // Clear previous content
 
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          let rewardsData = doc.data();
-          let rewardDate = rewardsData.date;
-          let rewardReason = rewardsData.reason;
-          let rewardEmployee = rewardsData.employeeName;
-          let fromEmployee = rewardsData.loggedInUserEmail;
-          let moreInfo = rewardsData.moreInfo;
-          // Create a card-like display for each reward
+          let rewardData = doc.data();
+          let rewardDate = rewardData.date;
+          let rewardReason = rewardData.moreInfo;
+
+          let fromEmployee = rewardData.loggedInUserEmail;
+
+          let rewardEmployee = rewardData.employeeName;
+
+          // Create a card-like display for each point
           let rewardCard = document.createElement("div");
           rewardCard.classList.add("reward-card");
           rewardCard.innerHTML = `
-            <div class="reward-info">
-            <div>To: ${rewardEmployee}</div>
-            <div>From: ${fromEmployee}</div>
+            <div class="point-info">
+            <div>Reward From: ${fromEmployee}</div>
+              <div>Employee: ${rewardEmployee}</div>
               <div>Date: ${rewardDate}</div>
-              <div>Reason: ${rewardReason}</div>
-              <div>Description: ${moreInfo}</div>
+              <div>Description: ${rewardReason}</div>
+              
             </div>
           `;
-          rewardsDisplay.appendChild(rewardCard);
+          rewardDisplay.appendChild(rewardCard);
+          rewardsCount++;
+
+          rewardLimit(userEmail, rewardsCount);
         });
       } else {
-        // No rewards data found for the user
-        rewardsDisplay.innerHTML = "No rewards found.";
+        // No points data found for the user
+        rewardLimit(userEmail, 0);
+
+        rewardDisplay.innerHTML = "No rewards found.";
       }
-      // Update the donut chart with the rewards count
-      rewardLimit(userEmail);
     })
     .catch((error) => {
-      console.error("Error loading user rewards: ", error);
+      console.error("Error loading reward points: ", error);
     });
 }
+
+function loadMoreRewards(userEmail, currentRewardsCount) {
+  return new Promise((resolve, reject) => {
+    let rewardsDisplay = document.getElementById("shoutoutDisplay");
+    let rewardsLimit = 10; // Number of rewards to load each time the button is clicked
+
+    // Get the next batch of rewards starting from the current count
+    db.collection("rewards")
+      .where("employeeEmail", "==", userEmail)
+      .orderBy("date", "desc")
+      .limit(rewardsLimit)
+
+      .get()
+      .then((querySnapshot) => {
+        rewardsDisplay.innerHTML = "";
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((doc) => {
+            let rewardsData = doc.data();
+            let rewardDate = rewardsData.date;
+            let rewardReason = rewardsData.reason;
+            let rewardEmployee = rewardsData.employeeName;
+            let fromEmployee = rewardsData.loggedInUserEmail;
+            let moreInfo = rewardsData.moreInfo;
+
+            // Create a card-like display for each reward
+            let rewardCard = document.createElement("div");
+            rewardCard.classList.add("reward-card");
+            rewardCard.innerHTML = `
+              <div class="reward-info">
+              <div>Reward From: ${fromEmployee}</div>
+              <div>Employee: ${rewardEmployee}</div>
+              <div>Date: ${rewardDate}</div>
+              <div>Reason: ${rewardReason}</div>
+                <div>Description: ${moreInfo}</div>
+              </div>
+            `;
+            rewardsDisplay.appendChild(rewardCard);
+          });
+          resolve(); // Resolve the Promise after loading rewards
+        } else {
+          // No more rewards to load
+          alert("No more rewards to load.");
+          // You can disable the load more button or display a message indicating no more rewards
+          reject("No more rewards to load.");
+        }
+      })
+      .catch((error) => {
+        alert("Error loading more rewards: ", error);
+        reject(error); // Reject the Promise if there's an error loading rewards
+      });
+  });
+}
+
+document.addEventListener("click", function (event) {
+  if (event.target.id == "loadMoreButton") {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get the current user's email using getCurrentUserEmail()
+    const currentUserEmail = getCurrentUserEmail();
+
+    // Check if currentUserEmail is not null or undefined before proceeding
+    if (currentUserEmail) {
+      console.log(currentUserEmail);
+      loadMoreRewards(currentUserEmail)
+        .then(() => {})
+        .catch((error) => {
+          alert("Error loading more rewards: ", error);
+        });
+    }
+  }
+});
+
 function getCurrentUserEmail() {
   // Check if there is a currently signed-in user
   const user = auth.currentUser;
@@ -1541,6 +1681,7 @@ function updateDonutChart(rewardsCount) {
       },
     },
   });
+
   // Store the chart instance in the myDonutChart variable
   myDonutChart = donutChart;
 }
@@ -1552,4 +1693,52 @@ function destroyChart() {
   if (myDonutChart) {
     myDonutChart.destroy(); // Destroy the chart if it exists
   }
+}
+
+function createPenaltyTable() {
+  let penaltyTable = document.createElement("table");
+  penaltyTable.classList.add("penalty-table");
+
+  // Add table header row
+  let headerRow = penaltyTable.insertRow();
+  let nameHeader = headerRow.insertCell();
+  nameHeader.textContent = "Employee Name";
+  let totalPointsHeader = headerRow.insertCell();
+  totalPointsHeader.textContent = "Total Points (Weight)";
+
+  // Get the penalty data from Firestore
+  db.collection("points")
+    .get()
+    .then((querySnapshot) => {
+      let penaltyWeights = {}; // Object to store total weights for each employee
+
+      querySnapshot.forEach((doc) => {
+        let penaltyData = doc.data();
+        let employeeName = penaltyData.employeeName;
+        let penaltyWeight = parseFloat(penaltyData.penaltyWeight) || 0; // Convert penaltyWeight to a float number, default to 0 if not defined or invalid
+
+        // Add penaltyWeight to the total for this employee
+        if (!isNaN(penaltyWeight)) {
+          penaltyWeights[employeeName] =
+            (penaltyWeights[employeeName] || 0) + penaltyWeight;
+        }
+      });
+
+      // Create rows in the table based on the aggregated penaltyWeights
+      Object.keys(penaltyWeights).forEach((employeeName) => {
+        let row = penaltyTable.insertRow();
+        let nameCell = row.insertCell();
+        nameCell.textContent = employeeName;
+        let totalPointsCell = row.insertCell();
+        totalPointsCell.textContent = penaltyWeights[employeeName];
+      });
+
+      // Append the table to a container element in the HTML
+      let tableContainer = document.getElementById("penaltyTableContainer");
+      tableContainer.innerHTML = ""; // Clear previous content
+      tableContainer.appendChild(penaltyTable);
+    })
+    .catch((error) => {
+      console.error("Error retrieving penalty data: ", error);
+    });
 }

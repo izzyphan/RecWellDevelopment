@@ -25,8 +25,8 @@
 
         <li><a href="#" id="directory">Directory</a></li>
         <li><a href="#" id="talent">Talent Turnstile</a></li>
-        <li><a href="#" id="myaccount">My Account</a></li>
         <li><a href="#" id="points">Points</a></li>
+        <li><a href="#" id="myaccount">My Account</a></li>
         <li><a href="#" id="signout">Sign Out</a></li>
       </ul>
     </nav>
@@ -39,6 +39,25 @@
       <header>
         <h1 id="point_header"></h1>
       </header>
+      <div class="container">
+        <div class="point-links">
+          <ul>
+            <li><a href="#point_container">Submit Rewards</a></li>
+            <li><a href="#allPointDisplay">See Points & Rewards</a></li>
+          </ul>
+          <div id="admin_buttons">
+            <hr />
+            <p id="admin_feature_header">Admin Features</p>
+            <ul>
+              <li><a href="#penalty_container">Submit Penalty Points</a></li>
+              <li>
+                <a href="#penaltyTableContainer">See All Employee Points</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br />
       <!-- Admin Only - Penalty Point System -->
       <div id="penalty_container" class="container" style="display: none">
         <h2>Employee Penalty Point System</h2>
@@ -136,14 +155,20 @@
 
       <div id="allPointDisplay">
         <div id="pointsDisplayAll">
-          <h3>Penalty Points:</h3>
+          <h3>Your 3 Most Recent Points:</h3>
           <div id="pointsDisplay">hi</div>
           <div id="pointTotal"></div>
         </div>
         <div id="shoutoutsAll">
-          <h3>Employee Shoutouts:</h3>
-          <div id="shoutoutDisplay"></div>
+          <h3>Your Most Recent Rewards:</h3>
+          <div id="shoutoutDisplay">hi</div>
+          <button id="loadMoreButton">Load More</button>
         </div>
+      </div>
+      <div id="allPoints">
+        <hr />
+        <h2>All Employee Points</h2>
+        <div id="penaltyTableContainer"></div>
       </div>
     </div>
   </body>

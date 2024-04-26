@@ -43,6 +43,46 @@ html {
   color: red;
 }
 
+.point-links {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.point-links ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.point-links li {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.point-links a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+  margin-left: 40px;
+}
+
+.point-links a:hover {
+  color: red;
+}
+
+#admin_feature_header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: black;
+  text-align: center;
+}
+
 /* Media query for responsiveness */
 @media (max-width: 768px) {
   .top-links {
@@ -376,7 +416,7 @@ p {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  height: 270px;
+  height: 310px;
   margin: 10px;
   width: 300px;
   background-color: #1c1c1c;
@@ -388,7 +428,21 @@ p {
   display: none;
 }
 .EmployeeCard.expanded {
-  height: 370px;
+  height: 400px;
+}
+.expand-button {
+  background-color: grey; /* Blue background color */
+  color: #ffffff; /* White text color */
+  border: none;
+  border-radius: 4px; /* Rounded corners */
+  padding: 7px 16px; /* Padding for the button */
+  font-size: 12px; /* Font size */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.expand-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 .EmployeeCard img {
   width: 100%;
@@ -408,7 +462,19 @@ p {
   margin-bottom: 10px;
   text-align: center;
 }
+.delete-button {
+  background-color: #ff0000; /* Red background color */
+  color: #ffffff; /* White text color */
+  border: none;
+  margin: 10px;
+  border-radius: 70%; /* Makes the button round */
+  padding: 8px; /* Adjust padding as needed */
+  font-size: 10px; /* Adjust font size as needed */
+}
 
+.delete-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
 #expand-delete {
   margin: 10px;
 }
@@ -556,11 +622,47 @@ p {
   text-align: center;
 }
 
-#filtering {
+#filteringdiv {
+  background-color: #f0f0f0; /* Light gray background */
+  padding: 20px; /* Adjust padding as needed */
+  border-radius: 8px; /* Rounded corners */
   text-align: center;
-  margin-top: -50px;
+  margin: auto;
+  width: 60%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
+#searchHeader {
+  color: #333333; /* Dark text color */
+  font-size: 24px; /* Larger font size */
+  margin-bottom: 15px; /* Space below the header */
+}
+
+.filterChoices {
+  margin-bottom: 10px; /* Space between filter choices */
+}
+.filterChoices input[type="text"],
+select {
+  padding: 8px; /* Padding for input and select elements */
+  border-radius: 4px; /* Rounded corners for input and select */
+  border: 1px solid #cccccc; /* Light gray border */
+  width: 150px; /* Adjust width as needed */
+}
+
+.filterChoices input[type="text"]:focus,
+select:focus {
+  outline: none; /* Remove outline on focus */
+  border-color: #007bff; /* Border color on focus */
+}
+
+/* Style the select arrow */
+select {
+  appearance: none; /* Remove default appearance */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow icon */
+  background-repeat: no-repeat; /* Prevent icon repetition */
+  background-position: right 8px center; /* Position icon */
+  background-size: 16px; /* Size of the icon */
+}
 #staffSearch {
   margin: 0 10px;
 }
@@ -689,4 +791,55 @@ p {
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 2%;
+}
+
+#directorybanner {
+  width: 100%;
+  height: 330px;
+}
+
+/* CSS Styles for Penalty Table Container */
+#penaltyTableContainer {
+  margin-top: 20px;
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS Styles for Penalty Table */
+.penalty-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.penalty-table th,
+.penalty-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.penalty-table th {
+  text-align: left;
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+.penalty-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.penalty-table tr:hover {
+  background-color: #e9e9e9;
+}
+
+#allPoints {
+  text-align: center;
+}
+
+#directory-message {
+  text-align: center;
 }
