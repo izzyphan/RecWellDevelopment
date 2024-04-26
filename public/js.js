@@ -1018,10 +1018,18 @@ function findStaff() {
             department.includes(departmentSearch)
           ) {
             trueNames.push(d.data().email);
+            // Update directory message
           }
         }
         // Remove duplicates
         trueNames = Array.from(new Set(trueNames));
+        const messageElement = document.getElementById("directory-message");
+        if (trueNames.length == 0) {
+          messageElement.textContent =
+            "No staff found. Please try a different filter.";
+        } else {
+          messageElement.textContent = "";
+        }
         //duplicate names arent hidden the 2nd time
         let allStaffArray = document.getElementsByClassName("EmployeeCard");
         let idList = [];

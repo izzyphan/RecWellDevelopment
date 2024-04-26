@@ -839,3 +839,7 @@ select {
 #allPoints {
   text-align: center;
 }
+
+#directory-message {
+  text-align: center;
+}
