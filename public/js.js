@@ -1484,6 +1484,8 @@ function loadUserRewards(userEmail) {
         });
       } else {
         // No points data found for the user
+        let chart = document.getElementById("rewardChart");
+        chart.style.display = "none";
         rewardDisplay.innerHTML = "No rewards found.";
       }
     })
