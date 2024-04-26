@@ -43,6 +43,46 @@ html {
   color: red;
 }
 
+.point-links {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.point-links ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.point-links li {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.point-links a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+  margin-left: 40px;
+}
+
+.point-links a:hover {
+  color: red;
+}
+
+#admin_feature_header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: black;
+  text-align: center;
+}
+
 /* Media query for responsiveness */
 @media (max-width: 768px) {
   .top-links {
