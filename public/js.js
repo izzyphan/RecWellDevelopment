@@ -1323,6 +1323,12 @@ function addRewardPoints(currentUserEmail) {
       return;
     }
 
+    // Check if the currentUserEmail matches the selected employee's email
+    if (currentUserEmail === employeeEmail) {
+      alert("You cannot add reward points for yourself.");
+      return;
+    }
+
     // Get the user's email based on the selected employee name
     db.collection("employees")
       .where("email", "==", employeeEmail)
@@ -1358,6 +1364,7 @@ function addRewardPoints(currentUserEmail) {
       })
       .catch((error) => {
         console.error("Error adding reward points: ", error);
+        reject(error);
       });
   });
 }
@@ -1392,7 +1399,7 @@ document.addEventListener("click", function (event) {
   }
 });
 
-function rewardLimit(userEmail) {
+function rewardLimit(userEmail, rewardsCount) {
   const today = new Date(); // Get the current date
   const currentMonth = today.getMonth(); // Get the current month (0-indexed)
   const currentYear = today.getFullYear(); // Get the current year
@@ -1409,10 +1416,10 @@ function rewardLimit(userEmail) {
     .where("submissionDate", "<", startOfNextMonth)
     .get()
     .then((querySnapshot) => {
-      // Check if the number of rewards submitted this month is less than 10
-      if (querySnapshot.size < 10) {
-        let rewardsCount = querySnapshot.size; // Get the count of rewards
+      // Set rewardsCount to the size of querySnapshot or 0 if it's empty
+      rewardsCount = querySnapshot.size || 0;
 
+      if (rewardsCount < 10) {
         updateDonutChart(rewardsCount);
 
         document.getElementById(
@@ -1424,65 +1431,64 @@ function rewardLimit(userEmail) {
           "NumSubmission"
         ).innerHTML = `You have reached the limit of 10 rewards submissions for this month.`;
       }
+
+      // Hide or show the chart based on rewardsCount
+      const chartElement = document.getElementById("rewardChart"); // Replace "yourChartId" with the actual ID of your chart
+
+      chartElement.style.display = "block";
+    })
+    .catch((error) => {
+      console.error("Error fetching rewards data: ", error);
     });
 }
 
 function loadUserRewards(userEmail) {
-  let rewardsDisplay = document.getElementById("shoutoutDisplay");
-  let loadMoreButton = document.getElementById("loadMoreButton");
-  let rewardsLimit = 3; // Number of rewards to display initially
-  let rewardsCount = 0; // Counter for displayed rewards
-
-  // Get the rewards data for the logged-in user and sort by date
+  // Get the points data for the logged-in user
   db.collection("rewards")
     .where("employeeEmail", "==", userEmail)
-    .orderBy("date", "desc") // Assuming "date" is the field containing the reward date
+    .orderBy("date", "desc")
+    .limit(3)
     .get()
     .then((querySnapshot) => {
-      // rewardsDisplay.innerHTML = ""; // Clear previous content
+      let rewardDisplay = document.getElementById("shoutoutDisplay");
+      let rewardsCount = 0; // Counter for displayed rewards
+
+      rewardDisplay.innerHTML = ""; // Clear previous content
 
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          if (rewardsCount < rewardsLimit) {
-            let rewardsData = doc.data();
-            let rewardDate = rewardsData.date;
-            let rewardReason = rewardsData.reason;
-            let rewardEmployee = rewardsData.employeeName;
-            let fromEmployee = rewardsData.loggedInUserEmail;
-            let moreInfo = rewardsData.moreInfo;
-            // Create a card-like display for each reward
-            let rewardCard = document.createElement("div");
-            rewardCard.classList.add("reward-card");
-            rewardCard.innerHTML = `
-              <div class="reward-info">
-                <div>To: ${rewardEmployee}</div>
-                <div>From: ${fromEmployee}</div>
-                <div>Date: ${rewardDate}</div>
-                <div>Reason: ${rewardReason}</div>
-                <div>Description: ${moreInfo}</div>
-              </div>
-            `;
-            rewardsDisplay.appendChild(rewardCard);
-            rewardsCount++;
-          }
+          let rewardData = doc.data();
+          let rewardDate = rewardData.date;
+          let rewardReason = rewardData.moreInfo;
+
+          let fromEmployee = rewardData.loggedInUserEmail;
+
+          let rewardEmployee = rewardData.employeeName;
+
+          // Create a card-like display for each point
+          let rewardCard = document.createElement("div");
+          rewardCard.classList.add("reward-card");
+          rewardCard.innerHTML = `
+            <div class="point-info">
+            <div>Reward From: ${fromEmployee}</div>
+              <div>Employee: ${rewardEmployee}</div>
+              <div>Date: ${rewardDate}</div>
+              <div>Description: ${rewardReason}</div>
+              
+            </div>
+          `;
+          rewardDisplay.appendChild(rewardCard);
+          rewardsCount++;
+
+          rewardLimit(userEmail, rewardsCount);
         });
-
-        // Check if there are more rewards to load
-        if (rewardsCount < querySnapshot.size) {
-          loadMoreButton.style.display = "block"; // Show the load more button
-        } else {
-          loadMoreButton.style.display = "none"; // Hide the load more button if all rewards are displayed
-        }
-
-        // Update the donut chart with the rewards count
-        rewardLimit(userEmail, rewardsCount); // Assuming rewardLimit function takes userEmail and rewardsCount parameters
       } else {
-        // No rewards data found for the user
-        rewardsDisplay.innerHTML = "No rewards found.";
+        // No points data found for the user
+        rewardDisplay.innerHTML = "No rewards found.";
       }
     })
     .catch((error) => {
-      console.error("Error loading user rewards: ", error);
+      console.error("Error loading reward points: ", error);
     });
 }
 
@@ -1514,10 +1520,10 @@ function loadMoreRewards(userEmail, currentRewardsCount) {
             rewardCard.classList.add("reward-card");
             rewardCard.innerHTML = `
               <div class="reward-info">
-                <div>To: ${rewardEmployee}</div>
-                <div>From: ${fromEmployee}</div>
-                <div>Date: ${rewardDate}</div>
-                <div>Reason: ${rewardReason}</div>
+              <div>Reward From: ${fromEmployee}</div>
+              <div>Employee: ${rewardEmployee}</div>
+              <div>Date: ${rewardDate}</div>
+              <div>Reason: ${rewardReason}</div>
                 <div>Description: ${moreInfo}</div>
               </div>
             `;
@@ -1660,6 +1666,7 @@ function updateDonutChart(rewardsCount) {
       },
     },
   });
+
   // Store the chart instance in the myDonutChart variable
   myDonutChart = donutChart;
 }

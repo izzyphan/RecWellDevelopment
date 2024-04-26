@@ -601,7 +601,7 @@ p {
 .filterChoices {
   margin-bottom: 10px; /* Space between filter choices */
 }
-input[type="text"],
+.filterChoices input[type="text"],
 select {
   padding: 8px; /* Padding for input and select elements */
   border-radius: 4px; /* Rounded corners for input and select */
@@ -609,7 +609,7 @@ select {
   width: 150px; /* Adjust width as needed */
 }
 
-input[type="text"]:focus,
+.filterChoices input[type="text"]:focus,
 select:focus {
   outline: none; /* Remove outline on focus */
   border-color: #007bff; /* Border color on focus */
