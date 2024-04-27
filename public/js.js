@@ -261,17 +261,20 @@ function handleSignupFormSubmission(event) {
       var user = cred.user;
 
       // Store user information in Firestore
-      return db.collection("employees").doc(user.uid).set({
-        firstName: firstName,
-        email: s_username,
-        lastName: lastName,
-        biography: "",
-        department: "",
-        phoneNumber: "",
-        position: "",
-        isAdmin: false,
-        // Add more employee details as needed
-      });
+      return db
+        .collection("employees")
+        .doc(user.uid)
+        .set({
+          firstName: String(firstName),
+          email: s_username,
+          lastName: String(lastName),
+          biography: "",
+          department: "",
+          phoneNumber: "",
+          position: "",
+          isAdmin: false,
+          // Add more employee details as needed
+        });
     })
     .then(() => {
       // Reset the signup form
