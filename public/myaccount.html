@@ -35,8 +35,12 @@
     <div class="new-content">
       <div id="account_container" class="container">
         <h1 id="NameHeader"></h1>
-        <span id="email"></span>
+        <!-- <span id="email"></span> -->
         <table id="accountTable">
+          <tr>
+            <th>Email</th>
+            <td id="myemail" style="color: red"></td>
+          </tr>
           <tr>
             <th>First Name</th>
             <td><input type="text" id="account_fname" /></td>
@@ -82,7 +86,12 @@
           <tr>
             <th>Image</th>
             <td>
-              <input type="file" id="imageUpload" accept="image/*" />
+              <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                style="color: white"
+              />
               <!-- Image preview -->
               <img
                 id="imagePreview"
