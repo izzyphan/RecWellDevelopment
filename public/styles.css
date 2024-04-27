@@ -607,10 +607,6 @@ p {
   /* background-color: white; */
 }
 
-#myemail:hover {
-  color: #dbcdc8; /* New color on hover */
-}
-
 #output,
 #output h2 {
   text-align: center;
@@ -690,4 +686,7 @@ p {
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 2%;
+}
+#myemail {
+  color: white;
 }
