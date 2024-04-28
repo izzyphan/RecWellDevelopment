@@ -463,8 +463,8 @@ p {
   text-align: center;
 }
 .delete-button {
-  background-color: #ff0000; /* Red background color */
-  color: #ffffff; /* White text color */
+  background-color: #da1313;
+  color: #ffffff;
   border: none;
   margin: 10px;
   border-radius: 70%; /* Makes the button round */
@@ -701,7 +701,7 @@ select {
 }
 
 #myemail {
-  color: red; /* Text color */
+  color: #da1313; /* Text color */
   font-size: 16px; /* Font size */
   text-align: center;
   font-weight: bold; /* Font weight */
