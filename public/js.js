@@ -367,10 +367,10 @@ function loadLastVisitedUrl() {
         if (user) {
           var userEmail = user.email;
           var elementIDToHide = "admin-status";
+          loadEmployeeShoutouts();
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
       });
-      loadEmployeeShoutouts();
     }
     if (stateData.url.endsWith("myaccount.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
@@ -383,7 +383,12 @@ function loadLastVisitedUrl() {
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
-    loadEmployeeShoutouts();
+    // loadEmployeeShoutouts();
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        loadEmployeeShoutouts();
+      }
+    });
   }
 }
 
