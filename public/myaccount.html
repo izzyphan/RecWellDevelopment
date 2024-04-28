@@ -76,8 +76,18 @@
             </td>
           </tr>
           <tr>
-            <th>Phone Number</th>
-            <td><input type="tel" id="phoneNumber" /></td>
+            <th><label for="phoneNumber">Phone Number</label></th>
+            <td>
+              <input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                placeholder="123-456-7890"
+                required
+                title="Phone number must be in the format 123-456-7890"
+              />
+            </td>
           </tr>
 
           <th>Biography</th>
