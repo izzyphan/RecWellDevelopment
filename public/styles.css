@@ -843,3 +843,78 @@ select {
 #myemail {
   color: white;
 }
+
+.footer {
+  background-color: rgb(74, 3, 3);
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #333;
+  font-size: 16px;
+}
+
+#logo_footer {
+  width: 200px;
+
+  margin: 0 auto; /* Center the logo horizontally */
+}
+
+#footer_banner {
+  background-color: rgb(74, 3, 3);
+  color: grey;
+}
+#footer_banner:hover {
+  font-size: 26px;
+}
+
+.footer_columns {
+  display: flex;
+  /* justify-content: space-between; Distribute space evenly between columns */
+  align-items: center; /* Align items vertically in the center */
+}
+
+#left_footer {
+  flex: 1;
+  text-align: right;
+  margin-right: 50px;
+}
+
+#right_footer {
+  flex: 1;
+  text-align: left;
+  color: grey;
+  margin-left: 50px;
+}
+#right_footer h3 {
+  text-decoration: underline;
+}
+
+#right_footer a {
+  text-decoration: none;
+  color: white;
+}
+
+#right_footer a:hover {
+  font-weight: bold;
+}
+#right_footer p {
+  color: grey;
+}
+
+#teams_logo,
+#insta_logo {
+  border-radius: 50%;
+  margin: 5px;
+  width: 40px;
+}
+
+#teams_logo:hover,
+#insta_logo:hover {
+  border-radius: 50%;
+  margin: 5px;
+  width: 50px;
+}

@@ -1572,7 +1572,6 @@ document.addEventListener("click", function (event) {
 
     // Check if currentUserEmail is not null or undefined before proceeding
     if (currentUserEmail) {
-      console.log(currentUserEmail);
       loadMoreRewards(currentUserEmail)
         .then(() => {})
         .catch((error) => {
