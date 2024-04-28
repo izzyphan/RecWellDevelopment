@@ -992,6 +992,9 @@ function formatPhoneNumber(phoneNumber) {
 function ValNum() {
   var phoneNumberInput = document.getElementById("phoneNumber");
   var phoneNumberPattern = /^\d{3}-\d{3}-\d{4}$/;
+  if (phoneNumberInput.value.trim() === "") {
+    return true;
+  }
   if (!phoneNumberPattern.test(phoneNumberInput.value)) {
     alert("Please enter a valid phone number in the format 123-456-7890");
     return false;
