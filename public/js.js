@@ -566,11 +566,11 @@ function handleFormSubmission(event) {
     alert("First name and last name cannot be empty.");
     return;
   }
-
+  if (!ValNum()) {
+    return;
+  }
   // Get the user ID of the authenticated user
   var userId = firebase.auth().currentUser.uid;
-
-  // Reference the user's document in Firestore
   var userRef = db.collection("employees").doc(userId);
 
   // Check if an image file is selected
@@ -595,7 +595,6 @@ function handleFormSubmission(event) {
               position: position,
               department: department,
               phoneNumber: phoneNumber,
-
               biography: biography,
               imageUrl: imageUrl, // Add imageUrl to the update data
             },
@@ -623,7 +622,6 @@ function handleFormSubmission(event) {
           position: position,
           department: department,
           phoneNumber: phoneNumber,
-
           biography: biography,
         },
         { merge: true } // Merge the new data with existing data
@@ -641,19 +639,19 @@ function handleFormSubmission(event) {
   }
 }
 
-//Confirm Matching Passwords
-function checkPasswordMatch() {
-  var password = document.getElementById("s_password").value;
-  var confirmPassword = document.getElementById("c_s_password").value;
+//Confirm Matching Passwords Future Implimentation. Currently lots of backend errors
+// function checkPasswordMatch() {
+//   var password = document.getElementById("s_password").value;
+//   var confirmPassword = document.getElementById("c_s_password").value;
 
-  if (password == confirmPassword) {
-    document.getElementById("passwordMatchMessage").innerHTML =
-      "Passwords match";
-  } else {
-    document.getElementById("passwordMatchMessage").innerHTML =
-      "Passwords don't match";
-  }
-}
+//   if (password == confirmPassword) {
+//     document.getElementById("passwordMatchMessage").innerHTML =
+//       "Passwords match";
+//   } else {
+//     document.getElementById("passwordMatchMessage").innerHTML =
+//       "Passwords don't match";
+//   }
+// }
 
 function makeAdmin() {
   var firstName = document.getElementById("adminAccount_fname").value.trim();
@@ -912,9 +910,7 @@ function loadDirectory(currentUserEmail) {
           <div class="employee-name">${d.data().firstName} ${
           d.data().lastName
         }</div>
-          <div class="employee-phone card-hidden">Phone Number: ${
-            d.data().phoneNumber
-          }</div>
+          <div class="employee-phone card-hidden">Phone Number: ${phoneNumber}</div>
           <div class="employee-department card-hidden">Department: ${
             d.data().department
           }</div>
@@ -977,17 +973,21 @@ function expandCard(email) {
 
 function formatPhoneNumber(phoneNumber) {
   phoneNumber = String(phoneNumber);
-  if (phoneNumber === undefined || phoneNumber.trim() === "") {
-    return "";
-  }
-  // Remove all non-digit characters from the phone number
   phoneNumber = phoneNumber.replace(/\D/g, "");
-  if (phoneNumber.length === 10) {
-    return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-  } else {
-    return "";
-  }
+  // Format the number as (XXX) XXX-XXXX
+  return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
 }
+
+function ValNum() {
+  var phoneNumberInput = document.getElementById("phoneNumber");
+  var phoneNumberPattern = /^\d{3}-\d{3}-\d{4}$/;
+  if (!phoneNumberPattern.test(phoneNumberInput.value)) {
+    alert("Please enter a valid phone number in the format 123-456-7890");
+    return false;
+  }
+  return true;
+}
+
 function findStaff() {
   document
     .getElementById("searchStaff")
