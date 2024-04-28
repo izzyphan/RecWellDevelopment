@@ -601,8 +601,8 @@ function handleFormSubmission(event) {
         userRef
           .set(
             {
-              firstName: firstName,
-              lastName: lastName,
+              firstName: toProperCase(String(firstName)),
+              lastName: toProperCase(String(lastName)),
               position: position,
               department: department,
               phoneNumber: phoneNumber,
