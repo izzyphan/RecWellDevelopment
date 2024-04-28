@@ -661,10 +661,10 @@ function checkPasswordMatch() {
 }
 
 function makeAdmin() {
-  var firstName = document.getElementById("adminAccount_fname").value.trim();
-  var lastName = document.getElementById("adminAccount_lname").value.trim();
-  var email = document.getElementById("adminAccount_email").value.trim();
-  var keyword = document.getElementById("adminAccount_keyword").value.trim();
+  var firstName = document.getElementById("adminAccount_fname").textContent;
+  var lastName = document.getElementById("adminAccount_lname").textContent;
+  var email = document.getElementById("adminAccount_email").textContent;
+  var keyword = document.getElementById("adminAccount_keyword").value;
 
   if (!firstName || !lastName || !email) {
     alert("First name, last name, and email are required.");

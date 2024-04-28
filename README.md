@@ -93,7 +93,7 @@ Day 9: ![ChartDay9](BurnDownChart9-S2.png)
 Day 14: ![ChartDay12](BurnDownChart12-S2.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
-![StandUpNotes](EvidenceofStandUpsS2.png)
+![StandUpNotes](EvidenceofStandUpsS3.png)
 
 **Sprint Review 2:**
 
