@@ -45,7 +45,7 @@ Day 14: ![ChartDay14](BurnDownChart14-S3.png) <br>
 We learned about the importance of experience during our third sprint. We felt that we were able to be more accurate with predictions and work better together as time has gone on, because we now have that experience that we have gained throughout the semester. 
 <br><br>
 **b. What did go well? Why?** <br>
-This time we felt that our time estimates were better because we had a better idea of how long things would realistically take us when we compared them to similar tasks we've had in the past. 
+This time we felt that our time estimates were better because we had a better idea of how long things would realistically take us when we compared them to similar tasks we've had in the past. We also felt that group communication went well and there was minimal confusion when discussing the work needed to be completed each day. 
 <br><br>
 **c. What didn’t go well? Why not?** <br>
 One area we think we could improve on is still time estimates. Even though we were a lot closer with our estimations this time around, we weren't perfect. Our reasoning is just because we don't have enough historical data and experience to account for all the factors that can impact when a college student is able to get a task done by. 
