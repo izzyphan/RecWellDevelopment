@@ -243,6 +243,16 @@ function handleLoginFormSubmission(event) {
       });
   }
 }
+function toProperCase(str) {
+  if (/[^0-9]/.test(str)) {
+    //capitalize the first letter of each word
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  } else {
+    return str;
+  }
+}
 
 /// Function to handle signup form submission
 function handleSignupFormSubmission(event) {
@@ -265,9 +275,9 @@ function handleSignupFormSubmission(event) {
         .collection("employees")
         .doc(user.uid)
         .set({
-          firstName: String(firstName),
+          firstName: toProperCase(String(firstName)),
           email: s_username,
-          lastName: String(lastName),
+          lastName: toProperCase(String(lastName)),
           biography: "",
           department: "",
           phoneNumber: "",
@@ -383,6 +393,7 @@ function loadLastVisitedUrl() {
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
+    //problem line?
     loadEmployeeShoutouts();
   }
 }
