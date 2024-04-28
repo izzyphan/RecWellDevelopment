@@ -173,11 +173,11 @@ document.addEventListener("click", function (event) {
           if (user) {
             var userEmail = user.email;
             var elementIdToHide = "admin-status";
-
+            loadEmployeeShoutouts();
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
           }
         });
-        loadEmployeeShoutouts();
+        // loadEmployeeShoutouts();
         break;
     }
     // Save the current URL to localStorage
@@ -261,17 +261,20 @@ function handleSignupFormSubmission(event) {
       var user = cred.user;
 
       // Store user information in Firestore
-      return db.collection("employees").doc(user.uid).set({
-        firstName: firstName,
-        email: s_username,
-        lastName: lastName,
-        biography: "",
-        department: "",
-        phoneNumber: "",
-        position: "",
-        isAdmin: false,
-        // Add more employee details as needed
-      });
+      return db
+        .collection("employees")
+        .doc(user.uid)
+        .set({
+          firstName: String(firstName),
+          email: s_username,
+          lastName: String(lastName),
+          biography: "",
+          department: "",
+          phoneNumber: "",
+          position: "",
+          isAdmin: false,
+          // Add more employee details as needed
+        });
     })
     .then(() => {
       // Reset the signup form
@@ -364,10 +367,10 @@ function loadLastVisitedUrl() {
         if (user) {
           var userEmail = user.email;
           var elementIDToHide = "admin-status";
+          loadEmployeeShoutouts();
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
       });
-      loadEmployeeShoutouts();
     }
     if (stateData.url.endsWith("myaccount.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
@@ -380,7 +383,12 @@ function loadLastVisitedUrl() {
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
-    loadEmployeeShoutouts();
+    // loadEmployeeShoutouts();
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        loadEmployeeShoutouts();
+      }
+    });
   }
 }
 
@@ -495,7 +503,7 @@ function loadUserData(userId) {
       var account_position = document.getElementById("position");
       var account_department = document.getElementById("department");
       var account_phoneNumber = document.getElementById("phoneNumber");
-      var account_email = document.getElementById("email");
+      var account_email = document.getElementById("myemail");
       var account_biography = document.getElementById("biography");
       var adminAccount_fname = document.getElementById("adminAccount_fname");
       var adminAccount_lname = document.getElementById("adminAccount_lname");
@@ -555,7 +563,7 @@ function handleFormSubmission(event) {
   var position = document.getElementById("position").value;
   var department = document.getElementById("department").value;
   var phoneNumber = document.getElementById("phoneNumber").value;
-  var email = document.getElementById("email").value;
+  var email = document.getElementById("myemail").value;
   var biography = document.getElementById("biography").value;
 
   // Check if first name or last name is empty or email is being changed
@@ -1569,7 +1577,6 @@ document.addEventListener("click", function (event) {
 
     // Check if currentUserEmail is not null or undefined before proceeding
     if (currentUserEmail) {
-      console.log(currentUserEmail);
       loadMoreRewards(currentUserEmail)
         .then(() => {})
         .catch((error) => {

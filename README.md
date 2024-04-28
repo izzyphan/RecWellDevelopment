@@ -29,12 +29,12 @@ User Story 3: As an admin, I want to understand how to best use this system. Thi
 
 
 <br><br><br>
-**Burn Down Chart Day 4, Day 9, Day 12** <br>
+**Burn Down Chart Day 4, Day 9, Day 14** <br>
 Day 4: ![ChartDay4](BurnDownChart4-S3.png) 
 <br>
 Day 9: ![ChartDay9](BurnDownChart9-S3.png)
 <br>
-Day 12: ![ChartDay12](BurnDownChart12-S3.png) <br>
+Day 14: ![ChartDay14](BurnDownChart14-S3.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
 ![StandUpNotes](EvidenceofStandUpsS3.png)
@@ -66,12 +66,12 @@ As an admin, I want to utilize an employee directory for our student staff which
 | Develop JavaScript functionality for the Talent Turnstile form to upload blog posts after submission of a file               | 6                         | 3                | Emily       
 
 
-**Burn Down Chart Day 4, Day 9, Day 12** <br>
+**Burn Down Chart Day 4, Day 9, Day 14** <br>
 Day 4: ![ChartDay4](BurnDownChart4-S2.png) 
 <br>
 Day 9: ![ChartDay9](BurnDownChart9-S2.png)
 <br>
-Day 12: ![ChartDay12](BurnDownChart12-S2.png) <br>
+Day 14: ![ChartDay12](BurnDownChart12-S2.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
 ![StandUpNotes](EvidenceofStandUpsS2.png)
@@ -141,37 +141,37 @@ As a RecWell professional staff member (full-time employee overseeing student st
 | Add content to main section of home page | 3 | 45 minutes | 6 | low | Matt/Cristian |
 | Add images to home page | 2 | 30 minutes | 5 | low | Cristian |
 
-**Burn Down Chart Day 4, Day 9, Day 12** <br>
+**Burn Down Chart Day 4, Day 9, Day 14** <br>
 Day 4: ![GitGraph](BurnDownChartDay4.png) 
 <br>
 This burn down chart does not accurately show the amount of work completed because our group did not know the graph depended on manual data entrance. We realized how to use this chart correctly after this screenshot was taken. The graph still showed us an accurate ideal burndown. We talked to the professor about this.
 Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
 <br>
-Day 12: ![GitGraph](BurnDownChartDay12.png) <br>
+Day 14: ![GitGraph](BurnDownChartDay12.png) <br>
 Our group could not figure out how to change the current day's total work completed because the burndown website only allowed us to edit past day's total work completed. I believe this error in our graph arised from closing tasks on day 12 even though work had been completed for these tasks on other days. We estimated we worked for 2.5 hours on day 12 and that is shown with the drawn in red dot and line to thr graph.
 
 **Evidence of 3 Daily Scrum Meetings:**
 ![GitGraph](StandUpNotes.png)
 
-**Sprint Review:**
+**Sprint Review 3:**
 
-**a. What did you learn from doing our first sprint?** <br>
-We found that it was important to communicate what tasks were being currently worked on, completed, and still needed to be finished. This was important becuase it reduced the number of potential merge errors that we anticipated getting later in the project. We also found it was important for people to work on the parts of the website and development that matched their skills the best. 
+**a. What did you learn from doing our third sprint?** <br>
+We learned about the importance of experience during our third sprint. We felt that we were able to be more accurate with predictions and work better together as time has gone on, because we now have that experience that we have gained throughout the semester. 
 <br>
 **b. What did go well? Why?** <br>
-One thing we believed we well was our communication. We were contantly conmmunicating to ensure that we were meeting deadlines, staying on track for budgeted time, and keeping the project in scope. We did this best through a groupchat that we had created where we can send questions and pictures and get quick responses instead of having to wait for in person conversations.
+This time we felt that our time estimates were better because we had a better idea of how long things would realistically take us when we compared them to similar tasks we've had in the past. 
 <br>
 **c. What didn’t go well? Why not?** <br>
-One area we think we could improve on is time estimation. We had created time estimations for each of our major sprint goals and most of the time they were inaccurate. One of the reasons we think this happened was becasue we had over estimated our skills and knowledge retention from previous courses.
+One area we think we could improve on is still time estimates. Even though we were a lot closer with our estimations this time around, we weren't perfect. Our reasoning is just because we don't have enough historical data and experience to account for all the factors that can impact when a college student is able to get a task done by. 
 <br>
 **d. How can you make things better next time?** <br>
-We think we can make things better, especially our time estimations, by break down each part and goal of our project into smaller pieces. This will be valuable as it will allow us to have a better understanding of how much time we still need to spend to hit our sprint goals. It will also allow more people to simultaneously work on one part of the project if it is broken up into smaller chunks.
+We think we can make things better by continuing to gain more experience and analyzing our progress to find key takeaways. 
 <br>
 **e. Are you satisfied with what you already completed?** <br>
-We are happy with the visual design of our website. There are still a few small pieces we would like to refine, but in general we are very happy with what we have completed so far.
+We are happy with our overall website as we believe it looks great, works well, and we've gotten positive feedback from our customer. 
 <br>
 **f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
-Group 2 was invited to our sprint review. Some feedback we received following the sprint review was that during our sprint review, we effectively communicated evidence of the daily scrum and we were confident in our effort and unified in deciding what went well and what needs improving. We believe we are now well prepared for the next stage of the projet and will see further improvement in our future sprints. Yes, everybody was present for the sprint review.
+Group 2 was invited to our sprint review. Some feedback we received following the sprint review was that during our sprint review, we effectively communicated evidence of the daily scrum and we were confident in our effort and unified in deciding what went well and what needs improving. Yes, everybody was present for the sprint review.
 
 Prototype:
 After our meeting with the staff member's of Rec Well here was out initial Protype for both the Login/Sign-Up Screen and the Main Page. We were able to include the items that they needed:
@@ -190,6 +190,4 @@ Afterwards we met as a team and sketched out a new design for the main page and 
 ![Final Prototype:Login](DecidedLoginPage.png)
 
 ![Final Prototype:Main](DecidedMainPage.png)
-
-
 
