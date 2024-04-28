@@ -29,12 +29,12 @@ User Story 3: As an admin, I want to understand how to best use this system. Thi
 
 
 <br><br><br>
-**Burn Down Chart Day 4, Day 9, Day 12** <br>
+**Burn Down Chart Day 4, Day 9, Day 14** <br>
 Day 4: ![ChartDay4](BurnDownChart4-S3.png) 
 <br>
 Day 9: ![ChartDay9](BurnDownChart9-S3.png)
 <br>
-Day 12: ![ChartDay12](BurnDownChart12-S3.png) <br>
+Day 14: ![ChartDay14](BurnDownChart14-S3.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
 ![StandUpNotes](EvidenceofStandUpsS3.png)
@@ -66,12 +66,12 @@ As an admin, I want to utilize an employee directory for our student staff which
 | Develop JavaScript functionality for the Talent Turnstile form to upload blog posts after submission of a file               | 6                         | 3                | Emily       
 
 
-**Burn Down Chart Day 4, Day 9, Day 12** <br>
+**Burn Down Chart Day 4, Day 9, Day 14** <br>
 Day 4: ![ChartDay4](BurnDownChart4-S2.png) 
 <br>
 Day 9: ![ChartDay9](BurnDownChart9-S2.png)
 <br>
-Day 12: ![ChartDay12](BurnDownChart12-S2.png) <br>
+Day 14: ![ChartDay12](BurnDownChart12-S2.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
 ![StandUpNotes](EvidenceofStandUpsS2.png)
@@ -141,13 +141,13 @@ As a RecWell professional staff member (full-time employee overseeing student st
 | Add content to main section of home page | 3 | 45 minutes | 6 | low | Matt/Cristian |
 | Add images to home page | 2 | 30 minutes | 5 | low | Cristian |
 
-**Burn Down Chart Day 4, Day 9, Day 12** <br>
+**Burn Down Chart Day 4, Day 9, Day 14** <br>
 Day 4: ![GitGraph](BurnDownChartDay4.png) 
 <br>
 This burn down chart does not accurately show the amount of work completed because our group did not know the graph depended on manual data entrance. We realized how to use this chart correctly after this screenshot was taken. The graph still showed us an accurate ideal burndown. We talked to the professor about this.
 Day 9: ![GitGraph](Burn%20Down%20Chart%20Day%209.png)
 <br>
-Day 12: ![GitGraph](BurnDownChartDay12.png) <br>
+Day 14: ![GitGraph](BurnDownChartDay12.png) <br>
 Our group could not figure out how to change the current day's total work completed because the burndown website only allowed us to edit past day's total work completed. I believe this error in our graph arised from closing tasks on day 12 even though work had been completed for these tasks on other days. We estimated we worked for 2.5 hours on day 12 and that is shown with the drawn in red dot and line to thr graph.
 
 **Evidence of 3 Daily Scrum Meetings:**

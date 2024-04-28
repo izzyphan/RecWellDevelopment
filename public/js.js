@@ -173,11 +173,11 @@ document.addEventListener("click", function (event) {
           if (user) {
             var userEmail = user.email;
             var elementIdToHide = "admin-status";
-
+            loadEmployeeShoutouts();
             checkAdminStatusAndHideElement(userEmail, elementIdToHide);
           }
         });
-        loadEmployeeShoutouts();
+        // loadEmployeeShoutouts();
         break;
     }
     // Save the current URL to localStorage
