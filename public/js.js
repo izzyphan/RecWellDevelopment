@@ -196,53 +196,46 @@ function handleLoginFormSubmission(event) {
   var username = document.getElementById("l_username").value;
   var password = document.getElementById("l_password").value;
 
-  // Determine which button was clicked
-  var submitButtonValue = event.submitter.value;
+  // Sign in with Firebase Authentication
+  auth
+    .signInWithEmailAndPassword(username, password)
+    .then((userCredential) => {
+      // Authentication successful
+      var user = userCredential.user;
+      console.log("User authenticated:", user.uid);
 
-  if (submitButtonValue === "Log In") {
-    // Check if the username exists in Firestore
-    db.collection("employees")
-      .where("email", "==", username)
-      .get()
-      .then((querySnapshot) => {
-        if (querySnapshot.empty) {
-          // Username doesn't exist, show "create account" message
-          document.querySelector(".error_message1").innerHTML =
-            "Create An Account!";
-        } else {
-          // Username exists, try to sign in with Firebase Authentication
-          auth
-            .signInWithEmailAndPassword(username, password)
-            .then((cred) => {
-              document.getElementById("loginform").reset();
-              hideModal();
-              showMainContent();
-
-              // Redirect user to home page after successful login
-              loadContent("home.html", {
-                message: username + " " + "is now logged in.",
-              });
-              checkAdminStatusAndHideElement(username, "admin-status");
-              if (window.location.pathname.endsWith("/points.html")) {
-                checkAdminStatusAndHideElement(username, "penalty_container");
-              }
-              loadEmployeeShoutouts();
-            })
-            .catch((error) => {
-              let errorMessage = error.message;
-              document.querySelector(".error_message1").innerHTML =
-                "Incorrect Password";
-
-              // Keep the modal visible on incorrect password
-              showModal();
-            });
-        }
-      })
-      .catch((error) => {
-        console.error("Error checking username in Firestore:", error);
-      });
-  }
+      // Check if the username exists in Firestore
+      db.collection("employees")
+        .where("email", "==", username)
+        .get()
+        .then((querySnapshot) => {
+          if (!querySnapshot.empty) {
+            // Username exists, redirect or show main content after successful login
+            document.getElementById("loginform").reset();
+            hideModal();
+            showMainContent();
+          } else {
+            // Username doesn't exist, show "create account" message
+            document.querySelector(".error_message1").innerHTML =
+              "Email not registered. Please create an account.";
+            return;
+          }
+        })
+        .catch((error) => {
+          console.error("Error checking username in Firestore:", error);
+        });
+    })
+    .catch((error) => {
+      // Authentication failed, handle error
+      var errorMessage = error.message;
+      console.error("Authentication error:", errorMessage);
+      // Display error message to the user
+      document.querySelector(".error_message1").innerHTML = errorMessage;
+      // Keep the modal visible on incorrect password
+      showModal();
+    });
 }
+
 function toProperCase(str) {
   if (/[^0-9]/.test(str)) {
     //capitalize the first letter of each word
