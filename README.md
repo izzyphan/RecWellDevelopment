@@ -40,6 +40,25 @@ Day 14: ![ChartDay14](BurnDownChart14-S3.png) <br>
 ![StandUpNotes](EvidenceofStandUpsS3.png)
 
 **Sprint Review 3:**
+
+**a. What did you learn from doing our third sprint?** <br>
+We learned about the importance of experience during our third sprint. We felt that we were able to be more accurate with predictions and work better together as time has gone on, because we now have that experience that we have gained throughout the semester. 
+<br><br>
+**b. What did go well? Why?** <br>
+This time we felt that our time estimates were better because we had a better idea of how long things would realistically take us when we compared them to similar tasks we've had in the past. We also felt that group communication went well and there was minimal confusion when discussing the work needed to be completed each day. 
+<br><br>
+**c. What didn’t go well? Why not?** <br>
+One area we think we could improve on is still time estimates. Even though we were a lot closer with our estimations this time around, we weren't perfect. Our reasoning is just because we don't have enough historical data and experience to account for all the factors that can impact when a college student is able to get a task done by. 
+<br><br>
+**d. How can you make things better next time?** <br>
+We think we can make things better by continuing to gain more experience and analyzing our progress to find key takeaways. 
+<br><br>
+**e. Are you satisfied with what you already completed?** <br>
+We are happy with our overall website as we believe it looks great, works well, and we've gotten positive feedback from our customer. 
+<br><br>
+**f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
+Group 2 was invited to our sprint review. Some feedback we received following the sprint review was that during our sprint review, we effectively communicated evidence of the daily scrum and we were confident in our effort and unified in deciding what went well and what needs improving. Yes, everybody was present for the sprint review.
+<br>
 ___________________________________________________________________________________________________________________________________________________________________
 **Sprint 2**
 <br>
@@ -74,7 +93,7 @@ Day 9: ![ChartDay9](BurnDownChart9-S2.png)
 Day 14: ![ChartDay12](BurnDownChart12-S2.png) <br>
 
 **Evidence of 3 Daily Scrum Meetings:**
-![StandUpNotes](EvidenceofStandUpsS2.png)
+![StandUpNotes](EvidenceofStandUpsS3.png)
 
 **Sprint Review 2:**
 
@@ -153,25 +172,6 @@ Our group could not figure out how to change the current day's total work comple
 **Evidence of 3 Daily Scrum Meetings:**
 ![GitGraph](StandUpNotes.png)
 
-**Sprint Review 3:**
-
-**a. What did you learn from doing our third sprint?** <br>
-We learned about the importance of experience during our third sprint. We felt that we were able to be more accurate with predictions and work better together as time has gone on, because we now have that experience that we have gained throughout the semester. 
-<br>
-**b. What did go well? Why?** <br>
-This time we felt that our time estimates were better because we had a better idea of how long things would realistically take us when we compared them to similar tasks we've had in the past. 
-<br>
-**c. What didn’t go well? Why not?** <br>
-One area we think we could improve on is still time estimates. Even though we were a lot closer with our estimations this time around, we weren't perfect. Our reasoning is just because we don't have enough historical data and experience to account for all the factors that can impact when a college student is able to get a task done by. 
-<br>
-**d. How can you make things better next time?** <br>
-We think we can make things better by continuing to gain more experience and analyzing our progress to find key takeaways. 
-<br>
-**e. Are you satisfied with what you already completed?** <br>
-We are happy with our overall website as we believe it looks great, works well, and we've gotten positive feedback from our customer. 
-<br>
-**f. Which group was invited? What are your observations/notes? Everybody was present?** <br>
-Group 2 was invited to our sprint review. Some feedback we received following the sprint review was that during our sprint review, we effectively communicated evidence of the daily scrum and we were confident in our effort and unified in deciding what went well and what needs improving. Yes, everybody was present for the sprint review.
 
 Prototype:
 After our meeting with the staff member's of Rec Well here was out initial Protype for both the Login/Sign-Up Screen and the Main Page. We were able to include the items that they needed:

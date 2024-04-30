@@ -377,10 +377,10 @@ function loadLastVisitedUrl() {
         if (user) {
           var userEmail = user.email;
           var elementIDToHide = "admin-status";
+          loadEmployeeShoutouts();
           checkAdminStatusAndHideElement(userEmail, elementIDToHide);
         }
       });
-      loadEmployeeShoutouts();
     }
     if (stateData.url.endsWith("myaccount.html")) {
       firebase.auth().onAuthStateChanged(function (user) {
@@ -393,8 +393,12 @@ function loadLastVisitedUrl() {
   } else {
     // Default action (e.g., load home page)
     loadContent("home.html");
-    //problem line?
-    loadEmployeeShoutouts();
+    // loadEmployeeShoutouts();
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        loadEmployeeShoutouts();
+      }
+    });
   }
 }
 
@@ -527,9 +531,9 @@ function loadUserData(userId) {
         account_phoneNumber.value = phoneNumber;
         account_email.innerHTML = email;
         account_biography.value = biography;
-        adminAccount_fname.value = firstName;
-        adminAccount_lname.value = lastName;
-        adminAccount_email.value = email;
+        adminAccount_fname.textContent = firstName;
+        adminAccount_lname.textContent = lastName;
+        adminAccount_email.textContent = email;
         adminAccount_status.textContent = status;
         // Update image preview if imageUrl exists in userData
         if (userData.imageUrl) {
@@ -665,10 +669,10 @@ function handleFormSubmission(event) {
 // }
 
 function makeAdmin() {
-  var firstName = document.getElementById("adminAccount_fname").value.trim();
-  var lastName = document.getElementById("adminAccount_lname").value.trim();
-  var email = document.getElementById("adminAccount_email").value.trim();
-  var keyword = document.getElementById("adminAccount_keyword").value.trim();
+  var firstName = document.getElementById("adminAccount_fname").textContent;
+  var lastName = document.getElementById("adminAccount_lname").textContent;
+  var email = document.getElementById("adminAccount_email").textContent;
+  var keyword = document.getElementById("adminAccount_keyword").value;
 
   if (!firstName || !lastName || !email) {
     alert("First name, last name, and email are required.");
