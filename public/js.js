@@ -202,33 +202,11 @@ function handleLoginFormSubmission(event) {
     .then((userCredential) => {
       // Authentication successful
       var user = userCredential.user;
-      console.log("User authenticated:", user.uid);
-
-      // Check if the username exists in Firestore
-      db.collection("employees")
-        .where("email", "==", username)
-        .get()
-        .then((querySnapshot) => {
-          if (!querySnapshot.empty) {
-            // Username exists, redirect or show main content after successful login
-            document.getElementById("loginform").reset();
-            hideModal();
-            showMainContent();
-          } else {
-            // Username doesn't exist, show "create account" message
-            document.querySelector(".error_message1").innerHTML =
-              "Email not registered. Please create an account.";
-            return;
-          }
-        })
-        .catch((error) => {
-          console.error("Error checking username in Firestore:", error);
-        });
     })
     .catch((error) => {
       // Authentication failed, handle error
-      var errorMessage = error.message;
-      console.error("Authentication error:", errorMessage);
+      var errorMessage = "Incorrect Username or Password";
+
       // Display error message to the user
       document.querySelector(".error_message1").innerHTML = errorMessage;
       // Keep the modal visible on incorrect password
